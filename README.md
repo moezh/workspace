@@ -37,4 +37,4 @@ This workspace is hosted at **https://mh.com6.cc** and is built using the follow
 
 ## Unit Testing
 
-- To run unit tests, use the command: `docker exec <CONTAINER_ID> yarn run test`. Please replace the <CONTAINER_ID> with the appropriate container id. To find the container ID, use the command docker container ls or docker ps.
+- To run unit tests, use the command: `docker exec <CONTAINER_ID> yarn run test`. Please replace the <CONTAINER_ID> with the appropriate container id. To find the container ID, use the command `docker container ls` or `docker ps`.
