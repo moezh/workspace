@@ -1,0 +1,61 @@
+version: "3.9"
+name: "project"
+services:
+  frontend:
+    container_name: frontend
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      target: ${DOCKER_ENV:-dev}
+    ports:
+      - "80:3000"
+    volumes:
+      - ./frontend:/app
+    secrets:
+      - backend-password
+  worker:
+    container_name: worker
+    depends_on:
+      - database
+    build:
+      context: ./worker
+      target: ${DOCKER_ENV:-dev}
+    volumes:
+      - ./worker:/app
+    secrets:
+      - database-password
+  backend:
+    container_name: backend
+    depends_on:
+      - database
+    build:
+      context: ./backend
+      target: ${DOCKER_ENV:-dev}
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+    secrets:
+      - database-password
+      - backend-password
+  database:
+    container_name: database
+    build:
+      context: ./database
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/database-password
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data-${DOCKER_ENV:-dev}:/var/lib/postgresql/data
+    secrets:
+      - database-password
+volumes:
+  database-data-dev:
+  database-data-prod:
+secrets:
+  database-password:
+    file: ./database-password.txt
+  backend-password:
+    file: ./backend-password.txt

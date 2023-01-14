@@ -1,0 +1,20 @@
+{
+  "name": "worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "export NODE_ENV=development && nodemon ./src/server.ts",
+    "build": "tsc",
+    "prod": "export NODE_ENV=production && node ./build/server.js"
+  },
+  "dependencies": {
+    "pg": "8.x"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "@types/pg": "8.x",
+    "nodemon": "2.x",
+    "ts-node": "10.x",
+    "typescript": "4.x"
+  }
+}

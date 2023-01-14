@@ -1,0 +1,10 @@
+.DS_Store
+.vscode
+node_modules
+build
+.next
+cache
+yarn.lock
+.env
+backend-password.txt
+database-password.txt
