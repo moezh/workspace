@@ -1,6 +1,6 @@
-# Template - Project Boilerplate
+# MH - Personal Workspace
 
-This project boilerplate is built using the following technologies:
+This workspace is hosted at **https://mh.com6.cc** and is built using the following technologies:
 
 - NextJs for the front-end framework
 - TypeScript for type checking and development
