@@ -9,15 +9,17 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 - NodeJs for the workers
 - PostgreSQL as the database
 
+# Notes to Myself
+
 ## Getting Set Up
 
 1. Install Docker Desktop on your computer or server.
 
 1. Clone this repository into a directory of your choice.
 
-1. In the root directory of the repository, you will find files `database-password.txt` and `backend-password.txt`. Please update them with your own passwords.
+1. In the main folder of the repository, change the name of `database-password.txt.sample` to `database-password.txt` and `backend-password.txt.sample` to `backend-password.txt`. Replace the content of `database-password.txt` and `backend-password.txt` with new, unique and random passwords.
 
-1. To run the application in production mode, set the `DOCKER_ENV` variable to `prod` in the environment file `.env` (root directory). By default, the environment variable `DOCKER_ENV` is unset and defaults to `dev` (development mode).
+1. To set up the environment for the application, rename the `env.sample` file in the root directory to `.env`. To run the application in production mode, set the `DOCKER_ENV` variable to `prod` in the `.env` file. If `DOCKER_ENV` is not set, it defaults to `dev` (development mode).
 
 1. To spin up the entire environment, run the command: `docker compose up`.
 
