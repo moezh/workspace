@@ -1,12 +1,12 @@
-# MH - Personal Workspace
+# Personal Workspace
 
-This workspace is hosted at **https://mh.com6.cc** and is built using the following technologies:
+This workspace is hosted at **https://com6.cc** and is built using the following technologies:
 
 - NextJs for the front-end framework
 - TypeScript for type checking and development
 - TailwindCSS for styling
 - ExpressJs for the backend framework
-- NodeJs for the worker
+- NodeJs for the workers
 - PostgreSQL as the database
 
 ## Getting Set Up
