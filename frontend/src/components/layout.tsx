@@ -2,8 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
-import logoWhite from "../../public/mh_logo_white.png";
-import logoBlack from "../../public/mh_logo_black.png";
+import logoWhite from "../../public/logo_white.png";
+import logoBlack from "../../public/logo_black.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
