@@ -13,9 +13,9 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 ## Getting Set Up
 
-1. Install Docker Desktop on your computer or server.
+1. Install Docker Desktop on the computer or server.
 
-1. Clone this repository into a directory of your choice.
+1. Clone this repository into a directory of choice.
 
 1. In the main folder of the repository, change the name of `database-password.txt.sample` to `database-password.txt` and `backend-password.txt.sample` to `backend-password.txt`. Replace the content of `database-password.txt` and `backend-password.txt` with new, unique and random passwords.
 
