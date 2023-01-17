@@ -25,9 +25,9 @@ export default function Page(props: { data: string }) {
   return (
     <>
       <Head>
-        <title>Homepage</title>
+        <title>MH</title>
       </Head>
-      <div>{props.data}</div>
+      <div>MH{props.data}</div>
     </>
   );
 }
