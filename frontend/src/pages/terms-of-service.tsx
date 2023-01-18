@@ -6,11 +6,10 @@ export default function Page(props: { data: string }) {
       <Head>
         <title>Terms of Service</title>
       </Head>
-      <h1 className="font-medium text-center text-xl uppercase">
+      <h1 className="font-medium text-xl uppercase font-serif">
         TERMS OF SERVICE
       </h1>
-      <div className="text-justify">
-        <br />
+      <div className="w-full pt-8">
         <p className="font-medium uppercase">OVERVIEW</p>
         <p>
           This website is operated by Moez Hachicha. Throughout the site, the

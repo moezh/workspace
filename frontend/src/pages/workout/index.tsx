@@ -25,9 +25,9 @@ export default function Page(props: { data: string }) {
   return (
     <>
       <Head>
-        <title>MH's Blog</title>
+        <title>MH's Workout</title>
       </Head>
-      <h1 className="font-medium text-xl uppercase font-serif">MH's Blog</h1>
+      <h1 className="font-medium text-xl uppercase font-serif">MH's Workout</h1>
       <div className="w-full pt-8"></div>
       <p className="font-medium uppercase">Coming Soon</p>
       <p>{props.data}</p>

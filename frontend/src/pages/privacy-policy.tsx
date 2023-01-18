@@ -6,11 +6,10 @@ export default function Page(props: { data: string }) {
       <Head>
         <title>Privacy Policy</title>
       </Head>
-      <h1 className="font-medium text-center text-xl uppercase">
+      <h1 className="font-medium text-xl uppercase font-serif">
         PRIVACY POLICY
       </h1>
-      <div className="text-justify">
-        <br />
+      <div className="w-full pt-8">
         <p className="font-medium uppercase">
           SECTION 1 – WHAT DO WE DO WITH YOUR INFORMATION?
         </p>
