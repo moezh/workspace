@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
-  const result = await fetch("http://backend:3001/api/info", {
+  const result = await fetch("http://backend:3001/api/web3/config", {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
       "Content-Type": "application/json",

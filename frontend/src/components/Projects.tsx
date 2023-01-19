@@ -35,7 +35,7 @@ const Projects = () => {
               </Link>
             )}
             {index < projects.length - 1 ? (
-              <span className="mr-1"> | </span>
+              <span className="ml-1 mr-1">|</span>
             ) : null}
           </div>
         );

@@ -7,16 +7,16 @@ afterAll(async () => {
   db.end();
 });
 
-describe("GET /api/info", () => {
+describe("GET /api/store/config", () => {
   describe("Test when no authorization is provided", () => {
     test("It should response code 401 (Missing Authentication)", () => {
-      return request(app).get("/api/info").expect(401);
+      return request(app).get("/api/store/config").expect(401);
     });
   });
   describe("Test when a false authorization is provided", () => {
     test("It should response code 401 (Authentication Failed)", () => {
       return request(app)
-        .get("/api/info")
+        .get("/api/store/config")
         .set("Authorization", `Bearer NON_VALID_TOKEN`)
         .expect(401);
     });
@@ -24,7 +24,7 @@ describe("GET /api/info", () => {
   describe("Test with a good authorization", () => {
     test("It should response code 200 (OK)", () => {
       return request(app)
-        .get("/api/info")
+        .get("/api/store/config")
         .set(
           "Authorization",
           `Bearer ${jwt.sign("admin", app.get("password"))}`
@@ -35,10 +35,10 @@ describe("GET /api/info", () => {
   });
 });
 
-describe("Test non existing endpoint", () => {
+describe("GET /api/store/*", () => {
   test("It should response error 404 (not found)", () => {
     return request(app)
-      .get("/api/info/non-existing-endpoint")
+      .get("/api/store/*")
       .set("Authorization", `Bearer ${jwt.sign("admin", app.get("password"))}`)
       .expect(404);
   });

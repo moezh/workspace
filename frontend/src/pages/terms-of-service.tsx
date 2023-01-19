@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Page(props: { data: string }) {
+export default function Page() {
   return (
     <>
       <Head>
@@ -12,11 +12,11 @@ export default function Page(props: { data: string }) {
       <div className="w-full pt-8">
         <p className="font-medium uppercase">OVERVIEW</p>
         <p>
-          This website is operated by Moez Hachicha. Throughout the site, the
-          terms “we”, “us” and “our” refer to Moez Hachicha. We offer this
-          website, including all information, tools and services available from
-          this site to you, the user, conditioned upon your acceptance of all
-          terms, conditions, policies and notices stated here.
+          This website is operated by me. Throughout the site, the terms “we”,
+          “us” and “our” refer to me. We offer this website, including all
+          information, tools and services available from this site to you, the
+          user, conditioned upon your acceptance of all terms, conditions,
+          policies and notices stated here.
         </p>
         <p>
           By visiting our site and/ or purchasing something from us, you engage
@@ -45,8 +45,7 @@ export default function Page(props: { data: string }) {
           continued use of or access to the website following the posting of any
           changes constitutes acceptance of those changes.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 1 – ONLINE WEBSITE TERMS
         </p>
         <p>
@@ -61,8 +60,9 @@ export default function Page(props: { data: string }) {
           or any code of a destructive nature. A breach or violation of any of
           the Terms will result in an immediate termination of your Services.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 2 – GENERAL CONDITIONS</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 2 – GENERAL CONDITIONS
+        </p>
         <p>
           We reserve the right to refuse service to anyone for any reason at any
           time. You understand that your content (not including credit card
@@ -77,8 +77,7 @@ export default function Page(props: { data: string }) {
           in this agreement are included for convenience only and will not limit
           or otherwise affect these Terms.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 3 – ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION
         </p>
         <p>
@@ -95,8 +94,7 @@ export default function Page(props: { data: string }) {
           on our site. You agree that it is your responsibility to monitor
           changes to our site.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 4 – MODIFICATIONS TO THE SERVICE AND PRICES
         </p>
         <p>
@@ -106,8 +104,7 @@ export default function Page(props: { data: string }) {
           be liable to you or to any third-party for any modification, price
           change, suspension or discontinuance of the Service.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 5 – PRODUCTS OR SERVICES (if applicable)
         </p>
         <p>
@@ -130,8 +127,7 @@ export default function Page(props: { data: string }) {
           obtained by you will meet your expectations, or that any errors in the
           Service will be corrected.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 6 – ACCURACY OF BILLING AND ACCOUNT INFORMATION
         </p>
         <p>
@@ -154,8 +150,7 @@ export default function Page(props: { data: string }) {
           can complete your transactions and contact you as needed.
         </p>
         <p>For more detail, please review our Returns Policy.</p>
-        <br />
-        <p className="font-medium uppercase">SECTION 7 – OPTIONAL TOOLS</p>
+        <p className="font-medium uppercase pt-6">SECTION 7 – OPTIONAL TOOLS</p>
         <p>
           We may provide you with access to third-party tools over which we
           neither monitor nor have any control nor input. You acknowledge and
@@ -171,8 +166,9 @@ export default function Page(props: { data: string }) {
           of new tools and resources). Such new features and/or services shall
           also be subject to these Terms of Service.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 8 – THIRD-PARTY LINKS</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 8 – THIRD-PARTY LINKS
+        </p>
         <p>
           Certain content, products and services available via our Service may
           include materials from third-parties. Third-party links on this site
@@ -189,14 +185,14 @@ export default function Page(props: { data: string }) {
           questions regarding third-party products should be directed to the
           third-party.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 9 – AFFILIATES LINKS</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 9 – AFFILIATES LINKS
+        </p>
         <p>
           We are a participant in affiliate advertising programs designed to
           provide a means for us to earn fees by linking to affiliated sites.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 10 – USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS
         </p>
         <p>
@@ -226,16 +222,14 @@ export default function Page(props: { data: string }) {
           responsibility and assume no liability for any comments posted by you
           or any third-party.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 11 – PERSONAL INFORMATION
         </p>
         <p>
           Your submission of personal information through the store is governed
           by our Privacy Policy. To view our Privacy Policy.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 12 – ERRORS, INACCURACIES AND OMISSIONS
         </p>
         <p>
@@ -254,8 +248,9 @@ export default function Page(props: { data: string }) {
           to indicate that all information in the Service or on any related
           website has been modified or updated.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 13 – PROHIBITED USES</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 13 – PROHIBITED USES
+        </p>
         <p>
           In addition to other prohibitions as set forth in the Terms of
           Service, you are prohibited from using the site or its content: (a)
@@ -278,8 +273,7 @@ export default function Page(props: { data: string }) {
           reserve the right to terminate your use of the Service or any related
           website for violating any of the prohibited uses.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 14 – DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY
         </p>
         <p>
@@ -315,8 +309,9 @@ export default function Page(props: { data: string }) {
           incidental damages, in such states or jurisdictions, our liability
           shall be limited to the maximum extent permitted by law.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 15 – INDEMNIFICATION</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 15 – INDEMNIFICATION
+        </p>
         <p>
           You agree to indemnify, defend and hold harmless us and our parent,
           subsidiaries, affiliates, partners, officers, directors, agents,
@@ -327,8 +322,7 @@ export default function Page(props: { data: string }) {
           incorporate by reference, or your violation of any law or the rights
           of a third-party.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 16 – SEVERABILITY</p>
+        <p className="font-medium uppercase pt-6">SECTION 16 – SEVERABILITY</p>
         <p>
           In the event that any provision of these Terms of Service is
           determined to be unlawful, void or unenforceable, such provision shall
@@ -338,8 +332,7 @@ export default function Page(props: { data: string }) {
           affect the validity and enforceability of any other remaining
           provisions.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 17 – TERMINATION</p>
+        <p className="font-medium uppercase pt-6">SECTION 17 – TERMINATION</p>
         <p>
           The obligations and liabilities of the parties incurred prior to the
           termination date shall survive the termination of this agreement for
@@ -353,8 +346,9 @@ export default function Page(props: { data: string }) {
           all amounts due up to and including the date of termination; and/or
           accordingly may deny you access to our Services (or any part thereof).
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 18 – ENTIRE AGREEMENT</p>
+        <p className="font-medium uppercase pt-6">
+          SECTION 18 – ENTIRE AGREEMENT
+        </p>
         <p>
           The failure of us to exercise or enforce any right or provision of
           these Terms of Service shall not constitute a waiver of such right or
@@ -368,15 +362,13 @@ export default function Page(props: { data: string }) {
           these Terms of Service shall not be construed against the drafting
           party.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 19 – GOVERNING LAW</p>
+        <p className="font-medium uppercase pt-6">SECTION 19 – GOVERNING LAW</p>
         <p>
           These Terms of Service and any separate agreements whereby we provide
           you Services shall be governed by and construed in accordance with the
           laws of Tunisia.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 20 – CHANGES TO TERMS OF SERVICE
         </p>
         <p>
@@ -389,8 +381,7 @@ export default function Page(props: { data: string }) {
           changes to these Terms of Service constitutes acceptance of those
           changes.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 21 – CONTACT INFORMATION
         </p>
         <p>Questions about the Terms of Service should be sent to us.</p>

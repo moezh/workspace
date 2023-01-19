@@ -1,6 +1,23 @@
+import { GetStaticProps } from "next";
+import { readFileSync } from "fs";
+import jwt from "jsonwebtoken";
 import Head from "next/head";
 
-export default function Page(props: { data: string }) {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const password = readFileSync("/run/secrets/backend-password", {
+    encoding: "utf8",
+  });
+  const result = await fetch("http://backend:3001/api/home/config", {
+    headers: {
+      Authorization: `Bearer ${jwt.sign("admin", password)}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const resultData = await result.json();
+  return { props: { data: resultData } };
+};
+
+export default function Page(props: { data: any }) {
   return (
     <>
       <Head>
@@ -11,31 +28,27 @@ export default function Page(props: { data: string }) {
       </h1>
       <div className="w-full pt-8">
         <p>
-          Are you seeking professional assistance with rapid prototyping,
-          application development, or digital product strategy? I am here to
-          offer my expertise. I am available to communicate with you regarding
-          any projects, ideas, or questions you may have. Please do not hesitate
-          to reach out to me. You may contact me through email, message me on
-          WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with
-          me by clicking the buttons below. Rest assured that I will respond
-          promptly to your inquiries. Thank you for considering my services.
+          I am available to communicate with you regarding any projects, ideas,
+          or questions you may have. Please do not hesitate to reach out to me.
+          You may contact me through email, message me on WhatsApp, connect with
+          me on LinkedIn or schedule a Zoom meeting with me, by clicking the
+          buttons below:
         </p>
-        <br />
-        <div className="w-full flex flex-row items-center justify-center">
-          <div className="w-1/4 flex flex-col items-center justify-center">
-            <a target="_blank" href="mailto:moez.hachicha@icloud.com">
+        <div className="w-full flex flex-row flex-wrap items-center justify-center pt-8">
+          <div className="w-1/4 flex flex-col items-center justify-start mb-6">
+            <a target="_blank" href={`mailto:${props.data.contact_email}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
                 viewBox="0 0 16 16"
-                className="w-10 h-10 mx-auto"
+                className="w-10 h-10"
               >
                 <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
               </svg>
               <div>Email</div>
             </a>
           </div>
-          <div className="w-1/4 flex flex-col items-center justify-center">
+          <div className="w-1/4 flex flex-col items-center justify-start mb-6">
             <a target="_blank" href="https://wa.me/21655334476">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +61,7 @@ export default function Page(props: { data: string }) {
               <div>WhatApp</div>
             </a>
           </div>
-          <div className="w-1/4 flex flex-col items-center justify-center">
+          <div className="w-1/4 flex flex-col items-center justify-start mb-6">
             <a
               target="_blank"
               href="https://www.linkedin.com/in/moez-hachicha/"
@@ -64,7 +77,7 @@ export default function Page(props: { data: string }) {
               <div>LinkedIn</div>
             </a>
           </div>
-          <div className="w-1/4 flex flex-col items-center justify-center">
+          <div className="w-1/4 flex flex-col items-center justify-start mb-6">
             <a target="_blank" href="https://calendly.com/moezh/30min">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +92,6 @@ export default function Page(props: { data: string }) {
             </a>
           </div>
         </div>
-        <br />
       </div>
     </>
   );

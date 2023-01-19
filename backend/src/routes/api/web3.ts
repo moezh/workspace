@@ -2,9 +2,9 @@ import { Router } from "express";
 const router = Router();
 
 import { getAuth } from "../../middlewares/auth";
-import { getInfo } from "../../controllers/info";
+import { getConfig } from "../../controllers/web3";
 
-router.get("/", getAuth, getInfo);
+router.get("/config", getAuth, getConfig);
 
 router.get("*", (req, res) => {
   res.status(404).json({ code: 404, description: "Not Found" });

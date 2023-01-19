@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Page(props: { data: string }) {
+export default function Page() {
   return (
     <>
       <Head>
@@ -23,8 +23,7 @@ export default function Page(props: { data: string }) {
           applicable): With your permission, we may send you emails about our
           store, new products and other updates.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 2 – CONSENT</p>
+        <p className="font-medium uppercase pt-6">SECTION 2 – CONSENT</p>
         <p>
           How do you get my consent? When you provide us with personal
           information to complete a transaction, verify your credit card, place
@@ -40,20 +39,17 @@ export default function Page(props: { data: string }) {
           continued collection, use or disclosure of your information, at
           anytime, by contacting us
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 3 – DISCLOSURE</p>
+        <p className="font-medium uppercase pt-6">SECTION 3 – DISCLOSURE</p>
         <p>
           We may disclose your personal information if we are required by law to
           do so or if you violate our Terms of Service.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 4 – AFFILIATES</p>
+        <p className="font-medium uppercase pt-6">SECTION 4 – AFFILIATES</p>
         <p>
           We are a participant in affiliate advertising programs designed to
           provide a means for us to earn fees by linking to affiliated sites.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 5 – THIRD-PARTY SERVICES
         </p>
         <p>
@@ -85,8 +81,7 @@ export default function Page(props: { data: string }) {
           Site. We are not responsible for the privacy practices of other sites
           and encourage you to read their privacy statements.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 6 – SECURITY</p>
+        <p className="font-medium uppercase pt-6">SECTION 6 – SECURITY</p>
         <p>
           To protect your personal information, we take reasonable precautions
           and follow industry best practices to make sure it is not
@@ -98,8 +93,7 @@ export default function Page(props: { data: string }) {
           we follow all PCI-DSS requirements and implement additional generally
           accepted industry standards.
         </p>
-        <br />
-        <p className="font-medium uppercase">SECTION 7 – AGE OF CONSENT</p>
+        <p className="font-medium uppercase pt-6">SECTION 7 – AGE OF CONSENT</p>
         <p>
           By using this Site, you represent that you are at least the age of
           majority in your state or province of residence, or that you are the
@@ -107,8 +101,7 @@ export default function Page(props: { data: string }) {
           given us your consent to allow any of your minor dependents to use
           this Site.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           SECTION 8 – CHANGES TO THIS PRIVACY POLICY
         </p>
         <p>
@@ -122,8 +115,7 @@ export default function Page(props: { data: string }) {
           your information may be transferred to the new owners so that we may
           continue to sell products to you.
         </p>
-        <br />
-        <p className="font-medium uppercase">
+        <p className="font-medium uppercase pt-6">
           QUESTIONS AND CONTACT INFORMATION
         </p>
         <p>

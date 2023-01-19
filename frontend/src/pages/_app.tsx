@@ -1,7 +1,8 @@
 import "../styles/global.css";
+import type { AppProps } from "next/app";
+
 import { ThemeProvider } from "next-themes";
 import Layout from "../components/Layout";
-import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
