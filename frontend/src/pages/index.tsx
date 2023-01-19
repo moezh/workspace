@@ -99,7 +99,7 @@ export default function Page() {
           I am always keeping up with the latest developments in the field to
           ensure that I am using the most appropriate technology for each
           project. My expertise includes proficiency in a wide range of
-          technologies, including those listed below:
+          technologies, including but not limited to those listed below:
         </p>
         <p className="font-medium w-full pt-4 text-center">Front-end:</p>
         <div className="w-full flex flex-row flex-wrap items-center justify-center pt-4">
@@ -363,6 +363,7 @@ export default function Page() {
                   Blog
                 </div>
               </div>
+              <p className="font-light text-center">https://blog.com6.cc</p>
             </Link>
             <p className="pt-2 ">
               A platform where I share my knowledge and insights on various
@@ -392,6 +393,7 @@ export default function Page() {
                   Store
                 </div>
               </div>
+              <p className="font-light text-center">https://store.com6.cc</p>
             </Link>
             <p className="pt-2 ">
               An affiliate store where I curate and feature a selection of
@@ -423,6 +425,7 @@ export default function Page() {
                   Web3
                 </div>
               </div>
+              <p className="font-light text-center">https://web3.com6.cc</p>
             </Link>
             <p className="pt-2 ">
               This side project showcases my ability to stay current with the
@@ -453,6 +456,7 @@ export default function Page() {
                   Workout
                 </div>
               </div>
+              <p className="font-light text-center">https://workout.com6.cc</p>
             </Link>
             <p className="pt-2">
               A mobile and web application that showcases my proficiency in
