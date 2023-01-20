@@ -119,73 +119,93 @@ export default function Page(props: { data: any }) {
           {props.data.skill_group1_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
-          {props.data.skill_group1_summary.split(",").map((skill: string) => (
-            <div className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4">
-              <Icons name={skill} />
-              <div className="pt-1">{skill}</div>
-            </div>
-          ))}
+          {props.data.skill_group1_summary
+            .split(",")
+            .map((skill: string, index: number) => (
+              <div
+                key={index}
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+              >
+                <Icons name={skill} />
+                <div className="pt-1">{skill}</div>
+              </div>
+            ))}
         </div>
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group2_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
-          {props.data.skill_group2_summary.split(",").map((skill: string) => (
-            <div className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4">
-              <Icons name={skill} />
-              <div className="pt-1">{skill}</div>
-            </div>
-          ))}
+          {props.data.skill_group2_summary
+            .split(",")
+            .map((skill: string, index: number) => (
+              <div
+                key={index}
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+              >
+                <Icons name={skill} />
+                <div className="pt-1">{skill}</div>
+              </div>
+            ))}
         </div>
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group3_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
-          {props.data.skill_group3_summary.split(",").map((skill: string) => (
-            <div className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4">
-              <Icons name={skill} />
-              <div className="pt-1">{skill}</div>
-            </div>
-          ))}
+          {props.data.skill_group3_summary
+            .split(",")
+            .map((skill: string, index: number) => (
+              <div
+                key={index}
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+              >
+                <Icons name={skill} />
+                <div className="pt-1">{skill}</div>
+              </div>
+            ))}
         </div>
         <p className="font-medium uppercase pt-8 text-center">
           {props.data.projects_title}
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-2">
-          {props.data.projects.split(",").map((project: string) => (
-            <div className="w-1/2 flex flex-col items-center justify-start p-4">
-              <Link href={`https://${project}.${props.data.domain}`}>
-                <div className="flex flex-row items-start justify-start">
-                  <div className="block dark:hidden">
-                    <Image
-                      src={props.data.logo_black}
-                      alt="Logo Black"
-                      width={870}
-                      height={372}
-                      className="h-[35px] w-auto"
-                      priority
-                    />
+          {props.data.projects
+            .split(",")
+            .map((project: string, index: number) => (
+              <div
+                key={index}
+                className="w-1/2 flex flex-col items-center justify-start p-4"
+              >
+                <Link href={`https://${project}.${props.data.domain}`}>
+                  <div className="flex flex-row items-start justify-start">
+                    <div className="block dark:hidden">
+                      <Image
+                        src={props.data.logo_black}
+                        alt="Logo Black"
+                        width={870}
+                        height={372}
+                        className="h-[35px] w-auto"
+                        priority
+                      />
+                    </div>
+                    <div className="hidden dark:block">
+                      <Image
+                        src={props.data.logo_white}
+                        alt="Logo White"
+                        width={870}
+                        height={372}
+                        className="h-[35px] w-auto"
+                        priority
+                      />
+                    </div>
+                    <div className="text-xl font-semibold tracking-wider pt-[13px] ml-2 capitalize">
+                      {project}
+                    </div>
                   </div>
-                  <div className="hidden dark:block">
-                    <Image
-                      src={props.data.logo_white}
-                      alt="Logo White"
-                      width={870}
-                      height={372}
-                      className="h-[35px] w-auto"
-                      priority
-                    />
-                  </div>
-                  <div className="text-xl font-semibold tracking-wider pt-[13px] ml-2 capitalize">
-                    {project}
-                  </div>
-                </div>
-                <p className="font-light text-center">{`${project}.${props.data.domain}`}</p>
-              </Link>
-              <p className="pt-2">{props.data[`${project}_summary`]}</p>
-            </div>
-          ))}
+                  <p className="font-light text-center">{`${project}.${props.data.domain}`}</p>
+                </Link>
+                <p className="pt-2">{props.data[`${project}_summary`]}</p>
+              </div>
+            ))}
         </div>
       </div>
       <div className="pt-6">
