@@ -6,4 +6,6 @@ CREATE TABLE blog_config (
 INSERT INTO blog_config (name, value)
 VALUES 
 ('domain','com6.cc'),
-('subdomain','blog');
+('subdomain','blog'),
+('logo_black','/logo_black.png'),
+('logo_white','/logo_white.png');

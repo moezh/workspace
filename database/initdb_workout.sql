@@ -6,4 +6,6 @@ CREATE TABLE workout_config (
 INSERT INTO workout_config (name, value)
 VALUES 
 ('domain','com6.cc'),
-('subdomain','workout');
+('subdomain','workout'),
+('logo_black','/logo_black.png'),
+('logo_white','/logo_white.png');

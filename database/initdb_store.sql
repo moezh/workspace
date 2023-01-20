@@ -6,4 +6,6 @@ CREATE TABLE store_config (
 INSERT INTO store_config (name, value)
 VALUES 
 ('domain','com6.cc'),
-('subdomain','store');
+('subdomain','store'),
+('logo_black','/logo_black.png'),
+('logo_white','/logo_white.png');

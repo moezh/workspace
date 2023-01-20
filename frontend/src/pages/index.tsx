@@ -1,16 +1,19 @@
 import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "../components/Head";
+import Header from "../components/Header";
+import Github from "../components/Github";
+import Footer from "../components/Footer";
 import Icons from "../components/Icons";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
-  const result = await fetch("http://backend:3001/api/home/config", {
+  const result = await fetch("http://backend:3001/api/home/", {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
       "Content-Type": "application/json",
@@ -23,14 +26,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head>
-        <title>{props.data.title}</title>
-      </Head>
-      <h1 className="font-medium text-xl uppercase font-serif">
-        {props.data.title}
-      </h1>
-      <div className="w-full pt-8">
-        <div className="flex flex-row items-center justify-center">
+      <Head title={props.data.title} />
+      <Header
+        logo_black={props.data.logo_black}
+        logo_white={props.data.logo_white}
+      />
+      <div className="w-full">
+        <h1 className="font-medium text-xl uppercase font-serif text-center">
+          {props.data.title}
+        </h1>
+        <div className="flex flex-row items-center justify-center pt-8">
           <div className="w-32 ml-4 mr-4">
             <Image
               src={props.data.profile_photo_url}
@@ -183,6 +188,10 @@ export default function Page(props: { data: any }) {
           ))}
         </div>
       </div>
+      <div className="pt-6">
+        <Github github_url={props.data.github_url} />
+      </div>
+      <Footer />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { getSubdomain } from "../utils/utils";
 
 const CurrentProject = () => {
   const [mounted, setMounted] = useState(false);
@@ -7,8 +6,13 @@ const CurrentProject = () => {
     setMounted(true);
   }, []);
   if (!mounted) return null;
-  const currentProject = getSubdomain(window.location.hostname);
-  return <>{currentProject}</>;
+  const hostname = window.location.hostname;
+  const domainparts = hostname.split(".");
+  const subdomain = domainparts
+    .slice(0, domainparts.length - 2)
+    .reverse()
+    .join(".");
+  return <>{subdomain}</>;
 };
 
 export default CurrentProject;
