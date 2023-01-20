@@ -9,8 +9,6 @@ VALUES
 ('subdomain',''),
 ('github_url','https://github.com/moezh/workspace'),
 ('title','My Personal Workspace'),
-('logo_black','/logo_black.png'),
-('logo_white','/logo_white.png'),
 ('profile_photo_url','/profile_picture.png'),
 ('profile_name','Moez Hachicha'),
 ('profile_job_title','Senior Software Engineer & Tech Lead'),

@@ -23,10 +23,7 @@ export default function Page(props: { data: any }) {
   return (
     <>
       <Head title="MH's Web3" />
-      <Header
-        logo_black={props.data.logo_black}
-        logo_white={props.data.logo_white}
-      />
+      <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           MH's Web3

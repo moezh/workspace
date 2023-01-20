@@ -8,6 +8,8 @@ import Header from "../components/Header";
 import Github from "../components/Github";
 import Footer from "../components/Footer";
 import Icons from "../components/Icons";
+import logoBlack from "../../public/logo_black.png";
+import logoWhite from "../../public/logo_white.png";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -27,10 +29,7 @@ export default function Page(props: { data: any }) {
   return (
     <>
       <Head title={props.data.title} />
-      <Header
-        logo_black={props.data.logo_black}
-        logo_white={props.data.logo_white}
-      />
+      <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           {props.data.title}
@@ -179,7 +178,7 @@ export default function Page(props: { data: any }) {
                   <div className="flex flex-row items-start justify-start">
                     <div className="block dark:hidden">
                       <Image
-                        src={props.data.logo_black}
+                        src={logoBlack}
                         alt="Logo Black"
                         width={870}
                         height={372}
@@ -189,7 +188,7 @@ export default function Page(props: { data: any }) {
                     </div>
                     <div className="hidden dark:block">
                       <Image
-                        src={props.data.logo_white}
+                        src={logoWhite}
                         alt="Logo White"
                         width={870}
                         height={372}

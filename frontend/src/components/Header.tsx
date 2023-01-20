@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import logoBlack from "../../public/logo_black.png";
+import logoWhite from "../../public/logo_white.png";
 import CurrentProject from "./CurrentProject";
 import DarkModeToggler from "./DarkModeToggler";
 
-const Header = (props: { logo_black: string; logo_white: string }) => {
+const Header = () => {
   return (
     <header className="flex flex-row items-center justify-center text-center pt-4 pb-4 mb-2">
       <div className="w-1/2 flex flex-col items-start justify-center">
@@ -11,7 +13,7 @@ const Header = (props: { logo_black: string; logo_white: string }) => {
           <div className="flex flex-row items-start justify-center">
             <div className="block dark:hidden">
               <Image
-                src={props.logo_black}
+                src={logoBlack}
                 alt="Logo Black"
                 width={870}
                 height={372}
@@ -21,7 +23,7 @@ const Header = (props: { logo_black: string; logo_white: string }) => {
             </div>
             <div className="hidden dark:block">
               <Image
-                src={props.logo_white}
+                src={logoWhite}
                 alt="Logo White"
                 width={870}
                 height={372}
