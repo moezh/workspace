@@ -5,11 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from "../components/Head";
 import Header from "../components/Header";
+import Icons from "../components/Icons";
+import Logo from "../components/Logo";
 import Github from "../components/Github";
 import Footer from "../components/Footer";
-import Icons from "../components/Icons";
-import logoBlack from "../../public/logo_black.png";
-import logoWhite from "../../public/logo_white.png";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -175,31 +174,7 @@ export default function Page(props: { data: any }) {
                 className="w-1/2 flex flex-col items-center justify-start p-4"
               >
                 <Link href={`https://${project}.${props.data.domain}`}>
-                  <div className="flex flex-row items-start justify-start">
-                    <div className="block dark:hidden">
-                      <Image
-                        src={logoBlack}
-                        alt="Logo Black"
-                        width={870}
-                        height={372}
-                        className="h-[35px] w-auto"
-                        priority
-                      />
-                    </div>
-                    <div className="hidden dark:block">
-                      <Image
-                        src={logoWhite}
-                        alt="Logo White"
-                        width={870}
-                        height={372}
-                        className="h-[35px] w-auto"
-                        priority
-                      />
-                    </div>
-                    <div className="text-xl font-semibold tracking-wider pt-[13px] ml-2 capitalize">
-                      {project}
-                    </div>
-                  </div>
+                  <Logo project={project} />
                   <p className="font-light text-center">{`${project}.${props.data.domain}`}</p>
                 </Link>
                 <p className="pt-2">{props.data[`${project}_summary`]}</p>

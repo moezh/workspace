@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const CurrentProject = () => {
+const Subdomain = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -15,4 +15,4 @@ const CurrentProject = () => {
   return <>{subdomain}</>;
 };
 
-export default CurrentProject;
+export default Subdomain;

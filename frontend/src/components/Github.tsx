@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const Github = (props: { github_url: string }) => {
   return (
     <div className="flex flex-col items-center justify-center">
