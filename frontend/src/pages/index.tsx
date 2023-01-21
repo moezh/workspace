@@ -109,9 +109,7 @@ export default function Page(props: { data: any }) {
           </div>
         </div>
         <p className="pt-4">{props.data.profile_summary}</p>
-        <p className="font-medium uppercase pt-8 text-center">
-          {props.data.skills_title}
-        </p>
+        c
         <p className="pt-4">{props.data.skills_summary}</p>
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group1_title}:

@@ -1,9 +1,9 @@
 import { GetServerSideProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
-import Head from "../../../components/Head";
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
+import Head from "../../components/Head";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -17,19 +17,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
+  if (resultData.code === 404)
+    return {
+      notFound: true,
+    };
   return { props: { data: resultData } };
 };
 
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title="MH's Blog Post" />
+      <Head title={props.data.title} />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
-          MH's Blog Post
+          {props.data.title}
         </h1>
-        <div className="pt-8">Coming Soon</div>
+        <div className="w-full flex flex-row flex-wrap items-start justify-center">
+        </div>
+        <div className="pt-8">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: props.data.content_html,
+            }}
+          />
+        </div>
       </div>
       <Footer />
     </>
