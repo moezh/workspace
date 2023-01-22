@@ -22,7 +22,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title="Contact" />
+      <Head
+        title="Contact"
+        description="I am available to communicate with you regarding any projects,
+            ideas, or questions you may have. Please do not hesitate to reach
+            out to me."
+      />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">

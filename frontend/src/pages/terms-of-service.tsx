@@ -22,7 +22,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title="Terms of Service" />
+      <Head
+        title="Terms of Service"
+        description="This page outlines the terms of service, providing you with critical information pertaining to your legal rights."
+      />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">

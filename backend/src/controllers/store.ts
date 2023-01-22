@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export const getBase = async (req: Request, res: Response) => {
+export const getConfig = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   let sql: string = `SELECT * FROM store_config`;
   let values: string[] = [];

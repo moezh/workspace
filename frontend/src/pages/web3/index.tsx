@@ -26,9 +26,9 @@ export default function Page(props: { data: any }) {
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
-          MH's Web3
+          Coming Soon
         </h1>
-        <div className="pt-8">Coming Soon</div>
+        <p className="pt-2 text-center pb-6">Under Construction!</p>
       </div>
       <Footer />
     </>

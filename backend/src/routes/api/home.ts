@@ -3,13 +3,13 @@ const router = Router();
 
 import { getAuth } from "../../middlewares/auth";
 import {
-  getBase,
+  getConfig,
   getContact,
   getPrivacy,
   getTos,
 } from "../../controllers/home";
 
-router.get("/", getAuth, getBase);
+router.get("/", getAuth, getConfig);
 router.get("/contact", getAuth, getContact);
 router.get("/privacy", getAuth, getPrivacy);
 router.get("/tos", getAuth, getTos);

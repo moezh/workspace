@@ -1,9 +1,16 @@
 import NextHead from "next/head";
 
-const Head = (props: { title: string }) => {
+const Head = (props: { title: string; description?: string }) => {
   return (
     <NextHead>
       <title>{props.title}</title>
+      <meta property="og:title" content={props.title} />
+      {props.description === undefined ? null : (
+        <>
+          <meta name="description" content={props.description} key="desc" />
+          <meta property="og:description" content={props.description} />
+        </>
+      )}
       <meta content="width=device-width, initial-scale=1" name="viewport" />
       <link rel="icon" href="/favicon.ico" />
       <link

@@ -22,7 +22,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title="Privacy Policy" />
+      <Head
+        title="Privacy Policy"
+        description="I take the protection of our users' personal information seriously and am dedicated to safeguarding their privacy in compliance with this Privacy Policy."
+      />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">

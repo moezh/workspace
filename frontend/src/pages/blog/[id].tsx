@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title={props.data.title} />
+      <Head title={props.data.title} description={props.data.summary} />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">

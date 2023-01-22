@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export const getBase = async (req: Request, res: Response) => {
+export const getConfig = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   let sql: string = `SELECT * FROM config`;
   let values: string[] = [];
@@ -24,7 +24,6 @@ export const getContact = async (req: Request, res: Response) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      console.log("ok");
       const data = new Map(
         result.rows.map(({ name, value }: any) => [name, value])
       );

@@ -27,7 +27,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title={`${props.data.title} | ${props.data.profile_name}`} />
+      <Head
+        title={`${props.data.title} | ${props.data.profile_name}`}
+        description={props.data.profile_summary}
+      />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
