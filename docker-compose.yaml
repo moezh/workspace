@@ -44,7 +44,6 @@ services:
       - backend-password
   database:
     container_name: database
-    restart: on-failure
     build:
       context: ./database
     environment:
