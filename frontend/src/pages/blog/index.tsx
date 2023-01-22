@@ -38,7 +38,7 @@ export default function Page(props: { config: any; posts: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           MH's Blog
         </h1>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center ">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
           <button
             onClick={() => setCurrentTag("")}
             className={
