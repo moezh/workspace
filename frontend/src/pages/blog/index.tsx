@@ -42,7 +42,7 @@ export default function Page(props: { config: any; posts: any }) {
           <button
             onClick={() => setCurrentTag("")}
             className={
-              "" === currentTag ? "p-2 mr-2 font-medium" : "p-2 mr-2 font-light"
+              "" === currentTag ? "p-1 mr-2 font-medium" : "p-1 mr-2 font-light"
             }
           >
             #all
@@ -57,8 +57,8 @@ export default function Page(props: { config: any; posts: any }) {
               }
               className={
                 tag === currentTag
-                  ? "p-2 mr-2 font-medium"
-                  : "p-2 mr-2 font-light"
+                  ? "p-1 mr-2 font-medium"
+                  : "p-1 mr-2 font-light"
               }
             >
               #{tag}
