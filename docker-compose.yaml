@@ -3,6 +3,7 @@ name: "project"
 services:
   frontend:
     container_name: frontend
+    restart: on-failure
     depends_on:
       - backend
     build:
@@ -16,6 +17,7 @@ services:
       - backend-password
   worker:
     container_name: worker
+    restart: on-failure
     depends_on:
       - database
     build:
@@ -27,6 +29,7 @@ services:
       - database-password
   backend:
     container_name: backend
+    restart: on-failure
     depends_on:
       - database
     build:
@@ -41,6 +44,7 @@ services:
       - backend-password
   database:
     container_name: database
+    restart: on-failure
     build:
       context: ./database
     environment:

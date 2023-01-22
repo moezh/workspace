@@ -18,10 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  if (resultData.code === 404)
-    return {
-      notFound: true,
-    };
+  if (resultData.code === 404) return { notFound: true };
   return { props: { data: resultData } };
 };
 
