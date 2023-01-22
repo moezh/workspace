@@ -33,9 +33,12 @@ export default function Page(props: { data: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           {props.data.title}
         </h1>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
+          {props.data.tags.split(",").map((tag: string) => (
+            <span className="font-light mr-2">#{tag}</span>
+          ))}
         </div>
-        <div className="pt-8">
+        <div className="pt-6">
           <div
             dangerouslySetInnerHTML={{
               __html: props.data.content_html,

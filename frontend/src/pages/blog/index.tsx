@@ -21,6 +21,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export default function Page(props: { data: any }) {
+  console.log(props);
   return (
     <>
       <Head title="MH's Blog" />
@@ -29,18 +30,30 @@ export default function Page(props: { data: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           MH's Blog
         </h1>
-        <div className="flex flex-row flex-wrap items-start justify-start pt-8">
+        <div className="flex flex-row flex-wrap items-start justify-start pt-6">
           {props.data.map(
             (
-              post: { id: string; title: string; summary: string },
+              post: {
+                id: string;
+                title: string;
+                tags: string;
+                summary: string;
+              },
               index: number
             ) => (
               <div
                 key={index}
-                className="w-1/3 flex flex-col items-center justify-start p-4 mb-4"
+                className="sm:w-full md:w-1/2 lg:w-1/3 flex flex-col items-start justify-start p-2 mb-4"
               >
                 <Link href={`/${post.id}`}>
                   <p className="font-medium">{post.title}</p>
+                </Link>
+                <div className="w-full flex flex-row flex-wrap items-start justify-start pt-1">
+                  {post.tags.split(",").map((tag) => (
+                    <span className="font-light mr-2">#{tag}</span>
+                  ))}
+                </div>
+                <Link href={`/${post.id}`}>
                   <p className="pt-1">{post.summary}</p>
                 </Link>
               </div>

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 export const getPosts = async (req: Request, res: Response) => {
   const db = req.app.get("db");
-  let sql: string = `SELECT id, title, summary FROM blog_posts`;
+  let sql: string = `SELECT id, title, tags, summary FROM blog_posts`;
   let values: string[] = [];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {

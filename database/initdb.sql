@@ -30,7 +30,7 @@ VALUES
 ('projects_title','Personal Side Projects'),
 ('projects_summary','Side projects allow me to experiment with new technologies and explore new ideas. The projects I am currently developing under this workspace are:'),
 ('projects','blog,store,web3,workout'),
-('blog_summary','A platform where I share my knowledge and insights on various software engineering topics.'),
+('blog_summary','A platform where I share my knowledge and insights on technologies used in this workspace.'),
 ('store_summary','An affiliate store where I curate and feature a selection of products related to software engineering and technology.'),
 ('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
 ('workout_summary','A mobile and web application that showcases my proficiency in creating high-performance applications using the latest technologies.');

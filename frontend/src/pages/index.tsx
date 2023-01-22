@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { data: any }) {
   return (
     <>
-      <Head title={props.data.title} />
+      <Head title={`${props.data.title} | ${props.data.profile_name}`} />
       <Header />
       <div className="w-full">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
@@ -109,7 +109,9 @@ export default function Page(props: { data: any }) {
           </div>
         </div>
         <p className="pt-4">{props.data.profile_summary}</p>
-        c
+        <p className="font-medium uppercase pt-8 text-center">
+          {props.data.skills_title}
+        </p>
         <p className="pt-4">{props.data.skills_summary}</p>
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group1_title}:
