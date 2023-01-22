@@ -35,8 +35,10 @@ export default function Page(props: { data: any }) {
           {props.data.title}
         </h1>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
-          {props.data.tags.split(",").map((tag: string) => (
-            <span className="font-light mr-2">#{tag}</span>
+          {props.data.tags.split(",").map((tag: string, index: number) => (
+            <span key={index} className="font-light mr-2">
+              #{tag}
+            </span>
           ))}
         </div>
         <div className="pt-6">

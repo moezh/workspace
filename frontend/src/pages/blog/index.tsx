@@ -74,8 +74,9 @@ export default function Page(props: { config: any; posts: any }) {
                     <p className="font-medium">{post.title}</p>
                   </Link>
                   <div className="w-full flex flex-row flex-wrap items-start justify-start pt-1">
-                    {post.tags.split(",").map((tag) => (
+                    {post.tags.split(",").map((tag: string, index: number) => (
                       <button
+                        key={index}
                         onClick={() => setCurrentTag(tag)}
                         className="font-light mr-2"
                       >
