@@ -65,7 +65,7 @@ export default function Page(props: { config: any; posts: any }) {
             </button>
           ))}
         </div>
-        <div className="flex flex-row flex-wrap items-start justify-start pt-8">
+        <div className="flex flex-row flex-wrap items-start justify-start pt-6">
           {props.posts
             .filter((post: { tags: string }) => post.tags.includes(currentTag))
             .map(
