@@ -5,5 +5,4 @@ CREATE TABLE store_config (
 
 INSERT INTO store_config (name, value)
 VALUES 
-('domain','com6.cc'),
 ('subdomain','store');

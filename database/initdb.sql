@@ -5,7 +5,6 @@ CREATE TABLE config (
 
 INSERT INTO config (name, value)
 VALUES 
-('domain','com6.cc'),
 ('subdomain',''),
 ('github_url','https://github.com/moezh/workspace'),
 ('title','My Personal Workspace'),

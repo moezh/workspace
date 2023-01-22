@@ -5,7 +5,6 @@ CREATE TABLE blog_config (
 
 INSERT INTO blog_config (name, value)
 VALUES 
-('domain','com6.cc'),
 ('subdomain','blog'),
 ('tags','docker,nodejs,expressjs,nextjs,tailwindcss,typescript,postgresql');
 

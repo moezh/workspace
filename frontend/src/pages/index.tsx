@@ -9,6 +9,7 @@ import Icons from "../components/Icons";
 import Logo from "../components/Logo";
 import Github from "../components/Github";
 import Footer from "../components/Footer";
+import ProjectLink from "../components/ProjectLink";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -176,11 +177,9 @@ export default function Page(props: { data: any }) {
                 key={index}
                 className="w-1/2 flex flex-col items-center justify-start p-4"
               >
-                <Link href={`https://${project}.${props.data.domain}`}>
-                  <Logo project={project} />
-                  <p className="font-light text-center">{`${project}.${props.data.domain}`}</p>
-                </Link>
-                <p className="pt-2">{props.data[`${project}_summary`]}</p>
+                <Logo project={project} />
+                <ProjectLink project={project} />
+                <p className="pt-1">{props.data[`${project}_summary`]}</p>
               </div>
             ))}
         </div>

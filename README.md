@@ -35,7 +35,9 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 - The worker (NodeJs/TypeScript) runs on an internal port.
 
-- The database (PostgreSQL) runs on port 5432. The Admin username is 'postgres' and the password is stored in the file database-password.txt (root directory)
+- The database (PostgreSQL) runs on port 5432. The Admin username is 'postgres' and the password is stored in the file database-password.txt (root directory).
+
+- For development testing, access the application in the browser by using 'localtest.me' instead of the typical 'localhost'.
 
 ## Unit Testing
 

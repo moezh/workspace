@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logoBlack from "../../public/logo_black.png";
 import logoWhite from "../../public/logo_white.png";
-import Subdomain from "./Subdomain";
+import CurrentProject from "./CurrentProject";
 
 const Logo = (props: { project?: string }) => {
   return (
@@ -27,7 +27,7 @@ const Logo = (props: { project?: string }) => {
         />
       </div>
       <div className="text-xl font-semibold tracking-wider pt-[13px] ml-2 capitalize">
-        {props.project !== undefined ? props.project : <Subdomain />}
+        {props.project !== undefined ? props.project : <CurrentProject />}
       </div>
     </div>
   );

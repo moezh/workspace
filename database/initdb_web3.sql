@@ -5,5 +5,4 @@ CREATE TABLE web3_config (
 
 INSERT INTO web3_config (name, value)
 VALUES 
-('domain','com6.cc'),
 ('subdomain','web3');
