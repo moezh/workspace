@@ -41,6 +41,7 @@ export default function Page(props: { config: any; posts: any }) {
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
           {props.config.tags.split(",").map((tag: string, index: number) => (
             <button
+              key={index}
               onClick={
                 tag === currentTag
                   ? () => setCurrentTag("")

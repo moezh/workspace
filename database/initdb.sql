@@ -31,6 +31,6 @@ VALUES
 ('projects_summary','Side projects allow me to experiment with new technologies and explore new ideas. The projects I am currently developing under this workspace are:'),
 ('projects','blog,store,web3,workout'),
 ('blog_summary','A platform where I share my knowledge and insights on technologies used in this workspace, providing valuable information and resources.'),
-('store_summary','A curated affiliate store featuring a selection of products relevant to the different projects within this workspace.'),
+('store_summary','A curated affiliate store featuring a selection of products directly relevant to the various projects within this workspace.'),
 ('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
 ('workout_summary','A mobile and web application that showcases my proficiency in creating high-performance applications using the latest technologies.');
