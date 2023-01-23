@@ -169,13 +169,15 @@ export default function Page(props: { data: any }) {
           {props.data.projects_title}
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-2">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.projects
             .split(",")
             .map((project: string, index: number) => (
               <div
                 key={index}
-                className="w-1/2 flex flex-col items-center justify-start p-4"
+                className={`w-1/2 flex flex-col items-center justify-start pb-6 ${
+                  index % 2 === 0 ? "pr-2" : "pl-2"
+                }`}
               >
                 <Logo project={project} />
                 <ProjectLink project={project} />
