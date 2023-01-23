@@ -31,6 +31,6 @@ VALUES
 ('projects','blog,store,workout,web3'),
 ('projects_under_construction','workout,web3'),
 ('blog_summary','A platform where I share my knowledge and insights on technologies used in this workspace, providing valuable information and resources.'),
-('store_summary','A curated affiliate store featuring a selection of products and services relevant to the projects within this workspace.'),
+('store_summary','An automated affiliate store that features and curates a relevant selection of products and services for the projects within this workspace.'),
 ('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
 ('workout_summary','A mobile and web application that showcases my proficiency in creating high-performance applications using the latest technologies.');

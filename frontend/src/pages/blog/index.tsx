@@ -38,11 +38,11 @@ export default function Page(props: { config: any; posts: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           MH's Blog
         </h1>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center ">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
           <button
             onClick={() => setCurrentTag("")}
             className={
-              "" === currentTag ? "p-2 mr-2 font-medium" : "p-2 mr-2 font-light"
+              "" === currentTag ? "p-1 mr-2 font-medium" : "p-1 mr-2 font-light"
             }
           >
             #all
@@ -57,8 +57,8 @@ export default function Page(props: { config: any; posts: any }) {
               }
               className={
                 tag === currentTag
-                  ? "p-2 mr-2 font-medium"
-                  : "p-2 mr-2 font-light"
+                  ? "p-1 mr-2 font-medium"
+                  : "p-1 mr-2 font-light"
               }
             >
               #{tag}
