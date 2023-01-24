@@ -9,6 +9,7 @@ CREATE TABLE blog_config (
 INSERT INTO blog_config (name, value)
 VALUES 
 ('subdomain','blog'),
+('postsPerPage',6),
 ('tags','docker,typescript,nodejs,expressjs,nextjs,tailwindcss,postgresql');
 
 CREATE TABLE blog_posts (
