@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     const subdomain = domainparts
       .slice(0, domainparts.length - 2)
       .reverse()
-      .join(".");
+      .join("/");
     if (subdomain !== "") {
       const url = req.nextUrl;
       url.pathname = `/${subdomain}${url.pathname}`;
