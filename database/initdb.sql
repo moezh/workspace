@@ -1,3 +1,5 @@
+--DROP TABLE config;
+
 CREATE TABLE config (
     name VARCHAR(255) PRIMARY KEY NOT NULL,
     value TEXT NOT NULL

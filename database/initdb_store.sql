@@ -1,3 +1,5 @@
+--DROP TABLE store_config;
+
 CREATE TABLE store_config (
     name VARCHAR(255) PRIMARY KEY NOT NULL,
     value TEXT NOT NULL

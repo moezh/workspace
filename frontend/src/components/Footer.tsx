@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HomeLink from "./HomeLink";
 
 const Footer = () => {
   return (
@@ -10,7 +11,9 @@ const Footer = () => {
         <span className="ml-1 mr-1">|</span>
         <Link href="../terms-of-service">Terms of Service</Link>
       </div>
-      <div>Copyright © {new Date().getFullYear()} - All right reserved</div>
+      <div>
+        Copyright © {new Date().getFullYear()} <HomeLink /> - All right reserved
+      </div>
     </footer>
   );
 };

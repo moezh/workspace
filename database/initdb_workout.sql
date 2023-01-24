@@ -1,3 +1,5 @@
+--DROP TABLE workout_config;
+
 CREATE TABLE workout_config (
     name VARCHAR(255) PRIMARY KEY NOT NULL,
     value TEXT NOT NULL

@@ -1,7 +1,6 @@
 import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
-import Link from "next/link";
 import Image from "next/image";
 import Head from "../components/Head";
 import Header from "../components/Header";
