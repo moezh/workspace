@@ -31,18 +31,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Page(props: { config: any; posts: any }) {
   const [currentTag, setCurrentTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
   const filtredPosts = props.posts.filter((post: { tags: string }) =>
     post.tags.includes(currentTag)
   );
-
-  const postsPerPage = 6;
-  const totalPages = Math.ceil(filtredPosts.length / postsPerPage);
+  const totalPages = Math.ceil(filtredPosts.length / props.config.postsPerPage);
   const postsToDisplay = filtredPosts.slice(
-    (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
+    (currentPage - 1) * props.config.postsPerPage,
+    currentPage * props.config.postsPerPage
   );
-
   return (
     <>
       <Head title="MH's Blog" />
