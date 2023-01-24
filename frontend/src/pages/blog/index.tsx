@@ -120,7 +120,7 @@ export default function Page(props: { config: any; posts: any }) {
       </div>
       <div className="pt-6 font-light" hidden={totalPages > 1 ? false : true}>
         <ul className="flex flex-row items-start justify-center">
-          <li className="flex flex-col items-center justify-center mr-2">
+          <li className="flex flex-col items-center justify-center mr-2 w-6">
             <button
               onClick={() =>
                 setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)
@@ -145,13 +145,13 @@ export default function Page(props: { config: any; posts: any }) {
           <li className="mx-2">
             Page {currentPage} / {totalPages}
           </li>
-          <li className="flex flex-col items-center justify-center ml-2">
+          <li className="flex flex-col items-center justify-center ml-2  w-6">
             <button
-              onClick={() =>
+              onClick={() => {
                 setCurrentPage(
                   currentPage < totalPages ? currentPage + 1 : totalPages
-                )
-              }
+                );
+              }}
               hidden={currentPage < totalPages ? false : true}
             >
               <svg
