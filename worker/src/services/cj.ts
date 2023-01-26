@@ -31,25 +31,28 @@ export const getDatafeeds = async (
       const filePath = `${localPath}${file}`;
       const zip = new AdmZip(filePath);
       zip.extractAllTo(localPath, true);
+      fs.unlink(`${localPath}${file}`, (err) => {
+        console.log(err);
+      });
     }
   });
   await pool.query(
     "DROP TABLE IF EXISTS store_datafeeds; CREATE TABLE store_datafeeds (LIKE store_datafeeds_schema INCLUDING ALL);"
   );
-  fs.readdirSync(localPath).forEach(async (file) => {
+  fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "txt") {
       const lineReader = readLine.createInterface({
         input: require("fs").createReadStream(`${localPath}${file}`),
       });
       let header: string;
       let isHeader = true;
-      lineReader.on("line", async (line: String) => {
+      lineReader.on("line", (line: String) => {
         if (isHeader) {
           isHeader = false;
           header = line.toLowerCase();
         } else {
           const values = line.replaceAll("'", "''").replaceAll('"', "'");
-          await pool.query(
+          pool.query(
             `INSERT INTO store_datafeeds (${header}) VALUES (${values});`
           );
         }
