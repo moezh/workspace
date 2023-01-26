@@ -23,8 +23,8 @@ export const getDatafeeds = async (
     },
   });
   const remotePath = `/outgoing/productcatalog/${SubscriptionId}`;
-  //fs.rmSync(localPath, { recursive: true, force: true });
-  //await sftp.downloadDir(remotePath, localPath);
+  fs.rmSync(localPath, { recursive: true, force: true });
+  await sftp.downloadDir(remotePath, localPath);
   sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
@@ -39,24 +39,25 @@ export const getDatafeeds = async (
   await pool.query(
     "DROP TABLE IF EXISTS store_datafeeds; CREATE TABLE store_datafeeds (LIKE store_datafeeds_schema INCLUDING ALL);"
   );
-  fs.readdirSync(localPath).forEach((file) => {
+  fs.readdirSync(localPath).forEach(async (file) => {
     if (file.split(".").pop() === "txt") {
       const lineReader = readLine.createInterface({
         input: require("fs").createReadStream(`${localPath}${file}`),
+        crlfDelay: Infinity,
       });
-      let header: string;
+      let header: string = "";
       let isHeader = true;
-      lineReader.on("line", (line: String) => {
+      for await (const line of lineReader) {
         if (isHeader) {
           isHeader = false;
           header = line.toLowerCase();
         } else {
           const values = line.replaceAll("'", "''").replaceAll('"', "'");
-          pool.query(
+          await pool.query(
             `INSERT INTO store_datafeeds (${header}) VALUES (${values});`
           );
         }
-      });
+      }
     }
   });
 };
