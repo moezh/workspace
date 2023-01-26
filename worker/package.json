@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "export NODE_ENV=development && nodemon ./src/server.ts",
     "build": "tsc",
-    "prod": "export NODE_ENV=production && node ./build/server.js"
+    "prod": "export NODE_ENV=production && node --max-old-space-size=10240 ./build/server.js"
   },
   "dependencies": {
     "pg": "8.x",
