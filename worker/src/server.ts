@@ -1,15 +1,11 @@
-import { pool } from "./services/db";
+import { CronJob } from "cron";
+
+import everyHour from "./everyHour";
+import everyDay from "./everyDay";
 
 (async () => {
-  setInterval(async () => {
-    let sql: string = `SELECT CURRENT_TIMESTAMP`;
-    let values: string[] = [];
-    pool.query(sql, values, (err: any, result: { rows: any }) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result.rows);
-      }
-    });
-  }, 300000);
+  everyHour();
+  everyDay();
+  new CronJob("* * * * 0", everyHour, null, true);
+  new CronJob("* * * 0 0", everyDay, null, true);
 })();

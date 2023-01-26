@@ -27,6 +27,7 @@ services:
       - ./worker:/app
     secrets:
       - database-password
+      - cj-private-key
   backend:
     container_name: backend
     restart: on-failure
@@ -62,3 +63,5 @@ secrets:
     file: ./database-password.txt
   backend-password:
     file: ./backend-password.txt
+  cj-private-key:
+    file: ./cj-private-key.txt

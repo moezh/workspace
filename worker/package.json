@@ -8,11 +8,20 @@
     "prod": "export NODE_ENV=production && node ./build/server.js"
   },
   "dependencies": {
-    "pg": "8.x"
+    "pg": "8.x",
+    "cron": "2.x",
+    "ssh2-sftp-client": "9.x",
+    "adm-zip": "0.x"
   },
   "devDependencies": {
+    "@babel/core": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-typescript": "7.x",
     "@types/node": "18.x",
     "@types/pg": "8.x",
+    "@types/cron": "2.x",
+    "@types/ssh2-sftp-client": "9.x",
+    "@types/adm-zip": "0.x",
     "nodemon": "2.x",
     "ts-node": "10.x",
     "typescript": "4.x"

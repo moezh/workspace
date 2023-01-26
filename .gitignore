@@ -6,5 +6,7 @@ build
 cache
 yarn.lock
 .env
+datafeeds
 backend-password.txt
 database-password.txt
+cj-private-key.txt
