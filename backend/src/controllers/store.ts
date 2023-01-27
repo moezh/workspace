@@ -39,7 +39,12 @@ export const getProducts = async (req: Request, res: Response) => {
 export const getProduct = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   const id = req.params.id;
-  let sql: string = `SELECT * FROM blog_posts where id = $1`;
+  let sql: string = `
+  SELECT title, description, link, impression_url, image_link, additional_image_link, availability, price, sale_price, brand, condition, age_group, color, gender, size
+  FROM store_datafeeds
+  WHERE product_uid=$1
+  `;
+  console.log(id);
   let values: string[] = [id];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
