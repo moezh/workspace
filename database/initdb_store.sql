@@ -8,7 +8,8 @@ CREATE TABLE store_config (
 
 INSERT INTO store_config (name, value)
 VALUES 
-('subdomain','store');
+('subdomain','store'),
+('productsPerPage',48);
 
 CREATE TABLE store_datafeeds (
 "program_name" TEXT,
@@ -75,8 +76,13 @@ CREATE TABLE store_datafeeds (
 "tax(rate:country:tax_ship:postal_code)" TEXT,
 "tax(rate:country:tax_ship:location_id)" TEXT,
 "tax(rate:country:tax_ship:location_group_name)" TEXT,
-"product_uid" TEXT GENERATED ALWAYS AS (translate(encode(CAST((program_name || '---' || catalog_name || '---' || COALESCE(NULLIF(item_group_id,''), id)) AS bytea), 'base64'), E'\n', '')) STORED,
-PRIMARY KEY (product_uid, id)
+"product_uid" TEXT GENERATED ALWAYS AS (COALESCE(NULLIF(item_group_id,''), gtin)) STORED,
+PRIMARY KEY (gtin)
+);
+
+CREATE INDEX index_products_uid
+ON store_datafeeds (
+"product_uid"
 );
 
 CREATE INDEX index_products
