@@ -75,7 +75,7 @@ CREATE TABLE store_datafeeds (
 "tax(rate:country:tax_ship:postal_code)" TEXT,
 "tax(rate:country:tax_ship:location_id)" TEXT,
 "tax(rate:country:tax_ship:location_group_name)" TEXT,
-"product_uid" TEXT GENERATED ALWAYS AS (encode(CAST((program_name || '---' || catalog_name || '---' || COALESCE(NULLIF(item_group_id,''), id)) AS bytea), 'base64')) STORED,
+"product_uid" TEXT GENERATED ALWAYS AS (translate(encode(CAST((program_name || '---' || catalog_name || '---' || COALESCE(NULLIF(item_group_id,''), id)) AS bytea), 'base64'), E'\n', '')) STORED,
 PRIMARY KEY (product_uid, id)
 );
 

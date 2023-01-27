@@ -23,7 +23,7 @@ export const getDatafeeds = async (
     },
   });
   const remotePath = `/outgoing/productcatalog/${SubscriptionId}`;
-  //await sftp.downloadDir(remotePath, localPath);
+  await sftp.downloadDir(remotePath, localPath);
   sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {

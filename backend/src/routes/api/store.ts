@@ -6,7 +6,7 @@ import { getConfig, getProducts, getProduct } from "../../controllers/store";
 
 router.get("/", getAuth, getConfig);
 router.get("/products", getAuth, getProducts);
-router.get("/product/:id", getAuth, getProduct);
+router.get("/product/:uid", getAuth, getProduct);
 
 router.get("*", (req, res) => {
   res.status(404).json({ code: 404, description: "Not Found" });

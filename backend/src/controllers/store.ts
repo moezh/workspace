@@ -18,14 +18,18 @@ export const getConfig = async (req: Request, res: Response) => {
 
 export const getProducts = async (req: Request, res: Response) => {
   const db = req.app.get("db");
+  const limit =
+    req.query.limit === undefined ? "100" : (req.query.limit as string);
+  const offset =
+    req.query.offset === undefined ? "0" : (req.query.offset as string);
   let sql: string = `
   SELECT product_uid, title, image_link, price, sale_price, brand
   FROM store_datafeeds 
   GROUP BY product_uid, title, image_link, price, sale_price, brand
-  LIMIT 100
-  OFFSET 0
+  LIMIT $1
+  OFFSET $2
   `;
-  let values: string[] = [];
+  let values: string[] = [limit, offset];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
@@ -38,22 +42,44 @@ export const getProducts = async (req: Request, res: Response) => {
 
 export const getProduct = async (req: Request, res: Response) => {
   const db = req.app.get("db");
-  const id = req.params.id;
+  const uid = req.params.uid;
   let sql: string = `
-  SELECT title, description, link, impression_url, image_link, additional_image_link, availability, price, sale_price, brand, condition, age_group, color, gender, size
-  FROM store_datafeeds
-  WHERE product_uid=$1
+  SELECT  title, brand, description, link, impression_url, image_link, additional_image_link, 
+  condition, availability, price, sale_price, age_group, gender, color, size, material, pattern 
+  FROM store_datafeeds 
+  WHERE product_uid = $1
   `;
-  console.log(id);
-  let values: string[] = [id];
+  let values: string[] = [uid];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      const data = result.rows[0];
-      if (data === undefined)
+      const data = result.rows;
+      if (data.length === 0) {
         res.status(404).json({ code: 404, description: "Not Found" });
-      res.json(data);
+      } else {
+        const reducedData = data.reduce(
+          (accumulator: any, currentProduct: any) => {
+            Object.entries(currentProduct).forEach((entry) => {
+              const [key, value] = entry;
+              if (!accumulator[key]) {
+                accumulator[key] = [];
+              }
+              if (!accumulator[key].includes(value)) {
+                accumulator[key].push(value);
+              }
+            });
+            return accumulator;
+          },
+          {}
+        );
+        Object.keys(reducedData).forEach((key) => {
+          if (reducedData[key].length === 1) {
+            reducedData[key] = reducedData[key][0];
+          }
+        });
+        res.json(reducedData);
+      }
     }
   });
 };
