@@ -10,7 +10,7 @@ INSERT INTO store_config (name, value)
 VALUES 
 ('subdomain','store');
 
-CREATE TABLE store_datafeeds_schema (
+CREATE TABLE store_datafeeds (
 "program_name" TEXT,
 "program_url" TEXT,
 "catalog_name" TEXT,
@@ -74,7 +74,19 @@ CREATE TABLE store_datafeeds_schema (
 "tax(rate:country:tax_ship:region)" TEXT,
 "tax(rate:country:tax_ship:postal_code)" TEXT,
 "tax(rate:country:tax_ship:location_id)" TEXT,
-"tax(rate:country:tax_ship:location_group_name)" TEXT
+"tax(rate:country:tax_ship:location_group_name)" TEXT,
+"product_uid" TEXT GENERATED ALWAYS AS (encode(CAST((program_name || '---' || catalog_name || '---' || COALESCE(NULLIF(item_group_id,''), id)) AS bytea), 'base64')) STORED,
+PRIMARY KEY (product_uid, id)
+);
+
+CREATE INDEX index_products
+ON store_datafeeds (
+"product_uid", 
+"title", 
+"image_link", 
+"price",
+"sale_price",
+"brand"
 );
 
 

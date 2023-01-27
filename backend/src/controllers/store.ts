@@ -15,3 +15,40 @@ export const getConfig = async (req: Request, res: Response) => {
     }
   });
 };
+
+export const getProducts = async (req: Request, res: Response) => {
+  const db = req.app.get("db");
+  let sql: string = `
+  SELECT product_uid, title, image_link, price, sale_price, brand
+  FROM store_datafeeds 
+  GROUP BY product_uid, title, image_link, price, sale_price, brand
+  LIMIT 100
+  OFFSET 0
+  `;
+  let values: string[] = [];
+  db.query(sql, values, (err: any, result: { rows: any }) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      const data = result.rows;
+      res.json(data);
+    }
+  });
+};
+
+export const getProduct = async (req: Request, res: Response) => {
+  const db = req.app.get("db");
+  const id = req.params.id;
+  let sql: string = `SELECT * FROM blog_posts where id = $1`;
+  let values: string[] = [id];
+  db.query(sql, values, (err: any, result: { rows: any }) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      const data = result.rows[0];
+      if (data === undefined)
+        res.status(404).json({ code: 404, description: "Not Found" });
+      res.json(data);
+    }
+  });
+};

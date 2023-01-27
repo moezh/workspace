@@ -23,22 +23,16 @@ export const getDatafeeds = async (
     },
   });
   const remotePath = `/outgoing/productcatalog/${SubscriptionId}`;
-  fs.rmSync(localPath, { recursive: true, force: true });
-  await sftp.downloadDir(remotePath, localPath);
+  //await sftp.downloadDir(remotePath, localPath);
   sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
       const zip = new AdmZip(filePath);
       zip.extractAllTo(localPath, true);
-      fs.unlink(`${localPath}${file}`, (err) => {
-        if (err) console.log(err);
-      });
     }
   });
-  await pool.query(
-    "DROP TABLE IF EXISTS store_datafeeds; CREATE TABLE store_datafeeds (LIKE store_datafeeds_schema INCLUDING ALL);"
-  );
+  await pool.query("TRUNCATE TABLE store_datafeeds;");
   fs.readdirSync(localPath).forEach(async (file) => {
     if (file.split(".").pop() === "txt") {
       const lineReader = readLine.createInterface({
