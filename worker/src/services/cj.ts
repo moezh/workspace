@@ -23,13 +23,17 @@ export const getDatafeeds = async (
     },
   });
   const remotePath = `/outgoing/productcatalog/${SubscriptionId}`;
-  await sftp.downloadDir(remotePath, localPath);
+  //fs.rmSync(localPath, { recursive: true, force: true });
+  //await sftp.downloadDir(remotePath, localPath);
   sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
       const zip = new AdmZip(filePath);
       zip.extractAllTo(localPath, true);
+      fs.unlink(`${localPath}${file}`, (err) => {
+        if (err) console.log(err);
+      });
     }
   });
   await pool.query("TRUNCATE TABLE store_datafeeds;");
