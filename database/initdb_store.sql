@@ -85,6 +85,11 @@ ON store_datafeeds (
 "product_uid"
 );
 
+CREATE INDEX index_products_uid
+ON store_datafeeds (
+"google_product_category_name"
+);
+
 CREATE INDEX index_products
 ON store_datafeeds (
 "product_uid", 
@@ -94,5 +99,8 @@ ON store_datafeeds (
 "sale_price",
 "brand"
 );
+
+CREATE INDEX index_search ON store_datafeeds USING GIN (to_tsvector('english', title || ' ' || google_product_category_name || ' ' || product_type || ' ' || brand || ' ' || age_group || ' ' || gender || ' ' || color));
+
 
 

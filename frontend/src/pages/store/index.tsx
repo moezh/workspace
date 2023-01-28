@@ -19,7 +19,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
-  console.log(configData);
   const limit = configData.productsPerPage
     ? Number(configData.productsPerPage)
     : 48;
@@ -111,7 +110,7 @@ export default function Page(props: {
               </svg>
             </Link>
           </li>
-          <li className="mx-2">Page {currentPage} / ####</li>
+          <li className="mx-2">Page {currentPage}</li>
           <li className="flex flex-col items-center justify-center ml-2  w-8">
             <Link href={`/?page=${Number(currentPage) + 1}`}>
               <svg
