@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const configData = await config.json();
   const limit = configData.productsPerPage
     ? Number(configData.productsPerPage)
-    : 48;
+    : 24;
   const offset = page * limit - limit;
   const products = await fetch(
     `http://backend:3001/api/store/products?limit=${limit}&offset=${offset}`,
@@ -63,8 +63,8 @@ export default function Page(props: {
                 <Image
                   src={product.image_link}
                   alt={`${product.title}, ${product.brand}`}
-                  width={200}
-                  height={200}
+                  width="400"
+                  height="400"
                   className="h-[200px] w-auto"
                   priority
                 />

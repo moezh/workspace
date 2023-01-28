@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

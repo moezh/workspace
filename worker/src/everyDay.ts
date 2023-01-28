@@ -1,8 +1,7 @@
 import { getDatafeeds } from "./services/cj";
 
 const everyDay = async () => {
-  console.log("> Every Day");
-  console.log(">> Get datafeeds");
+  console.log("> Get datafeeds");
   await getDatafeeds("4109775", "278257");
 };
 

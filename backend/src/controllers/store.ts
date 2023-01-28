@@ -23,9 +23,9 @@ export const getProducts = async (req: Request, res: Response) => {
   const offset =
     req.query.offset === undefined ? "0" : (req.query.offset as string);
   let sql: string = `
-  SELECT product_uid, title, image_link, price, sale_price, brand
+  SELECT product_uid, title, brand, image_link, price, sale_price
   FROM store_datafeeds 
-  GROUP BY product_uid, title, image_link, price, sale_price, brand
+  GROUP BY product_uid, title, brand, image_link, price, sale_price
   LIMIT $1
   OFFSET $2
   `;
@@ -44,7 +44,7 @@ export const getProduct = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   const uid = req.params.uid;
   let sql: string = `
-  SELECT  title, brand, description, link, impression_url, image_link, additional_image_link, 
+  SELECT  title, brand, description, link, image_link, additional_image_link, 
   condition, availability, price, sale_price, age_group, gender, color, size, material, pattern 
   FROM store_datafeeds 
   WHERE product_uid = $1
@@ -73,11 +73,11 @@ export const getProduct = async (req: Request, res: Response) => {
           },
           {}
         );
-        Object.keys(reducedData).forEach((key) => {
+        /*Object.keys(reducedData).forEach((key) => {
           if (reducedData[key].length === 1) {
             reducedData[key] = reducedData[key][0];
           }
-        });
+        });*/
         res.json(reducedData);
       }
     }
