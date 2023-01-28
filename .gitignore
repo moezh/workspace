@@ -5,6 +5,7 @@ build
 .next
 cache
 yarn.lock
+yarn-error.log
 .env
 datafeeds
 backend-password.txt
