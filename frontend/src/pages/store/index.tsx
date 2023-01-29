@@ -9,6 +9,7 @@ import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const page = context.query.page ? Number(context.query.page) : 1;
+  const category = context.query.category ? context.query.category : "";
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -23,18 +24,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ? Number(configData.productsPerPage)
     : 24;
   const offset = page * limit - limit;
-  const products = await fetch(
-    `http://backend:3001/api/store/products?limit=${limit}&offset=${offset}`,
-    {
-      headers: {
-        Authorization: `Bearer ${jwt.sign("admin", password)}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  let url = `http://backend:3001/api/store/products?limit=${limit}&offset=${offset}`;
+  if (category !== "") url += `&category=${category}`;
+  const products = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${jwt.sign("admin", password)}`,
+      "Content-Type": "application/json",
+    },
+  });
   const productsData = await products.json();
   return {
-    props: { config: configData, products: productsData, currentPage: page },
+    props: {
+      config: configData,
+      products: productsData,
+      currentPage: page,
+      currentCategory: category,
+    },
   };
 };
 
@@ -42,9 +47,13 @@ export default function Page(props: {
   config: any;
   products: any;
   currentPage: number;
+  currentCategory: string;
 }) {
   const products = props.products;
   const currentPage = props.currentPage;
+  const currentCategory = props.currentCategory;
+  const productsPerPage = props.config.productsPerPage;
+  console.log(productsPerPage);
   return (
     <>
       <Head title="MH's Store" />
@@ -54,9 +63,9 @@ export default function Page(props: {
           MH's Store
         </h1>
         <div className="flex flex-row flex-wrap items-start justify-center pt-8">
-          {products.map((product: any) => (
+          {products.map((product: any, index: number) => (
             <div
-              key={product.product_uid}
+              key={`${product.product_uid}-${index}`}
               className="w-[300px] flex flex-col items-center justify-start text-center px-6"
             >
               <Link href={`/${product.product_uid}`}>
@@ -66,6 +75,7 @@ export default function Page(props: {
                   width="400"
                   height="400"
                   className="h-[200px] w-auto"
+                  priority
                 />
               </Link>
               <div className="font-light h-[150px]">
@@ -76,7 +86,7 @@ export default function Page(props: {
                       <>{product.price}</>
                     ) : (
                       <>
-                        <s>{product.price}</s> {product.sale_price}
+                        {product.sale_price} <s>{product.price}</s>
                       </>
                     )}
                   </div>
@@ -87,11 +97,18 @@ export default function Page(props: {
           ))}
         </div>
       </div>
-      <div className="pt-6 font-light">
+      <div
+        className="pt-6 font-light"
+        hidden={
+          products.length < productsPerPage && currentPage === 1 ? true : false
+        }
+      >
         <ul className="flex flex-row items-start justify-center">
           <li className="flex flex-col items-center justify-center mr-2 w-8">
             <Link
-              href={`/?page=${Number(currentPage) - 1}`}
+              href={`/?page=${Number(currentPage) - 1}${
+                currentCategory !== "" ? `&category=${currentCategory}` : ""
+              }`}
               hidden={currentPage > 1 ? false : true}
             >
               <svg
@@ -111,7 +128,12 @@ export default function Page(props: {
           </li>
           <li className="mx-2">Page {currentPage}</li>
           <li className="flex flex-col items-center justify-center ml-2  w-8">
-            <Link href={`/?page=${Number(currentPage) + 1}`}>
+            <Link
+              href={`/?page=${Number(currentPage) + 1}${
+                currentCategory !== "" ? `&category=${currentCategory}` : ""
+              }`}
+              hidden={products.length < productsPerPage ? true : false}
+            >
               <svg
                 aria-hidden="true"
                 className="w-6 h-6"

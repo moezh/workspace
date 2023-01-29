@@ -28,53 +28,97 @@ export default function Page(props: { categories: any }) {
         <div className="flex flex-col items-center justify-start py-6">
           {props.categories["Root"].map((level0: any) => (
             <div key={level0} className="w-[360px]">
-              <Link
-                href={`/?category=${level0.replaceAll(/[^A-Za-z0-9]+/g, "")}`}
-              >
-                <div className="font-medium text-gl uppercase py-4">
-                  {level0} →
-                </div>
-              </Link>
+              <div className="py-4 font-medium">
+                {level0.slice(-1) === "→" ? (
+                  <Link
+                    href={`/?category=${level0.replaceAll(
+                      /[^A-Za-z0-9]+/g,
+                      ""
+                    )}`}
+                    className="disabled-link"
+                  >
+                    <>{level0}</>
+                  </Link>
+                ) : (
+                  <>{level0}</>
+                )}
+              </div>
               {props.categories[`${level0}`]?.map((level1: any) => (
                 <div key={level1}>
-                  <Link
-                    href={`/?category=${level0
-                      .concat(level1)
-                      .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                  <div
+                    className="py-4 ml-4"
+                    hidden={level1.slice(-1) === "→" ? false : true}
                   >
-                    <div className="font-medium py-4 ml-4">{level1} →</div>
-                  </Link>
-                  {props.categories[`${level1}`]?.map((level2: any) => (
-                    <div key={level2}>
+                    {level1.slice(-1) === "→" ? (
                       <Link
                         href={`/?category=${level0
-                          .concat(level1, level2)
+                          .concat(level1)
                           .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                        className="disabled-link"
                       >
-                        <div className="font-normal py-4 ml-8">{level2} →</div>
+                        <>{level1}</>
                       </Link>
-                      {props.categories[`${level2}`]?.map((level3: any) => (
-                        <div key={level3}>
+                    ) : (
+                      <>{level1}</>
+                    )}
+                  </div>
+                  {props.categories[`${level1}`]?.map((level2: any) => (
+                    <div key={level2}>
+                      <div
+                        className="py-4 ml-4"
+                        hidden={level2.slice(-1) === "→" ? false : true}
+                      >
+                        {level2.slice(-1) === "→" ? (
                           <Link
                             href={`/?category=${level0
-                              .concat(level1, level2, level3)
+                              .concat(level1, level2)
                               .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                            className="disabled-link"
                           >
-                            <div className="font-light py-4 ml-12">
-                              {level3} →
-                            </div>
+                            <>{level2}</>
                           </Link>
-                          {props.categories[`${level3}`]?.map((level4: any) => (
-                            <div key={level4}>
+                        ) : (
+                          <>{level2}</>
+                        )}
+                      </div>
+                      {props.categories[`${level2}`]?.map((level3: any) => (
+                        <div key={level3}>
+                          <div
+                            className="py-4 ml-4"
+                            hidden={level3.slice(-1) === "→" ? false : true}
+                          >
+                            {level3.slice(-1) === "→" ? (
                               <Link
                                 href={`/?category=${level0
-                                  .concat(level1, level2, level3, level4)
+                                  .concat(level1, level2, level3)
                                   .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                                className="disabled-link"
                               >
-                                <div className="font-light py-4 ml-16">
-                                  {level4} →
-                                </div>
+                                <>{level3}</>
                               </Link>
+                            ) : (
+                              <>{level3}</>
+                            )}
+                          </div>
+                          {props.categories[`${level3}`]?.map((level4: any) => (
+                            <div key={level4}>
+                              <div
+                                className="py-4 ml-4"
+                                hidden={level4.slice(-1) === "→" ? false : true}
+                              >
+                                {level4.slice(-1) === "→" ? (
+                                  <Link
+                                    href={`/?category=${level0
+                                      .concat(level1, level2, level3, level4)
+                                      .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                                    className="disabled-link"
+                                  >
+                                    <>{level4}</>
+                                  </Link>
+                                ) : (
+                                  <>{level4}</>
+                                )}
+                              </div>
                             </div>
                           ))}
                         </div>

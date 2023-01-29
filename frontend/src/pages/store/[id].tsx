@@ -45,7 +45,7 @@ const arrayToImages = (arrayOfImages: string[]) => {
     return <></>;
   } else {
     return (
-      <div>
+      <>
         {arrayOfImages.map((e: string, index: number) => (
           <Image
             key={index}
@@ -53,10 +53,11 @@ const arrayToImages = (arrayOfImages: string[]) => {
             alt={e.substring(e.lastIndexOf("/") + 1)}
             width="640"
             height="640"
-            className="w-[320px] h-auto mx-2 mb-2"
+            className="w-[320px] h-auto mx-1 mb-2"
+            priority
           />
         ))}
-      </div>
+      </>
     );
   }
 };
@@ -74,7 +75,7 @@ export default function Page(props: { data: any }) {
           {arrayToText(props.data.title)}
         </h1>
         <div className="w-full flex flex-col items-center justify-start mt-8 mb-2">
-          <div className="flex flex-row flex-wrap items-start justify-center">
+          <div className="w-full flex flex-row flex-wrap items-center justify-center">
             {arrayToImages(props.data.image_link)}
             {arrayToImages(props.data.additional_image_link)}
           </div>

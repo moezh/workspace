@@ -22,14 +22,17 @@ export const getProducts = async (req: Request, res: Response) => {
     req.query.limit === undefined ? "100" : (req.query.limit as string);
   const offset =
     req.query.offset === undefined ? "0" : (req.query.offset as string);
+  const category =
+    req.query.category === undefined ? "%" : (req.query.category as string);
   let sql: string = `
   SELECT product_uid, title, brand, image_link, price, sale_price
   FROM store_datafeeds 
+  WHERE product_category like $3
   GROUP BY product_uid, title, brand, image_link, price, sale_price
   LIMIT $1
   OFFSET $2
   `;
-  let values: string[] = [limit, offset];
+  let values: string[] = [limit, offset, category];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
@@ -58,26 +61,18 @@ export const getProduct = async (req: Request, res: Response) => {
       if (data.length === 0) {
         res.status(404).json({ code: 404, description: "Not Found" });
       } else {
-        const reducedData = data.reduce(
-          (accumulator: any, currentProduct: any) => {
-            Object.entries(currentProduct).forEach((entry) => {
-              const [key, value] = entry;
-              if (!accumulator[key]) {
-                accumulator[key] = [];
-              }
-              if (!accumulator[key].includes(value)) {
-                accumulator[key].push(value);
-              }
-            });
-            return accumulator;
-          },
-          {}
-        );
-        /*Object.keys(reducedData).forEach((key) => {
-          if (reducedData[key].length === 1) {
-            reducedData[key] = reducedData[key][0];
-          }
-        });*/
+        const reducedData = data.reduce((accumulator: any, current: any) => {
+          Object.entries(current).forEach((entry) => {
+            const [key, value] = entry;
+            if (!accumulator[key]) {
+              accumulator[key] = [];
+            }
+            if (!accumulator[key].includes(value)) {
+              accumulator[key].push(value);
+            }
+          });
+          return accumulator;
+        }, {});
         res.json(reducedData);
       }
     }
@@ -93,16 +88,29 @@ export const getCategories = async (req: Request, res: Response) => {
       res.status(500).json(err);
     } else {
       const data = result.rows;
-      const reducedData = data.reduce((accumulator: any, currentItem: any) => {
-        Object.values(currentItem).forEach((value: any) => {
-          const valueSplit = value.split(" > ");
-          valueSplit.forEach((category: any, index: number) => {
-            const parentCategory = index === 0 ? "Root" : valueSplit[index - 1];
-            if (!accumulator[parentCategory]) {
-              accumulator[parentCategory] = [];
+      const reducedData = data.reduce((accumulator: any, current: any) => {
+        Object.values(current).forEach((value: any) => {
+          const categories = value.split(" > ");
+          categories.forEach((category: any, index: number) => {
+            const parent = index === 0 ? "Root" : categories[index - 1];
+            if (!accumulator[parent]) {
+              accumulator[parent] = [];
             }
-            if (!accumulator[parentCategory].includes(category)) {
-              accumulator[parentCategory].push(category);
+            if (
+              !accumulator[parent].includes(category) &&
+              !accumulator[parent].includes(`${category} →`)
+            ) {
+              accumulator[parent].push(category);
+            }
+            if (category === categories[categories.length - 1]) {
+              if (accumulator[parent].includes(category)) {
+                accumulator[parent] = accumulator[parent].filter(
+                  (item: any) => item !== category
+                );
+              }
+              if (!accumulator[parent].includes(`${category} →`)) {
+                accumulator[parent].push(`${category} →`);
+              }
             }
           });
         });

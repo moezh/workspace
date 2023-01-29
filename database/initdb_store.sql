@@ -9,7 +9,7 @@ CREATE TABLE store_config (
 INSERT INTO store_config (name, value)
 VALUES 
 ('subdomain','store'),
-('productsPerPage',48);
+('productsPerPage',24);
 
 CREATE TABLE store_datafeeds (
 "program_name" TEXT,
