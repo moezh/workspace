@@ -54,7 +54,6 @@ const arrayToImages = (arrayOfImages: string[]) => {
             width="640"
             height="640"
             className="w-[320px] h-auto mx-2 mb-2"
-            priority
           />
         ))}
       </div>
@@ -74,32 +73,33 @@ export default function Page(props: { data: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           {arrayToText(props.data.title)}
         </h1>
-        <div className="flex flex-col items-center justify-start mt-8 mb-2">
+        <div className="w-full flex flex-col items-center justify-start mt-8 mb-2">
           <div className="flex flex-row flex-wrap items-start justify-center">
             {arrayToImages(props.data.image_link)}
             {arrayToImages(props.data.additional_image_link)}
           </div>
-          <div className="pt-4"></div>
-          {arrayToText(props.data.brand, "brand")}
-          <div className="flex flex-row items-start justify-start">
-            {props.data.sale_price[0] === "" ? (
-              <>{arrayToText(props.data.price, "price")}</>
-            ) : (
-              <>
-                {arrayToText(props.data.sale_price, "price")}{" "}
-                <s>{arrayToText(props.data.price)}</s>
-              </>
-            )}
+          <div className="w-full flex flex-col items-center justify-start">
+            {arrayToText(props.data.brand, "brand")}
+            <div className="flex flex-row items-start justify-start">
+              {props.data.sale_price[0] === "" ? (
+                <>{arrayToText(props.data.price, "price")}</>
+              ) : (
+                <>
+                  {arrayToText(props.data.sale_price, "price")}{" "}
+                  <s>{arrayToText(props.data.price)}</s>
+                </>
+              )}
+            </div>
+            <Link
+              href={props.data.link[0]}
+              className="my-4 border border-gray-900 dark:border-white px-6 py-2 rounded-sm"
+            >
+              <p className="text-gray-900 dark:text-white capitalize font-light">
+                buy now →
+              </p>
+            </Link>
           </div>
-          <Link
-            href={props.data.link[0]}
-            className="my-4 border border-gray-900 dark:border-white px-6 py-2 rounded-sm"
-          >
-            <p className="text-gray-900 dark:text-white capitalize font-light">
-              buy now →
-            </p>
-          </Link>
-          <div className="w-full pt-2">
+          <div className="w-full flex flex-col items-start justify-start pt-2">
             {arrayToText(props.data.description)}
             <div className="pt-4"></div>
             {arrayToText(props.data.availability, "availability")}
@@ -107,7 +107,6 @@ export default function Page(props: { data: any }) {
             {arrayToText(props.data.age_group, "age group")}
             {arrayToText(props.data.gender, "gender")}
             {arrayToText(props.data.color, "color")}
-            {arrayToText(props.data.size, "size")}
             {arrayToText(props.data.material, "material")}
             {arrayToText(props.data.pattern, "pattern")}
             <Link href={props.data.link[0]}>

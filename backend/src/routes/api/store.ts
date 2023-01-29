@@ -2,11 +2,17 @@ import { Router } from "express";
 const router = Router();
 
 import { getAuth } from "../../middlewares/auth";
-import { getConfig, getProducts, getProduct } from "../../controllers/store";
+import {
+  getConfig,
+  getProducts,
+  getProduct,
+  getCategories,
+} from "../../controllers/store";
 
 router.get("/", getAuth, getConfig);
 router.get("/products", getAuth, getProducts);
 router.get("/product/:uid", getAuth, getProduct);
+router.get("/categories", getAuth, getCategories);
 
 router.get("*", (req, res) => {
   res.status(404).json({ code: 404, description: "Not Found" });

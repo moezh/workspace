@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
@@ -54,9 +54,9 @@ export default function Page(props: {
           MH's Store
         </h1>
         <div className="flex flex-row flex-wrap items-start justify-center pt-8">
-          {products.map((product: any, index: number) => (
+          {products.map((product: any) => (
             <div
-              key={index}
+              key={product.product_uid}
               className="w-[300px] flex flex-col items-center justify-start text-center px-6"
             >
               <Link href={`/${product.product_uid}`}>
@@ -66,7 +66,6 @@ export default function Page(props: {
                   width="400"
                   height="400"
                   className="h-[200px] w-auto"
-                  priority
                 />
               </Link>
               <div className="font-light h-[150px]">

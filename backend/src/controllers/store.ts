@@ -83,3 +83,32 @@ export const getProduct = async (req: Request, res: Response) => {
     }
   });
 };
+
+export const getCategories = async (req: Request, res: Response) => {
+  const db = req.app.get("db");
+  let sql: string = `select distinct(google_product_category_name) from store_datafeeds;`;
+  let values: string[] = [];
+  db.query(sql, values, (err: any, result: { rows: any }) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      const data = result.rows;
+      const reducedData = data.reduce((accumulator: any, currentItem: any) => {
+        Object.values(currentItem).forEach((value: any) => {
+          const valueSplit = value.split(" > ");
+          valueSplit.forEach((category: any, index: number) => {
+            const parentCategory = index === 0 ? "Root" : valueSplit[index - 1];
+            if (!accumulator[parentCategory]) {
+              accumulator[parentCategory] = [];
+            }
+            if (!accumulator[parentCategory].includes(category)) {
+              accumulator[parentCategory].push(category);
+            }
+          });
+        });
+        return accumulator;
+      }, {});
+      res.json(reducedData);
+    }
+  });
+};

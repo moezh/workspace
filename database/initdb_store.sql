@@ -77,6 +77,7 @@ CREATE TABLE store_datafeeds (
 "tax(rate:country:tax_ship:location_id)" TEXT,
 "tax(rate:country:tax_ship:location_group_name)" TEXT,
 "product_uid" TEXT GENERATED ALWAYS AS (COALESCE(NULLIF(REGEXP_REPLACE(mpn, '[^A-Za-z0-9]+', '', 'g'),''), gtin)) STORED,
+"product_category" TEXT GENERATED ALWAYS AS (REGEXP_REPLACE(google_product_category_name, '[^A-Za-z0-9]+', '', 'g')) STORED,
 PRIMARY KEY (gtin)
 );
 
@@ -96,6 +97,11 @@ ON store_datafeeds (
 );
 
 CREATE INDEX index_products_category
+ON store_datafeeds (
+"product_category"
+);
+
+CREATE INDEX index_google_category
 ON store_datafeeds (
 "google_product_category_name"
 );
