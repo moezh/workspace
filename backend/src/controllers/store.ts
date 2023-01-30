@@ -25,10 +25,10 @@ export const getProducts = async (req: Request, res: Response) => {
   const category =
     req.query.category === undefined ? "%" : (req.query.category as string);
   let sql: string = `
-  SELECT product_uid, title, brand, image_link, price, sale_price
+  SELECT product_uid, title, brand, product_category_name, image_link, price, sale_price
   FROM store_datafeeds 
-  WHERE product_category like $3
-  GROUP BY product_uid, title, brand, image_link, price, sale_price
+  WHERE product_category_id like $3
+  GROUP BY product_uid, title, brand, product_category_name, image_link, price, sale_price
   LIMIT $1
   OFFSET $2
   `;
@@ -47,7 +47,7 @@ export const getProduct = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   const uid = req.params.uid;
   let sql: string = `
-  SELECT  title, brand, description, link, image_link, additional_image_link, 
+  SELECT  title, brand, product_category_name, description, gtin, link, image_link, additional_image_link, 
   condition, availability, price, sale_price, age_group, gender, color, size, material, pattern 
   FROM store_datafeeds 
   WHERE product_uid = $1
@@ -117,6 +117,29 @@ export const getCategories = async (req: Request, res: Response) => {
         return accumulator;
       }, {});
       res.json(reducedData);
+    }
+  });
+};
+
+export const getLink = async (req: Request, res: Response) => {
+  const db = req.app.get("db");
+  const gtin = req.params.gtin;
+  let sql: string = `
+  SELECT link
+  FROM store_datafeeds 
+  WHERE gtin = $1
+  `;
+  let values: string[] = [gtin];
+  db.query(sql, values, (err: any, result: { rows: any }) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      const data = result.rows;
+      if (data.length === 0) {
+        res.status(404).json({ code: 404, description: "Not Found" });
+      } else {
+        res.json(data[0]);
+      }
     }
   });
 };

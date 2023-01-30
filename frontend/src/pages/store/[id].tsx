@@ -8,6 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=300, stale-while-revalidate=600"
+  );
   const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
@@ -74,7 +78,11 @@ export default function Page(props: { data: any }) {
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           {arrayToText(props.data.title)}
         </h1>
-        <div className="w-full flex flex-col items-center justify-start mt-8 mb-2">
+        <div className="w-full flex flex-row items-start justify-center pt-2">
+          {props.data.product_category_name}
+        </div>
+
+        <div className="w-full flex flex-col items-center justify-start mt-6 mb-2">
           <div className="w-full flex flex-row flex-wrap items-center justify-center">
             {arrayToImages(props.data.image_link)}
             {arrayToImages(props.data.additional_image_link)}
@@ -92,7 +100,7 @@ export default function Page(props: { data: any }) {
               )}
             </div>
             <Link
-              href={props.data.link[0]}
+              href={`/link/${props.data.gtin[0]}`}
               className="my-4 border border-gray-900 dark:border-white px-6 py-2 rounded-sm"
             >
               <p className="text-gray-900 dark:text-white capitalize font-light">
@@ -110,7 +118,7 @@ export default function Page(props: { data: any }) {
             {arrayToText(props.data.color, "color")}
             {arrayToText(props.data.material, "material")}
             {arrayToText(props.data.pattern, "pattern")}
-            <Link href={props.data.link[0]}>
+            <Link href={`/link/${props.data.gtin[0]}`}>
               <div className="font-medium capitalize mt-4">more details →</div>
             </Link>
           </div>

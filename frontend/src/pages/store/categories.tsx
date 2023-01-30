@@ -3,8 +3,13 @@ import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Link from "next/link";
+import GoBack from "../../components/GoBack";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=300, stale-while-revalidate=600"
+  );
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -20,14 +25,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page(props: { categories: any }) {
+export default function Categories(props: { categories: any }) {
   return (
     <>
-      <Head title="MH's Categories" />
+      <Head title="" />
       <div className="w-full">
-        <div className="flex flex-col items-center justify-start py-6">
+        <div className="flex flex-col items-center justify-start px-4 py-4 pb-8">
+          <div className="sticky top-4 left-full px-8">
+            <GoBack />
+          </div>
+          <h1 className="w-[340px] font-medium text-xl uppercase font-serif pb-4">
+            <Link href="/">All Products →</Link>
+          </h1>
           {props.categories["Root"].map((level0: any) => (
-            <div key={level0} className="w-[360px]">
+            <div key={level0} className="w-[300px]">
               <div className="py-4 font-medium">
                 {level0.slice(-1) === "→" ? (
                   <Link
@@ -51,9 +62,10 @@ export default function Page(props: { categories: any }) {
                   >
                     {level1.slice(-1) === "→" ? (
                       <Link
-                        href={`/?category=${level0
-                          .concat(level1)
-                          .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                        href={`/?category=${level1.replaceAll(
+                          /[^A-Za-z0-9]+/g,
+                          ""
+                        )}`}
                         className="disabled-link"
                       >
                         <>{level1}</>
@@ -70,9 +82,10 @@ export default function Page(props: { categories: any }) {
                       >
                         {level2.slice(-1) === "→" ? (
                           <Link
-                            href={`/?category=${level0
-                              .concat(level1, level2)
-                              .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                            href={`/?category=${level2.replaceAll(
+                              /[^A-Za-z0-9]+/g,
+                              ""
+                            )}`}
                             className="disabled-link"
                           >
                             <>{level2}</>
@@ -89,10 +102,10 @@ export default function Page(props: { categories: any }) {
                           >
                             {level3.slice(-1) === "→" ? (
                               <Link
-                                href={`/?category=${level0
-                                  .concat(level1, level2, level3)
-                                  .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
-                                className="disabled-link"
+                                href={`/?category=${level3.replaceAll(
+                                  /[^A-Za-z0-9]+/g,
+                                  ""
+                                )}`}
                               >
                                 <>{level3}</>
                               </Link>
@@ -108,9 +121,10 @@ export default function Page(props: { categories: any }) {
                               >
                                 {level4.slice(-1) === "→" ? (
                                   <Link
-                                    href={`/?category=${level0
-                                      .concat(level1, level2, level3, level4)
-                                      .replaceAll(/[^A-Za-z0-9]+/g, "")}`}
+                                    href={`/?category=${level4.replaceAll(
+                                      /[^A-Za-z0-9]+/g,
+                                      ""
+                                    )}`}
                                     className="disabled-link"
                                   >
                                     <>{level4}</>

@@ -8,6 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=300, stale-while-revalidate=600"
+  );
   const page = context.query.page ? Number(context.query.page) : 1;
   const category = context.query.category ? context.query.category : "";
   const password = readFileSync("/run/secrets/backend-password", {
@@ -53,16 +57,28 @@ export default function Page(props: {
   const currentPage = props.currentPage;
   const currentCategory = props.currentCategory;
   const productsPerPage = props.config.productsPerPage;
-  console.log(productsPerPage);
   return (
     <>
-      <Head title="MH's Store" />
+      <Head
+        title={
+          currentCategory !== ""
+            ? products[0].product_category_name
+            : "MH's Store"
+        }
+      />
       <Header />
       <div className="w-full">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
-          MH's Store
-        </h1>
-        <div className="flex flex-row flex-wrap items-start justify-center pt-8">
+        <div className="flex flex-row items-center justify-start">
+          <Link href={`/categories`} className="capitalize w-1/3">
+            Shop by category →
+          </Link>
+          <h1 className="font-medium text-xl uppercase font-serif text-center w-1/3">
+            {currentCategory !== ""
+              ? `${products[0].product_category_name}`
+              : "All products"}
+          </h1>
+        </div>
+        <div className="flex flex-row flex-wrap items-start justify-center pt-10">
           {products.map((product: any, index: number) => (
             <div
               key={`${product.product_uid}-${index}`}
@@ -98,7 +114,7 @@ export default function Page(props: {
         </div>
       </div>
       <div
-        className="pt-6 font-light"
+        className="pt-4 font-light"
         hidden={
           products.length < productsPerPage && currentPage === 1 ? true : false
         }
