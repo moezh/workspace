@@ -24,15 +24,18 @@ export const getProducts = async (req: Request, res: Response) => {
     req.query.offset === undefined ? "0" : (req.query.offset as string);
   const category =
     req.query.category === undefined ? "%" : (req.query.category as string);
+  const search =
+    req.query.search === undefined ? "" : (req.query.search as string);
   let sql: string = `
   SELECT product_uid, title, brand, product_category_name, image_link, price, sale_price
   FROM store_datafeeds 
   WHERE product_category_id like $3
+  AND text_search @@ websearch_to_tsquery('english', $4)
   GROUP BY product_uid, title, brand, product_category_name, image_link, price, sale_price
   LIMIT $1
   OFFSET $2
   `;
-  let values: string[] = [limit, offset, category];
+  let values: string[] = [limit, offset, category, search];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);

@@ -79,6 +79,7 @@ CREATE TABLE store_datafeeds (
 "product_uid" TEXT GENERATED ALWAYS AS (COALESCE(NULLIF(REGEXP_REPLACE(mpn, '[^A-Za-z0-9]+', '', 'g'),''), gtin)) STORED,
 "product_category_id" TEXT GENERATED ALWAYS AS (REGEXP_REPLACE(SPLIT_PART(google_product_category_name, ' > ', -1), '[^A-Za-z0-9]+', '', 'g')) STORED,
 "product_category_name" TEXT GENERATED ALWAYS AS (SPLIT_PART(google_product_category_name, ' > ', -1)) STORED,
+"text_search" tsvector GENERATED ALWAYS AS (to_tsvector('english', coalesce(title, '') ||  ' ' || coalesce(brand, '') || ' ' || coalesce(google_product_category_name, '') || ' ' || coalesce(product_type, '') || ' ' || coalesce(color, '') || ' ' || coalesce(gender, '')  || ' ' || coalesce(material, ''))) STORED,
 PRIMARY KEY (gtin)
 );
 
@@ -96,6 +97,8 @@ CREATE INDEX index_google_category
 ON store_datafeeds (
 "google_product_category_name"
 );
+
+CREATE INDEX index_text_search ON store_datafeeds USING GIN (text_search);
 
 CREATE TABLE store_products_category (
 "category" TEXT

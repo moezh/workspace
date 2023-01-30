@@ -25,7 +25,7 @@ export const getDatafeeds = async (
   });
   const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
   fs.rmSync(localPath, { recursive: true, force: true });
-  await sftp.downloadDir(remotePath, localPath);
+  await sftp.downloadDir(remotePath, localPath, { useFastget: true });
   sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
