@@ -3,34 +3,30 @@ import fs from "fs";
 import Client from "ssh2-sftp-client";
 import readLine from "readline";
 import AdmZip from "adm-zip";
-import { Pool } from "pg";
 
 export const getDatafeeds = async (
-  usernameId?: string,
-  subscriptionId?: string
+  usernameId: string,
+  subscriptionId: string
 ) => {
   console.log("> Sync datafeeds");
-  let localPath = "./cj/datafeeds_sample/";
-  if (usernameId !== undefined && subscriptionId !== undefined) {
-    const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
-      encoding: "utf8",
-    });
-    localPath = "./cj/datafeeds/";
-    const sftp = new Client();
-    await sftp.connect({
-      host: "datatransfer.cj.com",
-      port: 22,
-      username: usernameId,
-      privateKey: privateKey,
-      algorithms: {
-        serverHostKey: ["ssh-rsa", "ssh-dss"],
-      },
-    });
-    const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
-    fs.rmSync(localPath, { recursive: true, force: true });
-    await sftp.downloadDir(remotePath, localPath);
-    sftp.end();
-  }
+  const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
+    encoding: "utf8",
+  });
+  const localPath = "./cj/datafeeds/";
+  const sftp = new Client();
+  await sftp.connect({
+    host: "datatransfer.cj.com",
+    port: 22,
+    username: usernameId,
+    privateKey: privateKey,
+    algorithms: {
+      serverHostKey: ["ssh-rsa", "ssh-dss"],
+    },
+  });
+  const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
+  fs.rmSync(localPath, { recursive: true, force: true });
+  await sftp.downloadDir(remotePath, localPath);
+  sftp.end();
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
