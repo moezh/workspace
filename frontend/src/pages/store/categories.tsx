@@ -30,15 +30,15 @@ export default function Categories(props: { categories: any }) {
     <>
       <Head title="" />
       <div className="w-full">
-        <div className="flex flex-col items-center justify-start px-4 py-4 pb-8">
-          <div className="sticky top-4 left-full px-8">
+        <div className="w-full flex flex-col items-center justify-start px-4 pt-4 pb-8">
+          <div className="fixed right-0 pt-4 pr-4">
             <GoBack />
           </div>
-          <h1 className="w-[340px] font-medium text-xl uppercase font-serif pb-4">
+          <h1 className="w-[280px] font-medium text-xl uppercase font-serif py-4">
             <Link href="/">All Products →</Link>
           </h1>
-          {props.categories["Root"].map((level0: any) => (
-            <div key={level0} className="w-[300px]">
+          {props.categories["Root"]?.map((level0: any) => (
+            <div key={level0} className="w-[260px]">
               <div className="py-4 font-medium">
                 {level0.slice(-1) === "→" ? (
                   <Link

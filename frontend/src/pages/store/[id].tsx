@@ -32,7 +32,7 @@ const arrayToText = (arrayOfText: string[], title: string = "") => {
     return <></>;
   } else {
     return (
-      <div className="pt-1 capitalize">
+      <div className="w-full pt-1 capitalize">
         {title === "" ? <></> : <span className="pr-2">{title}:</span>}
         {arrayOfText.map((e: string, index: number) => (
           <span key={index} className="font-light pr-2">
@@ -87,7 +87,7 @@ export default function Page(props: { data: any }) {
             {arrayToImages(props.data.image_link)}
             {arrayToImages(props.data.additional_image_link)}
           </div>
-          <div className="w-full flex flex-col items-center justify-start">
+          <div className="w-full flex flex-col items-center justify-start text-center">
             {arrayToText(props.data.brand, "brand")}
             <div className="flex flex-row items-start justify-start">
               {props.data.sale_price[0] === "" ? (
@@ -95,7 +95,7 @@ export default function Page(props: { data: any }) {
               ) : (
                 <>
                   {arrayToText(props.data.sale_price, "price")}{" "}
-                  <s>{arrayToText(props.data.price)}</s>
+                  <s className="text-sm">{arrayToText(props.data.price)}</s>
                 </>
               )}
             </div>

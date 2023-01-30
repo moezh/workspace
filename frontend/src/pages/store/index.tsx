@@ -69,9 +69,23 @@ export default function Page(props: {
       <Header />
       <div className="w-full">
         <div className="flex flex-row items-center justify-start">
-          <Link href={`/categories`} className="capitalize w-1/3">
-            Shop by category →
-          </Link>
+          <div className="w-1/3">
+            <Link href={`/categories`} className="capitalize">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </Link>
+          </div>
           <h1 className="font-medium text-xl uppercase font-serif text-center w-1/3">
             {currentCategory !== ""
               ? `${products[0].product_category_name}`
