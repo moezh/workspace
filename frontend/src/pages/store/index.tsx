@@ -65,17 +65,11 @@ export default function Page(props: {
   currentCategory: string;
 }) {
   const totalPages = Math.ceil(
-    props.count.product_count / props.config.productsPerPage
+    Number(props.count.product_count) / props.config.productsPerPage
   );
   return (
     <>
-      <Head
-        title={
-          props.currentCategory !== ""
-            ? props.count.product_category_name
-            : "MH's Store"
-        }
-      />
+      <Head title={props.count.product_category_name} />
       <Header />
       <div className="w-full">
         <div className="flex flex-row items-start justify-start">
@@ -98,11 +92,9 @@ export default function Page(props: {
           </div>
           <div className="w-2/4 flex flex-col items-center justify-start text-center">
             <h1 className="font-medium text-xl uppercase font-serif">
-              {props.currentCategory !== ""
-                ? `${props.count.product_category_name}`
-                : "All products"}
+              {props.count.product_category_name}
             </h1>
-            <p>{props.count.product_count} items</p>
+            <p>{Number(props.count.product_count)} items</p>
           </div>
           <div className="w-1/4 flex flex-col items-end justify-start">
             <Link href={`/search`}>

@@ -52,7 +52,7 @@ export default function Categories(props: { categories: any }) {
             {props.categories[`${level0}`]?.map((level1: any) => (
               <div key={level1}>
                 <div
-                  className="py-4 ml-4"
+                  className="py-4 ml-2"
                   hidden={level1.slice(-1) === "→" ? false : true}
                 >
                   {level1.slice(-1) === "→" ? (
@@ -90,7 +90,7 @@ export default function Categories(props: { categories: any }) {
                     {props.categories[`${level2}`]?.map((level3: any) => (
                       <div key={level3}>
                         <div
-                          className="py-4 ml-4"
+                          className="py-4 ml-6"
                           hidden={level3.slice(-1) === "→" ? false : true}
                         >
                           {level3.slice(-1) === "→" ? (
@@ -109,7 +109,7 @@ export default function Categories(props: { categories: any }) {
                         {props.categories[`${level3}`]?.map((level4: any) => (
                           <div key={level4}>
                             <div
-                              className="py-4 ml-4"
+                              className="py-4 ml-8"
                               hidden={level4.slice(-1) === "→" ? false : true}
                             >
                               {level4.slice(-1) === "→" ? (

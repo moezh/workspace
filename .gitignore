@@ -5,9 +5,7 @@ build
 .next
 cache
 yarn.lock
-yarn-error.log
 .env
-datafeeds
-backend-password.txt
-database-password.txt
-cj-private-key.txt
+*.txt
+*.txt.zip
+*.log

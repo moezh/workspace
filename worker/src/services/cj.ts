@@ -6,37 +6,38 @@ import AdmZip from "adm-zip";
 import { Pool } from "pg";
 
 export const getDatafeeds = async (
-  usernameId: string,
-  SubscriptionId: string
+  usernameId?: string,
+  subscriptionId?: string
 ) => {
-  const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
-    encoding: "utf8",
-  });
-  const localPath = "./cj/datafeeds/";
-  /*const sftp = new Client();
-  await sftp.connect({
-    host: "datatransfer.cj.com",
-    port: 22,
-    username: usernameId,
-    privateKey: privateKey,
-    algorithms: {
-      serverHostKey: ["ssh-rsa", "ssh-dss"],
-    },
-  });
-  const remotePath = `/outgoing/productcatalog/${SubscriptionId}`;
-  fs.rmSync(localPath, { recursive: true, force: true });
-  await sftp.downloadDir(remotePath, localPath);
-  sftp.end();
+  console.log("> Sync datafeeds");
+  let localPath = "./cj/datafeeds_sample/";
+  if (usernameId !== undefined && subscriptionId !== undefined) {
+    const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
+      encoding: "utf8",
+    });
+    localPath = "./cj/datafeeds/";
+    const sftp = new Client();
+    await sftp.connect({
+      host: "datatransfer.cj.com",
+      port: 22,
+      username: usernameId,
+      privateKey: privateKey,
+      algorithms: {
+        serverHostKey: ["ssh-rsa", "ssh-dss"],
+      },
+    });
+    const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
+    fs.rmSync(localPath, { recursive: true, force: true });
+    await sftp.downloadDir(remotePath, localPath);
+    sftp.end();
+  }
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
       const zip = new AdmZip(filePath);
       zip.extractAllTo(localPath, true);
-      fs.unlink(`${localPath}${file}`, (err) => {
-        if (err) console.log(err);
-      });
     }
-  });*/
+  });
   await pool.query(`
   DROP TABLE IF EXISTS store_datafeeds_temp;
   CREATE TABLE store_datafeeds_temp (LIKE store_datafeeds INCLUDING ALL);
@@ -68,7 +69,7 @@ export const getDatafeeds = async (
       `);
       await pool.query(`
       DROP TABLE IF EXISTS store_products_category;
-      CREATE TABLE store_products_category as (SELECT distinct(google_product_category_name) as category FROM store_datafeeds WHERE google_product_category_name is not null);
+      CREATE TABLE store_products_category as (SELECT distinct(google_product_category_name) as category FROM store_datafeeds WHERE google_product_category_name <> '');
       `);
       await pool.query(`
       DROP TABLE IF EXISTS store_products_count;

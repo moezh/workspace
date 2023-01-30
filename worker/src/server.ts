@@ -1,13 +1,11 @@
 import { CronJob } from "cron";
+import { getDatafeeds } from "./services/cj";
 
 import everyHour from "./everyHour";
 import everyDay from "./everyDay";
 
-console.log(process.env.NODE_ENV === "development");
-
 (async () => {
-  everyHour();
-  everyDay();
+  await getDatafeeds();
   new CronJob("* * * * 0", everyHour, null, true);
   new CronJob("* * * 5 0", everyDay, null, true);
 })();

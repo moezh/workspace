@@ -15,7 +15,6 @@ export default function Search() {
         <h1 className="w-[280px] font-medium text-xl uppercase font-serif py-4">
           Coming Soon
         </h1>
-        <p className="w-[260px]">Under Construction</p>
       </div>
     </>
   );

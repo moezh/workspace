@@ -45,19 +45,27 @@ export const getProducts = async (req: Request, res: Response) => {
 
 export const getProductsCount = async (req: Request, res: Response) => {
   const db = req.app.get("db");
-  const category =
-    req.query.category === undefined ? "%" : (req.query.category as string);
-  let sql: string = `
-  SELECT product_category_name, product_count
-  FROM store_products_count
-  WHERE product_category_id like $1
-  `;
-  let values: string[] = [category];
+  let sql: string;
+  let values: string[];
+  if (req.query.category === undefined) {
+    sql = `
+    SELECT 'All Products' as product_category_name, sum(product_count) as product_count
+    FROM store_products_count
+    `;
+    values = [];
+  } else {
+    sql = `
+    SELECT product_category_name, product_count
+    FROM store_products_count
+    WHERE product_category_id like $1
+    `;
+    values = [req.query.category as string];
+  }
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      const data = result.rows;
+      const data = result.rows[0];
       res.json(data);
     }
   });
