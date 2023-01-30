@@ -9,5 +9,5 @@ console.log(process.env.NODE_ENV === "development");
   everyHour();
   everyDay();
   new CronJob("* * * * 0", everyHour, null, true);
-  new CronJob("* * * 0 0", everyDay, null, true);
+  new CronJob("* * * 5 0", everyDay, null, true);
 })();

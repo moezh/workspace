@@ -97,4 +97,12 @@ ON store_datafeeds (
 "google_product_category_name"
 );
 
+CREATE TABLE store_products_category (
+"category" TEXT
+);
 
+CREATE TABLE store_products_count (
+"product_category_id" TEXT,
+"product_category_name" TEXT,
+"product_count" bigint
+);

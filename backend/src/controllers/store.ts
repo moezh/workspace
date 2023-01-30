@@ -43,6 +43,26 @@ export const getProducts = async (req: Request, res: Response) => {
   });
 };
 
+export const getProductsCount = async (req: Request, res: Response) => {
+  const db = req.app.get("db");
+  const category =
+    req.query.category === undefined ? "%" : (req.query.category as string);
+  let sql: string = `
+  SELECT product_category_name, product_count
+  FROM store_products_count
+  WHERE product_category_id like $1
+  `;
+  let values: string[] = [category];
+  db.query(sql, values, (err: any, result: { rows: any }) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      const data = result.rows;
+      res.json(data);
+    }
+  });
+};
+
 export const getProduct = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   const uid = req.params.uid;
@@ -81,7 +101,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   const db = req.app.get("db");
-  let sql: string = `select distinct(google_product_category_name) from store_datafeeds;`;
+  let sql: string = `select category from store_products_category;`;
   let values: string[] = [];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
