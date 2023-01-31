@@ -27,7 +27,7 @@ export default function Page(props: { data: any }) {
         description="I take the protection of our users' personal information seriously and am dedicated to safeguarding their privacy in compliance with this Privacy Policy."
       />
       <Header />
-      <div className="w-full">
+      <div className="w-full pt-4">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           Privacy Policy
         </h1>

@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import Search from "../../components/Search";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -14,6 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   const page = context.query.page ? Number(context.query.page) : 1;
   const category = context.query.category ? context.query.category : "";
+  const search = context.query.search ? context.query.search : "";
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -28,8 +30,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ? Number(configData.productsPerPage)
     : 24;
   const offset = page * limit - limit;
-  let urlProducts = `http://backend:3001/api/store/products?limit=${limit}&offset=${offset}`;
+  let urlProducts = `http://backend:3001/api/store/products?limit=${
+    limit + 1
+  }&offset=${offset}`;
   if (category !== "") urlProducts += `&category=${category}`;
+  if (search !== "") urlProducts += `&search=${search}`;
   const products = await fetch(urlProducts, {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
@@ -37,6 +42,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const productsData = await products.json();
+  let nextPage = false;
+  if (productsData.length > limit) {
+    nextPage = true;
+    productsData.pop();
+  }
   let urlProductsCount = `http://backend:3001/api/store/products/count`;
   if (category !== "") urlProductsCount += `?category=${category}`;
   const count = await fetch(urlProductsCount, {
@@ -53,6 +63,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       count: countData,
       currentPage: page,
       currentCategory: category,
+      currentSearch: search,
+      nextPage: nextPage,
     },
   };
 };
@@ -63,17 +75,22 @@ export default function Page(props: {
   count: any;
   currentPage: number;
   currentCategory: string;
+  currentSearch: string;
+  nextPage: boolean;
 }) {
-  const totalPages = Math.ceil(
-    Number(props.count.product_count) / props.config.productsPerPage
-  );
   return (
     <>
-      <Head title={props.count.product_category_name} />
+      <Head
+        title={
+          props.currentSearch !== ""
+            ? "Search"
+            : props.count.product_category_name
+        }
+      />
       <Header />
       <div className="w-full">
-        <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4 flex flex-col items-start justify-start">
+        <div className="flex flex-row items-start justify-start py-1">
+          <div className="w-1/2 flex flex-col items-start justify-center">
             <Link href={`/categories`}>
               <svg
                 fill="none"
@@ -90,31 +107,23 @@ export default function Page(props: {
               </svg>
             </Link>
           </div>
-          <div className="w-2/4 flex flex-col items-center justify-start text-center">
-            <h1 className="font-medium text-xl uppercase font-serif">
-              {props.count.product_category_name}
-            </h1>
-            <p>{Number(props.count.product_count)} items</p>
-          </div>
-          <div className="w-1/4 flex flex-col items-end justify-start">
-            <Link href={`/search`}>
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </Link>
+          <div className="w-1/2 flex flex-col items-end justify-center">
+            <Search />
           </div>
         </div>
-        <div className="flex flex-row flex-wrap items-start justify-center pt-8">
+        <div className="flex flex-col items-center justify-start pt-4">
+          <h1 className="font-medium text-xl uppercase font-serif">
+            {props.currentSearch !== ""
+              ? "Search"
+              : props.count.product_category_name}
+          </h1>
+          {props.currentSearch !== "" ? (
+            <p>{props.currentSearch}</p>
+          ) : (
+            <p>{Number(props.count.product_count)} item(s)</p>
+          )}
+        </div>
+        <div className="flex flex-row flex-wrap items-start justify-center pt-4 pb-6">
           {props.products.map((product: any, index: number) => (
             <div
               key={`${product.product_uid}-${index}`}
@@ -148,13 +157,22 @@ export default function Page(props: {
             </div>
           ))}
         </div>
-        <div className="py-2 font-light" hidden={totalPages > 1 ? false : true}>
+        <div
+          className="font-light"
+          hidden={
+            props.currentPage === 1 && props.nextPage === false ? true : false
+          }
+        >
           <div className="flex flex-row items-start justify-center">
             <div className="flex flex-col items-center justify-center mr-2 w-8">
               <Link
                 href={`/?page=${Number(props.currentPage) - 1}${
                   props.currentCategory !== ""
                     ? `&category=${props.currentCategory}`
+                    : ""
+                }${
+                  props.currentSearch !== ""
+                    ? `&search=${props.currentSearch}`
                     : ""
                 }`}
                 hidden={props.currentPage > 1 ? false : true}
@@ -175,7 +193,7 @@ export default function Page(props: {
               </Link>
             </div>
             <div className="flex flex-col items-center justify-center mx-2">
-              Page {props.currentPage} / {totalPages}
+              Page {props.currentPage}
             </div>
             <div className="flex flex-col items-center justify-center ml-2 w-8">
               <Link
@@ -183,8 +201,12 @@ export default function Page(props: {
                   props.currentCategory !== ""
                     ? `&category=${props.currentCategory}`
                     : ""
+                }${
+                  props.currentSearch !== ""
+                    ? `&search=${props.currentSearch}`
+                    : ""
                 }`}
-                hidden={props.currentPage < totalPages ? false : true}
+                hidden={!props.nextPage}
               >
                 <svg
                   aria-hidden="true"

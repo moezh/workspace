@@ -29,7 +29,7 @@ export default function Page(props: { data: any }) {
             out to me."
       />
       <Header />
-      <div className="w-full">
+      <div className="w-full pt-4">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           Contact / Get In Touch
         </h1>

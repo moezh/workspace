@@ -76,11 +76,13 @@ export default function Page(props: { data: any }) {
         description={props.data.description[0]}
       />
       <Header />
-      <div className="w-full">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
+      <div className="w-full pt-4">
+        <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
           {arrayToText(props.data.title)}
         </h1>
-        <p className="pt-2 text-center">{props.data.product_category_name}</p>
+        <p className="pt-2 w-full text-center">
+          {props.data.product_category_name}
+        </p>
         <div className="flex flex-col items-center justify-start mt-6 mb-2">
           <div className="flex flex-row flex-wrap items-center justify-center">
             <Link href={`/link/${props.data.gtin[0]}`}>
@@ -91,14 +93,16 @@ export default function Page(props: { data: any }) {
             </Link>
           </div>
           <div className="flex flex-col items-center justify-start pt-4">
-            <p className="text-center">
+            <p className="w-full text-center">
               {arrayToText(props.data.brand, "brand")}
             </p>
             <div className="flex flex-row items-start justify-start text-center pt-1">
               {props.data.sale_price[0] === "" ? (
-                <p>{arrayToText(props.data.price, "price")}</p>
+                <p className="w-full">
+                  {arrayToText(props.data.price, "price")}
+                </p>
               ) : (
-                <p>
+                <p className="w-full">
                   {arrayToText(props.data.sale_price, "price")}{" "}
                   <s className="text-sm">{arrayToText(props.data.price)}</s>
                 </p>
@@ -114,17 +118,25 @@ export default function Page(props: { data: any }) {
             </div>
           </div>
           <div className="flex flex-col items-start justify-start pt-2">
-            <p>{arrayToText(props.data.description)}</p>
-            <p className="pt-4">
+            <p className="w-full">{arrayToText(props.data.description)}</p>
+            <p className="pt-4 w-full">
               {arrayToText(props.data.availability, "availability")}
             </p>
-            <p>{arrayToText(props.data.condition, "condition")}</p>
-            <p>{arrayToText(props.data.age_group, "age group")}</p>
-            <p>{arrayToText(props.data.gender, "gender")}</p>
-            <p>{arrayToText(props.data.color, "color")}</p>
-            <p>{arrayToText(props.data.material, "material")}</p>
-            <p>{arrayToText(props.data.pattern, "pattern")}</p>
-            <div className="w-[260px] flex flex-col items-start justify-start py-2">
+            <p className="w-full">
+              {arrayToText(props.data.condition, "condition")}
+            </p>
+            <p className="w-full">
+              {arrayToText(props.data.age_group, "age group")}
+            </p>
+            <p className="w-full">{arrayToText(props.data.gender, "gender")}</p>
+            <p className="w-full">{arrayToText(props.data.color, "color")}</p>
+            <p className="w-full">
+              {arrayToText(props.data.material, "material")}
+            </p>
+            <p className="w-full">
+              {arrayToText(props.data.pattern, "pattern")}
+            </p>
+            <div className="w-[260px] flex flex-col items-start justify-start pt-2">
               <Link href={`/link/${props.data.gtin[0]}`}>
                 <p className="font-medium capitalize py-2">more details →</p>
               </Link>

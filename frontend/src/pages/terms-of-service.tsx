@@ -27,7 +27,7 @@ export default function Page(props: { data: any }) {
         description="This page outlines the terms of service, providing you with critical information pertaining to your legal rights."
       />
       <Header />
-      <div className="w-full">
+      <div className="w-full pt-4">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           Terms of Service
         </h1>

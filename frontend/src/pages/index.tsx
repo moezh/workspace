@@ -32,7 +32,7 @@ export default function Page(props: { data: any }) {
         description={props.data.profile_summary}
       />
       <Header />
-      <div className="w-full">
+      <div className="w-full pt-4">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
           {props.data.title}
         </h1>

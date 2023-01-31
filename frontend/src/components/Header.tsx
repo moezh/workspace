@@ -4,7 +4,7 @@ import DarkModeToggler from "./DarkModeToggler";
 
 const Header = () => {
   return (
-    <header className="flex flex-row items-center justify-center text-center pt-4 pb-4 mb-2">
+    <header className="flex flex-row items-center justify-center text-center pt-4 pb-2">
       <div className="w-1/2 flex flex-col items-start justify-center">
         <Link href="/">
           <Logo />

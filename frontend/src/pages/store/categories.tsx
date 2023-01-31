@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Link from "next/link";
 import GoBack from "../../components/GoBack";
+import Logo from "../../components/Logo";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -30,14 +31,16 @@ export default function Categories(props: { categories: any }) {
     <>
       <Head title="" />
       <div className="w-full flex flex-col items-center justify-start px-4 pt-4 pb-8">
-        <div className="fixed right-0 pt-4 pr-4">
+        <div className="fixed top-8 right-8">
           <GoBack />
         </div>
-        <h1 className="w-[280px] font-medium text-xl uppercase font-serif py-4">
-          <Link href="/">All Products →</Link>
+        <h1 className="w-[280px] flex flex-col items-start justify-start py-4">
+          <Link href="/">
+            <Logo />
+          </Link>
         </h1>
         {props.categories["Root"]?.map((level0: any) => (
-          <div key={level0} className="w-[260px]">
+          <div key={level0} className="w-[280px]">
             <div className="py-4 uppercase">
               {level0.slice(-1) === "→" ? (
                 <Link

@@ -22,20 +22,24 @@ export const getProducts = async (req: Request, res: Response) => {
     req.query.limit === undefined ? "100" : (req.query.limit as string);
   const offset =
     req.query.offset === undefined ? "0" : (req.query.offset as string);
-  const category =
-    req.query.category === undefined ? "%" : (req.query.category as string);
-  const search =
-    req.query.search === undefined ? "" : (req.query.search as string);
   let sql: string = `
-  SELECT product_uid, title, brand, product_category_name, image_link, price, sale_price
-  FROM store_datafeeds 
-  WHERE product_category_id like $3
-  AND text_search @@ websearch_to_tsquery('english', $4)
-  GROUP BY product_uid, title, brand, product_category_name, image_link, price, sale_price
-  LIMIT $1
-  OFFSET $2
+  SELECT product_uid, title, brand, product_category_name, image_link, price, sale_price 
+  FROM store_datafeeds WHERE 1=1 
   `;
-  let values: string[] = [limit, offset, category, search];
+  if (req.query.category !== undefined)
+    sql += `AND product_category_id like $3 `;
+  if (req.query.search !== undefined)
+    sql += `AND text_search @@ websearch_to_tsquery('english', ${
+      req.query.category !== undefined ? "$4" : "$3"
+    }) `;
+  sql += `
+  GROUP BY product_uid, title, brand, product_category_name, image_link, price, sale_price 
+  LIMIT $1 OFFSET $2
+  `;
+  let values: string[] = [limit, offset];
+  if (req.query.category !== undefined)
+    values.push(req.query.category as string);
+  if (req.query.search !== undefined) values.push(req.query.search as string);
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
@@ -51,25 +55,22 @@ export const getProductsCount = async (req: Request, res: Response) => {
   let sql: string;
   let values: string[];
   if (req.query.category === undefined) {
-    sql = `
-    SELECT 'All Products' as product_category_name, sum(product_count) as product_count
-    FROM store_products_count
-    `;
+    sql = `SELECT 'All Products' as product_category_name, sum(product_count) as product_count FROM store_products_count`;
     values = [];
   } else {
-    sql = `
-    SELECT product_category_name, product_count
-    FROM store_products_count
-    WHERE product_category_id like $1
-    `;
+    sql = `SELECT product_category_name, product_count FROM store_products_count WHERE product_category_id like $1`;
     values = [req.query.category as string];
   }
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      const data = result.rows[0];
-      res.json(data);
+      const data = result.rows;
+      if (data.length === 0) {
+        res.status(404).json({ code: 404, description: "Not Found" });
+      } else {
+        res.json(data[0]);
+      }
     }
   });
 };
@@ -155,11 +156,7 @@ export const getCategories = async (req: Request, res: Response) => {
 export const getLink = async (req: Request, res: Response) => {
   const db = req.app.get("db");
   const gtin = req.params.gtin;
-  let sql: string = `
-  SELECT link
-  FROM store_datafeeds 
-  WHERE gtin = $1
-  `;
+  let sql: string = `SELECT link FROM store_datafeeds WHERE gtin = $1`;
   let values: string[] = [gtin];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {
