@@ -44,18 +44,14 @@ export const getDatafeeds = async (
         input: require("fs").createReadStream(`${localPath}${file}`),
         crlfDelay: Infinity,
       });
-      // let header: string = "";
       const clientDB = await pool.connect();
       let isHeader = true;
       for await (const line of lineReader) {
         if (isHeader) {
           isHeader = false;
-          //header = line.toLowerCase();
         } else {
           const values = line.replaceAll("'", "''").replaceAll('"', "'");
-          //await clientDB.query(
-          clientDB.query(
-            //  `INSERT INTO store_datafeeds_temp (${header}) VALUES (${values}) ON CONFLICT DO NOTHING;`
+          await clientDB.query(
             `INSERT INTO store_datafeeds_temp VALUES (${values}) ON CONFLICT DO NOTHING;`
           );
         }

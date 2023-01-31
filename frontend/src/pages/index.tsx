@@ -179,7 +179,11 @@ export default function Page(props: { data: any }) {
                 }`}
               >
                 <Logo project={project} />
-                <ProjectLink project={project} />
+                {props.data.projects_under_construction.includes(project) ? (
+                  <p className="p-1 capitalize">Coming soon</p>
+                ) : (
+                  <ProjectLink project={project} />
+                )}
                 <p className="pt-1">{props.data[`${project}_summary`]}</p>
               </div>
             ))}
