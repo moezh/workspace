@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
   matcher: [
-    "/((?!_next|privacy-policy|terms-of-service|contact-mh|[\\w-]+\\.\\w+).*)",
+    "/((?!_next|privacy-policy|terms-of-service|contact|[\\w-]+\\.\\w+).*)",
   ],
 };
 
