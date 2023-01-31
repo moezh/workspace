@@ -3,7 +3,6 @@ import fs from "fs";
 import Client from "ssh2-sftp-client";
 import readLine from "readline";
 import AdmZip from "adm-zip";
-import { setMaxIdleHTTPParsers } from "http";
 
 export const getDatafeeds = async (
   usernameId: string,
@@ -28,7 +27,6 @@ export const getDatafeeds = async (
   fs.rmSync(localPath, { recursive: true, force: true });
   await sftp.downloadDir(remotePath, localPath, { useFastget: true });
   sftp.end();
-  console.log("> Sync datafeeds");
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
@@ -39,6 +37,7 @@ export const getDatafeeds = async (
   await pool.query("TRUNCATE TABLE store_datafeeds;");
   fs.readdirSync(localPath).forEach(async (file) => {
     if (file.split(".").pop() === "txt") {
+      console.log(`> Sync datafeed: ${file}`);
       const lineReader = readLine.createInterface({
         input: require("fs").createReadStream(`${localPath}${file}`),
         crlfDelay: Infinity,
@@ -66,7 +65,7 @@ export const getDatafeeds = async (
           FROM store_datafeeds 
           group by product_category_id, product_category_name);
           `);
-      console.log("> Datafeeds Synced");
+      console.log(`> Datafeed Synced: ${file}`);
     }
   });
 };

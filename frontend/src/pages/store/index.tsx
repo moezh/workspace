@@ -81,11 +81,11 @@ export default function Page(props: {
   return (
     <>
       <Head
-        title={
+        title={`MH's Store | ${
           props.currentSearch !== ""
             ? "Search"
             : props.count.product_category_name
-        }
+        }`}
       />
       <Header />
       <div className="w-full">

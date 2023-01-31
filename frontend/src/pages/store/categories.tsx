@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function Categories(props: { categories: any }) {
   return (
     <>
-      <Head title="" />
+      <Head title="MH's Store | Categories" />
       <div className="w-full flex flex-col items-center justify-start px-4 pt-4 pb-8">
         <div className="fixed top-8 right-8">
           <GoBack />
