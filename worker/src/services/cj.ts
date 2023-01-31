@@ -3,18 +3,19 @@ import fs from "fs";
 import Client from "ssh2-sftp-client";
 import readLine from "readline";
 import AdmZip from "adm-zip";
+import { setMaxIdleHTTPParsers } from "http";
 
 export const getDatafeeds = async (
   usernameId: string,
   subscriptionId: string
 ) => {
-  console.log("> Sync datafeeds");
+  console.log("> Download datafeeds");
   const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
     encoding: "utf8",
   });
   const localPath = "./cj/datafeeds/";
   const sftp = new Client();
-  await sftp.connect({
+  /*await sftp.connect({
     host: "datatransfer.cj.com",
     port: 22,
     username: usernameId,
@@ -26,7 +27,8 @@ export const getDatafeeds = async (
   const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
   fs.rmSync(localPath, { recursive: true, force: true });
   await sftp.downloadDir(remotePath, localPath, { useFastget: true });
-  sftp.end();
+  sftp.end();*/
+  console.log("> Sync datafeeds");
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
@@ -34,43 +36,36 @@ export const getDatafeeds = async (
       zip.extractAllTo(localPath, true);
     }
   });
-  await pool.query(`
-  DROP TABLE IF EXISTS store_datafeeds_temp;
-  CREATE TABLE store_datafeeds_temp (LIKE store_datafeeds INCLUDING ALL);
-  `);
+  await pool.query("TRUNCATE TABLE store_datafeeds;");
   fs.readdirSync(localPath).forEach(async (file) => {
     if (file.split(".").pop() === "txt") {
       const lineReader = readLine.createInterface({
         input: require("fs").createReadStream(`${localPath}${file}`),
         crlfDelay: Infinity,
       });
-      const clientDB = await pool.connect();
       let isHeader = true;
+      const clientDB = await pool.connect();
       for await (const line of lineReader) {
         if (isHeader) {
           isHeader = false;
         } else {
           const values = line.replaceAll("'", "''").replaceAll('"', "'");
           await clientDB.query(
-            `INSERT INTO store_datafeeds_temp VALUES (${values}) ON CONFLICT DO NOTHING;`
+            `INSERT INTO store_datafeeds VALUES (${values}) ON CONFLICT DO NOTHING;`
           );
         }
       }
       clientDB.release();
       await pool.query(`
-      DROP TABLE IF EXISTS store_datafeeds;
-      ALTER TABLE store_datafeeds_temp RENAME TO store_datafeeds;
-      `);
+          DROP TABLE IF EXISTS store_products_category;
+          CREATE TABLE store_products_category as (SELECT distinct(google_product_category_name) as category FROM store_datafeeds WHERE google_product_category_name <> '');
+          `);
       await pool.query(`
-      DROP TABLE IF EXISTS store_products_category;
-      CREATE TABLE store_products_category as (SELECT distinct(google_product_category_name) as category FROM store_datafeeds WHERE google_product_category_name <> '');
-      `);
-      await pool.query(`
-      DROP TABLE IF EXISTS store_products_count;
-      CREATE TABLE store_products_count as (SELECT product_category_id, product_category_name, count(distinct(product_uid)) as product_count
-      FROM store_datafeeds 
-      group by product_category_id, product_category_name);
-      `);
+          DROP TABLE IF EXISTS store_products_count;
+          CREATE TABLE store_products_count as (SELECT product_category_id, product_category_name, count(distinct(product_uid)) as product_count
+          FROM store_datafeeds 
+          group by product_category_id, product_category_name);
+          `);
       console.log("> Datafeeds Synced");
     }
   });
