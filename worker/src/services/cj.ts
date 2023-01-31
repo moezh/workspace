@@ -15,7 +15,7 @@ export const getDatafeeds = async (
   });
   const localPath = "./cj/datafeeds/";
   const sftp = new Client();
-  /*await sftp.connect({
+  await sftp.connect({
     host: "datatransfer.cj.com",
     port: 22,
     username: usernameId,
@@ -27,7 +27,7 @@ export const getDatafeeds = async (
   const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
   fs.rmSync(localPath, { recursive: true, force: true });
   await sftp.downloadDir(remotePath, localPath, { useFastget: true });
-  sftp.end();*/
+  sftp.end();
   console.log("> Sync datafeeds");
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
