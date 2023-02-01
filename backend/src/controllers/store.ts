@@ -1,23 +1,22 @@
 import { Request, Response } from "express";
+import { Pool } from "pg";
 
 export const getConfig = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   let sql: string = `SELECT * FROM store_config`;
   let values: string[] = [];
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      const data = new Map(
-        result.rows.map(({ name, value }: any) => [name, value])
-      );
+      const data = new Map(result.rows.map(({ name, value }) => [name, value]));
       res.json(Object.fromEntries(data));
     }
   });
 };
 
 export const getProducts = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   const limit =
     req.query.limit === undefined ? "100" : (req.query.limit as string);
   const offset =
@@ -40,7 +39,7 @@ export const getProducts = async (req: Request, res: Response) => {
   if (req.query.category !== undefined)
     values.push(req.query.category as string);
   if (req.query.search !== undefined) values.push(req.query.search as string);
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -51,7 +50,7 @@ export const getProducts = async (req: Request, res: Response) => {
 };
 
 export const getProductsCount = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   let sql: string;
   let values: string[];
   if (req.query.category === undefined) {
@@ -61,7 +60,7 @@ export const getProductsCount = async (req: Request, res: Response) => {
     sql = `SELECT product_category_name, product_count FROM store_products_count WHERE product_category_id like $1`;
     values = [req.query.category as string];
   }
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -76,7 +75,7 @@ export const getProductsCount = async (req: Request, res: Response) => {
 };
 
 export const getProduct = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   const uid = req.params.uid;
   let sql: string = `
   SELECT  title, brand, product_category_name, description, gtin, link, image_link, additional_image_link, 
@@ -85,7 +84,7 @@ export const getProduct = async (req: Request, res: Response) => {
   WHERE product_uid = $1
   `;
   let values: string[] = [uid];
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -93,18 +92,21 @@ export const getProduct = async (req: Request, res: Response) => {
       if (data.length === 0) {
         res.status(404).json({ code: 404, description: "Not Found" });
       } else {
-        const reducedData = data.reduce((accumulator: any, current: any) => {
-          Object.entries(current).forEach((entry) => {
-            const [key, value] = entry;
-            if (!accumulator[key]) {
-              accumulator[key] = [];
-            }
-            if (!accumulator[key].includes(value)) {
-              accumulator[key].push(value);
-            }
-          });
-          return accumulator;
-        }, {});
+        const reducedData = data.reduce(
+          (accumulator: Record<string, string[]>, current) => {
+            Object.entries(current).forEach((entry) => {
+              const [key, value] = entry;
+              if (!accumulator[key]) {
+                accumulator[key] = [];
+              }
+              if (!accumulator[key].includes(value)) {
+                accumulator[key].push(value);
+              }
+            });
+            return accumulator;
+          },
+          {}
+        );
         res.json(reducedData);
       }
     }
@@ -112,53 +114,56 @@ export const getProduct = async (req: Request, res: Response) => {
 };
 
 export const getCategories = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   let sql: string = `select category from store_products_category;`;
   let values: string[] = [];
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {
       const data = result.rows;
-      const reducedData = data.reduce((accumulator: any, current: any) => {
-        Object.values(current).forEach((value: any) => {
-          const categories = value.split(" > ");
-          categories.forEach((category: any, index: number) => {
-            const parent = index === 0 ? "Root" : categories[index - 1];
-            if (!accumulator[parent]) {
-              accumulator[parent] = [];
-            }
-            if (
-              !accumulator[parent].includes(category) &&
-              !accumulator[parent].includes(`${category} →`)
-            ) {
-              accumulator[parent].push(category);
-            }
-            if (category === categories[categories.length - 1]) {
-              if (accumulator[parent].includes(category)) {
-                accumulator[parent] = accumulator[parent].filter(
-                  (item: any) => item !== category
-                );
+      const reducedData = data.reduce(
+        (accumulator: Record<string, string[]>, current) => {
+          Object.values(current).forEach((value) => {
+            const categories = value.split(" > ");
+            categories.forEach((category, index: number) => {
+              const parent = index === 0 ? "Root" : categories[index - 1];
+              if (!accumulator[parent]) {
+                accumulator[parent] = [];
               }
-              if (!accumulator[parent].includes(`${category} →`)) {
-                accumulator[parent].push(`${category} →`);
+              if (
+                !accumulator[parent].includes(category) &&
+                !accumulator[parent].includes(`${category} →`)
+              ) {
+                accumulator[parent].push(category);
               }
-            }
+              if (category === categories[categories.length - 1]) {
+                if (accumulator[parent].includes(category)) {
+                  accumulator[parent] = accumulator[parent].filter(
+                    (item) => item !== category
+                  );
+                }
+                if (!accumulator[parent].includes(`${category} →`)) {
+                  accumulator[parent].push(`${category} →`);
+                }
+              }
+            });
           });
-        });
-        return accumulator;
-      }, {});
+          return accumulator;
+        },
+        {}
+      );
       res.json(reducedData);
     }
   });
 };
 
 export const getLink = async (req: Request, res: Response) => {
-  const db = req.app.get("db");
+  const db: Pool = req.app.get("db");
   const gtin = req.params.gtin;
   let sql: string = `SELECT link FROM store_datafeeds WHERE gtin = $1`;
   let values: string[] = [gtin];
-  db.query(sql, values, (err: any, result: { rows: any }) => {
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json(err);
     } else {

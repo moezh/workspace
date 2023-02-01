@@ -7,12 +7,6 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "../../components/Search";
-import {
-  ReactElement,
-  JSXElementConstructor,
-  ReactFragment,
-  ReactPortal,
-} from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -154,7 +148,8 @@ export default function Page(props: {
                       <>{product.price}</>
                     ) : (
                       <>
-                        {product.sale_price} <s>{product.price}</s>
+                        {product.sale_price}{" "}
+                        <s className="text-sm">{product.price}</s>
                       </>
                     )}
                   </div>
