@@ -1,9 +1,19 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const GoBack = (props: { text?: string }) => {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
   return (
-    <button type="button" onClick={() => router.back()}>
+    <button
+      type="button"
+      onClick={() => router.back()}
+      hidden={!(window?.history?.length > 2)}
+    >
       {props.text !== undefined ? (
         props.text
       ) : (

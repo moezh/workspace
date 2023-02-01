@@ -18,7 +18,7 @@ export const getConfig = async (req: Request, res: Response) => {
 
 export const getContact = async (req: Request, res: Response) => {
   const db = req.app.get("db");
-  let sql: string = `SELECT * FROM config where name in ('logo_black', 'logo_white', 'contact_email', 'contact_whatapp', 'contact_linkedin_url', 'contact_calendly_url')`;
+  let sql: string = `SELECT * FROM config where name in ('logo_black', 'logo_white', 'profile_name', 'contact_email', 'contact_whatapp', 'contact_linkedin_url', 'contact_calendly_url', 'contact_summary')`;
   let values: string[] = [];
   db.query(sql, values, (err: any, result: { rows: any }) => {
     if (err) {

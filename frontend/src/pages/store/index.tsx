@@ -7,6 +7,12 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "../../components/Search";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactFragment,
+  ReactPortal,
+} from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -70,9 +76,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function Page(props: {
-  config: any;
-  products: any;
-  count: any;
+  config: { store_title: string; store_summary: string };
+  products: Record<string, string>[];
+  count: { product_category_name: string; product_count: string };
   currentPage: number;
   currentCategory: string;
   currentSearch: string;
@@ -81,11 +87,12 @@ export default function Page(props: {
   return (
     <>
       <Head
-        title={`MH's Store | ${
+        title={`${props.config.store_title} - ${
           props.currentSearch !== ""
             ? "Search"
             : props.count.product_category_name
         }`}
+        description={props.config.store_summary}
       />
       <Header />
       <div className="w-full">
@@ -124,7 +131,7 @@ export default function Page(props: {
           )}
         </div>
         <div className="flex flex-row flex-wrap items-start justify-center pt-4 pb-6">
-          {props.products.map((product: any, index: number) => (
+          {props.products.map((product, index: number) => (
             <div
               key={`${product.product_uid}-${index}`}
               className="w-[320px] flex flex-col items-center justify-start text-center px-2"

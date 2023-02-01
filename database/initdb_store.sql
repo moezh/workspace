@@ -9,6 +9,10 @@ CREATE TABLE store_config (
 INSERT INTO store_config (name, value)
 VALUES 
 ('subdomain','store'),
+('store_title','MH''s Store'),
+('store_summary','Explore a diverse range of top-rated products and brands from around the world, all expertly curated and assembled in one convenient place.'),
+('store_category_title','Categories'),
+('store_category_summary','Find all your shopping needs in one place with our comprehensive category page. Browse through a variety of categories to discover the products you''re looking for.'),
 ('productsPerPage',24);
 
 CREATE TABLE store_datafeeds (

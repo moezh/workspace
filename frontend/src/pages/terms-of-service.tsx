@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { ReactElement, JSXElementConstructor, ReactFragment } from "react";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -19,7 +20,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-export default function Page(props: { data: any }) {
+export default function Page(props: { data: { profile_name: string } }) {
   return (
     <>
       <Head

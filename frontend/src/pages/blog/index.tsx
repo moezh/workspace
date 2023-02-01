@@ -28,24 +28,42 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { config: configData, posts: postsData } };
 };
 
-export default function Page(props: { config: any; posts: any }) {
+export default function Page(props: {
+  config: {
+    postsPerPage: string;
+    blog_title: string;
+    blog_summary: string;
+    tags: string;
+  };
+  posts: {
+    id: string;
+    title: string;
+    tags: string;
+    summary: string;
+  }[];
+}) {
   const [currentTag, setCurrentTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const filtredPosts = props.posts.filter((post: { tags: string }) =>
     post.tags.includes(currentTag)
   );
-  const totalPages = Math.ceil(filtredPosts.length / props.config.postsPerPage);
+  const totalPages = Math.ceil(
+    filtredPosts.length / Number(props.config.postsPerPage)
+  );
   const postsToDisplay = filtredPosts.slice(
-    (currentPage - 1) * props.config.postsPerPage,
-    currentPage * props.config.postsPerPage
+    (currentPage - 1) * Number(props.config.postsPerPage),
+    currentPage * Number(props.config.postsPerPage)
   );
   return (
     <>
-      <Head title="MH's Blog" />
+      <Head
+        title={props.config.blog_title}
+        description={props.config.blog_summary}
+      />
       <Header />
       <div className="w-full pt-4">
         <h1 className="font-medium text-xl uppercase font-serif text-center">
-          MH's Blog
+          {props.config.blog_title}
         </h1>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
           <button
@@ -59,7 +77,7 @@ export default function Page(props: { config: any; posts: any }) {
           >
             #all
           </button>
-          {props.config.tags.split(",").map((tag: string, index: number) => (
+          {props.config.tags.split(",").map((tag, index: number) => (
             <button
               key={index}
               onClick={
@@ -84,46 +102,36 @@ export default function Page(props: { config: any; posts: any }) {
           ))}
         </div>
         <div className="flex flex-row flex-wrap items-start justify-start pt-6">
-          {postsToDisplay.map(
-            (
-              post: {
-                id: string;
-                title: string;
-                tags: string;
-                summary: string;
-              },
-              index: number
-            ) => (
-              <div
-                key={index}
-                className="sm:w-full md:w-1/2 lg:w-1/3 flex flex-col items-start justify-start p-2 mb-4"
-              >
-                <Link href={`/${post.id}`}>
-                  <p className="font-medium">{post.title}</p>
-                </Link>
-                <div className="w-full flex flex-row flex-wrap items-start justify-start pt-1">
-                  {post.tags.split(",").map((tag: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setCurrentTag(tag);
-                        setCurrentPage(1);
-                      }}
-                      className="font-light mr-2"
-                    >
-                      #{tag}
-                    </button>
-                  ))}
-                </div>
-                <p className="pt-1">{post.summary}</p>
-                <div className="pt-1">
-                  <Link href={`/${post.id}`}>
-                    <p className="font-medium capitalize">Read full post →</p>
-                  </Link>
-                </div>
+          {postsToDisplay.map((post, index: number) => (
+            <div
+              key={index}
+              className="sm:w-full md:w-1/2 lg:w-1/3 flex flex-col items-start justify-start p-2 mb-4"
+            >
+              <Link href={`/${post.id}`}>
+                <p className="font-medium">{post.title}</p>
+              </Link>
+              <div className="w-full flex flex-row flex-wrap items-start justify-start pt-1">
+                {post.tags.split(",").map((tag, index: number) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCurrentTag(tag);
+                      setCurrentPage(1);
+                    }}
+                    className="font-light mr-2"
+                  >
+                    #{tag}
+                  </button>
+                ))}
               </div>
-            )
-          )}
+              <p className="pt-1">{post.summary}</p>
+              <div className="pt-1">
+                <Link href={`/${post.id}`}>
+                  <p className="font-medium capitalize">Read full post →</p>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div className="pt-6 font-light" hidden={totalPages > 1 ? false : true}>

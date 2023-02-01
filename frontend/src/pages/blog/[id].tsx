@@ -25,7 +25,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-export default function Page(props: { data: any }) {
+export default function Page(props: {
+  data: { title: string; summary: string; tags: string; content_html: string };
+}) {
   return (
     <>
       <Head title={props.data.title} description={props.data.summary} />
@@ -35,7 +37,7 @@ export default function Page(props: { data: any }) {
           {props.data.title}
         </h1>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
-          {props.data.tags.split(",").map((tag: string, index: number) => (
+          {props.data.tags.split(",").map((tag, index: number) => (
             <span key={index} className="font-light mr-2">
               #{tag}
             </span>

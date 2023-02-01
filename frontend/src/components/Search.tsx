@@ -1,18 +1,18 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 
-const Search = (props: { link?: string }) => {
+const Search = () => {
   const [mounted, setMounted] = useState(false);
   const [search, setSearch] = useState("");
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: { target: { value: string } }) => {
     setSearch(event.target.value);
   };
 
   const router = useRouter();
 
-  const handleKeyDown = (target: any) => {
+  const handleKeyDown = (target: { code: string }) => {
     if (target.code === "Enter") {
       router.push(`/?search=${search}`);
     }

@@ -6,6 +6,12 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactFragment,
+  ReactPortal,
+} from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -68,11 +74,30 @@ const arrayToImages = (arrayOfImages: string[]) => {
   }
 };
 
-export default function Page(props: { data: any }) {
+export default function Page(props: {
+  data: {
+    title: string[];
+    brand: string[];
+    gtin: string[];
+    description: string[];
+    product_category_name: string[];
+    image_link: string[];
+    additional_image_link: string[];
+    sale_price: string[];
+    price: string[];
+    availability: string[];
+    condition: string[];
+    age_group: string[];
+    gender: string[];
+    color: string[];
+    material: string[];
+    pattern: string[];
+  };
+}) {
   return (
     <>
       <Head
-        title={props.data.title[0]}
+        title={`${props.data.title[0]} - ${props.data.brand[0]}`}
         description={props.data.description[0]}
       />
       <Header />

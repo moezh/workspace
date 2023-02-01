@@ -10,6 +10,8 @@ INSERT INTO blog_config (name, value)
 VALUES 
 ('subdomain','blog'),
 ('postsPerPage',6),
+('blog_title','MH''s Blog'),
+('blog_summary','A blog where I share my knowledge and insights on various software engineering technologies, including: typescript, node.js, express.js, next.js, tailwindcss, docker, and postgresql.'),
 ('tags','docker,typescript,nodejs,expressjs,nextjs,tailwindcss,postgresql');
 
 CREATE TABLE blog_posts (

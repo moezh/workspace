@@ -27,6 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page(props: { data: any }) {
-  return <>{props.data.link}</>;
+export default function Page() {
+  return <></>;
 }

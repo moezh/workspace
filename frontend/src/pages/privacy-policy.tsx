@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-export default function Page(props: { data: any }) {
+export default function Page() {
   return (
     <>
       <Head

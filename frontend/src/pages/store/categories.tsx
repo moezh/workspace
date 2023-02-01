@@ -14,6 +14,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
+  const config = await fetch("http://backend:3001/api/store/", {
+    headers: {
+      Authorization: `Bearer ${jwt.sign("admin", password)}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const configData = await config.json();
   const categories = await fetch("http://backend:3001/api/store/categories", {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
@@ -22,14 +29,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   const categoriesData = await categories.json();
   return {
-    props: { categories: categoriesData },
+    props: { config: configData, categories: categoriesData },
   };
 };
 
-export default function Categories(props: { categories: any }) {
+export default function Categories(props: {
+  config: {
+    store_title: string;
+    store_category_title: string;
+    store_category_summary: string;
+  };
+  categories: Record<string, string[]>;
+}) {
   return (
     <>
-      <Head title="MH's Store | Categories" />
+      <Head
+        title={`${props.config.store_title} - ${props.config.store_category_title}`}
+        description={props.config.store_category_summary}
+      />
       <div className="w-full flex flex-col items-center justify-start px-4 pt-4 pb-8">
         <div className="fixed top-8 right-8">
           <GoBack />
@@ -39,7 +56,7 @@ export default function Categories(props: { categories: any }) {
             <Logo />
           </Link>
         </h1>
-        {props.categories["Root"]?.map((level0: any) => (
+        {props.categories["Root"]?.map((level0) => (
           <div key={level0} className="w-[280px]">
             <div className="py-4 uppercase">
               {level0.slice(-1) === "→" ? (
@@ -52,7 +69,7 @@ export default function Categories(props: { categories: any }) {
                 <>{level0}</>
               )}
             </div>
-            {props.categories[`${level0}`]?.map((level1: any) => (
+            {props.categories[`${level0}`]?.map((level1) => (
               <div key={level1}>
                 <div
                   className="py-4 ml-2"
@@ -71,7 +88,7 @@ export default function Categories(props: { categories: any }) {
                     <>{level1}</>
                   )}
                 </div>
-                {props.categories[`${level1}`]?.map((level2: any) => (
+                {props.categories[`${level1}`]?.map((level2) => (
                   <div key={level2}>
                     <div
                       className="py-4 ml-4"
@@ -90,7 +107,7 @@ export default function Categories(props: { categories: any }) {
                         <>{level2}</>
                       )}
                     </div>
-                    {props.categories[`${level2}`]?.map((level3: any) => (
+                    {props.categories[`${level2}`]?.map((level3) => (
                       <div key={level3}>
                         <div
                           className="py-4 ml-6"
@@ -109,7 +126,7 @@ export default function Categories(props: { categories: any }) {
                             <>{level3}</>
                           )}
                         </div>
-                        {props.categories[`${level3}`]?.map((level4: any) => (
+                        {props.categories[`${level3}`]?.map((level4) => (
                           <div key={level4}>
                             <div
                               className="py-4 ml-8"

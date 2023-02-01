@@ -24,11 +24,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-export default function Page(props: { data: any }) {
+const dataName = "";
+
+export default function Page(props: { data: Record<string, string> }) {
   return (
     <>
       <Head
-        title={`${props.data.title} | ${props.data.profile_name}`}
+        title={`${props.data.title} - ${props.data.profile_name}`}
         description={props.data.profile_summary}
       />
       <Header />
@@ -122,7 +124,7 @@ export default function Page(props: { data: any }) {
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.skill_group1_summary
             .split(",")
-            .map((skill: string, index: number) => (
+            .map((skill, index: number) => (
               <div
                 key={index}
                 className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
@@ -138,7 +140,7 @@ export default function Page(props: { data: any }) {
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.skill_group2_summary
             .split(",")
-            .map((skill: string, index: number) => (
+            .map((skill, index: number) => (
               <div
                 key={index}
                 className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
@@ -154,7 +156,7 @@ export default function Page(props: { data: any }) {
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.skill_group3_summary
             .split(",")
-            .map((skill: string, index: number) => (
+            .map((skill, index: number) => (
               <div
                 key={index}
                 className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
@@ -169,24 +171,22 @@ export default function Page(props: { data: any }) {
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
-          {props.data.projects
-            .split(",")
-            .map((project: string, index: number) => (
-              <div
-                key={index}
-                className={`w-1/2 flex flex-col items-center justify-start pb-6 ${
-                  index % 2 === 0 ? "pr-2" : "pl-2"
-                }`}
-              >
-                <Logo project={project} />
-                {props.data.projects_under_construction.includes(project) ? (
-                  <p className="p-1 capitalize">Coming soon</p>
-                ) : (
-                  <ProjectLink project={project} />
-                )}
-                <p className="pt-1">{props.data[`${project}_summary`]}</p>
-              </div>
-            ))}
+          {props.data.projects.split(",").map((project, index: number) => (
+            <div
+              key={index}
+              className={`w-1/2 flex flex-col items-center justify-start pb-6 ${
+                index % 2 === 0 ? "pr-2" : "pl-2"
+              }`}
+            >
+              <Logo project={project} />
+              {props.data.projects_under_construction.includes(project) ? (
+                <p className="p-1 capitalize">Coming soon</p>
+              ) : (
+                <ProjectLink project={project} />
+              )}
+              <p className="pt-1">{props.data[`${project}_summary`]}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className="pt-6">

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { ReactElement, JSXElementConstructor, ReactFragment } from "react";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -19,14 +20,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-export default function Page(props: { data: any }) {
+export default function Page(props: {
+  data: {
+    contact_summary: string;
+    contact_email: string;
+    contact_whatapp: string;
+    contact_linkedin_url: string;
+    contact_calendly_url: string;
+  };
+}) {
   return (
     <>
       <Head
-        title="Contact"
-        description="I am available to communicate with you regarding any projects,
-            ideas, or questions you may have. Please do not hesitate to reach
-            out to me."
+        title="Contact / Get In Touch"
+        description={props.data.contact_summary}
       />
       <Header />
       <div className="w-full pt-4">
@@ -34,13 +41,7 @@ export default function Page(props: { data: any }) {
           Contact / Get In Touch
         </h1>
         <div className="pt-8">
-          <p>
-            I am available to communicate with you regarding any projects,
-            ideas, or questions you may have. Please do not hesitate to reach
-            out to me. You may contact me through email, message me on WhatsApp,
-            connect with me on LinkedIn or schedule a Zoom meeting with me, by
-            clicking the buttons below:
-          </p>
+          <p>{props.data.contact_summary}</p>
           <div className="w-full flex flex-row flex-wrap items-center justify-center pt-8">
             <div className="w-1/4 flex flex-col items-center justify-start mb-6">
               <a target="_blank" href={`mailto:${props.data.contact_email}`}>
