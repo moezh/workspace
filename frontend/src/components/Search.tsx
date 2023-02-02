@@ -12,8 +12,12 @@ const Search = () => {
 
   const router = useRouter();
 
-  const handleKeyDown = (target: { code: string }) => {
-    if (target.code === "Enter") {
+  const handleKeyDown = (target: { code: string; keyCode: number }) => {
+    if (
+      target.code === "Enter" ||
+      target.code === "NumpadEnter" ||
+      target.keyCode === 13
+    ) {
       router.push(`/?search=${search}`);
     }
   };

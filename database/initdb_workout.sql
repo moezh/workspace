@@ -7,4 +7,6 @@ CREATE TABLE workout_config (
 
 INSERT INTO workout_config (name, value)
 VALUES 
-('subdomain','workout');
+('subdomain','workout'),
+('workout_title','MH''s Workout'),
+('bucket_url','https://objectstorage.eu-marseille-1.oraclecloud.com/n/axrso0xdipxv/b/bucket/o/workout');
