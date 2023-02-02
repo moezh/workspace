@@ -1,23 +1,6 @@
-import { GetStaticProps } from "next";
-import { readFileSync } from "fs";
-import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const password = readFileSync("/run/secrets/backend-password", {
-    encoding: "utf8",
-  });
-  const result = await fetch("http://backend:3001/api/home/privacy", {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
-  const resultData = await result.json();
-  return { props: { data: resultData } };
-};
 
 export default function Page() {
   return (

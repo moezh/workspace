@@ -31,7 +31,7 @@ export const getContact = async (req: Request, res: Response) => {
 
 export const getPrivacy = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
-  let sql: string = `SELECT * FROM config where name in ('logo_black', 'logo_white')`;
+  let sql: string = `SELECT * FROM config where name in ('profile_name')`;
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
@@ -45,7 +45,7 @@ export const getPrivacy = async (req: Request, res: Response) => {
 
 export const getTos = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
-  let sql: string = `SELECT * FROM config where name in ('logo_black', 'logo_white', 'profile_name')`;
+  let sql: string = `SELECT * FROM config where name in ('profile_name')`;
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
