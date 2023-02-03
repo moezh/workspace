@@ -1,5 +1,5 @@
 version: "3.9"
-name: "project"
+name: "workspace"
 services:
   frontend:
     container_name: frontend
@@ -9,6 +9,7 @@ services:
     build:
       context: ./frontend
       target: ${DOCKER_ENV:-dev}
+    image: workspace_frontend_${DOCKER_ENV:-dev}
     ports:
       - "80:3000"
     volumes:
@@ -23,6 +24,7 @@ services:
     build:
       context: ./worker
       target: ${DOCKER_ENV:-dev}
+    image: workspace_worker_${DOCKER_ENV:-dev}
     volumes:
       - ./worker:/app
     secrets:
@@ -36,6 +38,7 @@ services:
     build:
       context: ./backend
       target: ${DOCKER_ENV:-dev}
+    image: workspace_backend_${DOCKER_ENV:-dev}
     ports:
       - "3001:3001"
     volumes:
@@ -47,17 +50,18 @@ services:
     container_name: database
     build:
       context: ./database
+    image: workspace_database_${DOCKER_ENV:-dev}
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/database-password
     ports:
       - "5432:5432"
     volumes:
-      - database-data-${DOCKER_ENV:-dev}:/var/lib/postgresql/data
+      - volume_${DOCKER_ENV:-dev}:/var/lib/postgresql/data
     secrets:
       - database-password
 volumes:
-  database-data-dev:
-  database-data-prod:
+  volume_dev:
+  volume_prod:
 secrets:
   database-password:
     file: ./database-password.txt
