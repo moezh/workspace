@@ -1,6 +1,5 @@
 FROM node:19-alpine as base
 WORKDIR /app
-COPY package.json ./
 EXPOSE 3000
 
 FROM base as dev

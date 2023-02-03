@@ -1,6 +1,5 @@
 FROM node:19-alpine as base
 WORKDIR /app
-COPY package.json ./
 
 FROM base as dev
 CMD ["sh", "-c", "yarn install && yarn run dev"]
