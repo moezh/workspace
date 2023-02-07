@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const GoBack = (props: { text?: string }) => {
+const Close = (props: { text?: string }) => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -18,22 +18,20 @@ const GoBack = (props: { text?: string }) => {
         props.text
       ) : (
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          className="h-7 w-7"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          fill="none"
           stroke="currentColor"
-          className="w-7 h-7s"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-          />
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       )}
     </button>
   );
 };
 
-export default GoBack;
+export default Close;

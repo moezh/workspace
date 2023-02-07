@@ -48,6 +48,7 @@ services:
       - backend-password
   database:
     container_name: database
+    restart: on-failure
     build:
       context: ./database
     image: workspace_database_${DOCKER_ENV:-dev}

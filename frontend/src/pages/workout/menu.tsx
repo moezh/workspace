@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Link from "next/link";
-import GoBack from "../../components/GoBack";
+import Close from "../../components/Close";
 import Logo from "../../components/Logo";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -36,7 +36,7 @@ export default function Categories(props: {
       />
       <div className="w-full flex flex-col items-center justify-start px-4 pt-4 pb-8">
         <div className="fixed top-8 right-8">
-          <GoBack />
+          <Close />
         </div>
         <h1 className="w-[280px] flex flex-col items-start justify-start py-4">
           <Link href="/">

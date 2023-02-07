@@ -34,7 +34,7 @@ const Search = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={"Search for ..."}
-        className="w-[150px] bg-inherit border focus:outline-0 px-1 border-neutral-300 placeholder-neutral-300 dark:border-neutral-500 dark:placeholder-neutral-500 "
+        className="w-[150px] bg-inherit border focus:outline-0 px-1 border-neutral-300 placeholder-neutral-300 dark:border-neutral-500 dark:placeholder-neutral-500 rounded-sm"
       />
       <Link href={`/?search=${search}`}>
         <svg

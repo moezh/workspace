@@ -12,7 +12,8 @@
     "next": "13.x",
     "next-themes": "0.x",
     "react": "18.x",
-    "react-dom": "18.x"
+    "react-dom": "18.x",
+    "zod": "3.x"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "8.x",
