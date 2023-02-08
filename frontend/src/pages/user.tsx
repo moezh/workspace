@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useUserContext } from "../context/UserContext";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import GoBack from "../components/GoBack";
 
 export default function Page() {
@@ -12,13 +11,9 @@ export default function Page() {
   const { data, setData } = useUserContext();
 
   const handleLogout = () => {
-    setData({ ...data, isLogged: false });
+    setData({});
     router.push("/");
   };
-
-  useEffect(() => {
-    if (data?.isLogged === false) router.push("/login");
-  }, []);
 
   return (
     <>
@@ -44,9 +39,15 @@ export default function Page() {
               {data?.firstName} {data?.lastName}
             </p>
             <p className="pt-1">{data?.email}</p>
-            <button onClick={handleLogout} aria-label="Logout" className="mt-6">
-              <p className="capitalize py-2">Logout →</p>
-            </button>
+            {data.email !== undefined ? (
+              <button
+                onClick={handleLogout}
+                aria-label="Logout"
+                className="mt-6"
+              >
+                <p className="capitalize py-2">Logout →</p>
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

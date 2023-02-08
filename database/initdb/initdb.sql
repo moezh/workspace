@@ -1,4 +1,5 @@
 --DROP TABLE config;
+--DROP TABLE users;
 
 CREATE TABLE config (
     name VARCHAR(255) PRIMARY KEY NOT NULL,
@@ -36,3 +37,11 @@ VALUES
 ('store_summary','An automated affiliate store that curates items from top affiliate partners, simplifying my affiliate link promotion in one convenient platform.'),
 ('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
 ('workout_summary','A mobile and web application that showcases my proficiency in creating high-performance applications using the latest technologies.');
+
+CREATE TABLE users (
+    email VARCHAR(100) PRIMARY KEY NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    user_data TEXT NOT NULL DEFAULT '{}'
+);

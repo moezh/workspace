@@ -24,8 +24,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-const dataName = "";
-
 export default function Page(props: { data: Record<string, string> }) {
   return (
     <>

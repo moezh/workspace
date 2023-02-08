@@ -1,19 +1,54 @@
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
+import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useUserContext } from "../context/UserContext";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GoBack from "../components/GoBack";
 import { z } from "zod";
 
-export default function Page() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (context.query.email !== undefined) {
+    const { email, firstName, lastName, password } = context.query;
+    const backendPassword = readFileSync("/run/secrets/backend-password", {
+      encoding: "utf8",
+    });
+    const response = await fetch("http://backend:3001/api/user/register", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${jwt.sign("admin", backendPassword)}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        first_name: firstName,
+        last_name: lastName,
+        password: password,
+      }),
+    });
+    const responseData = await response.json();
+    return {
+      props: {
+        data: responseData,
+      },
+    };
+  }
+  return {
+    props: {
+      data: {},
+    },
+  };
+};
+
+export default function Page(props: { data: Record<string, string> }) {
   let router = useRouter();
 
   const { data, setData } = useUserContext();
-
   const [registerForm, setRegisterForm] = useState({} as RegisterForm);
-  const [message, setMessage] = useState(undefined as undefined | string);
   const [error, setError] = useState(
     undefined as undefined | Record<string, string>
   );
@@ -22,14 +57,20 @@ export default function Page() {
     .object({
       firstName: z
         .string()
-        .min(3, { message: "Must be 3 or more characters long" }),
+        .min(3, { message: "Must be 3 or more characters long" })
+        .max(50, { message: "Must be 50 or fewer characters long" }),
       lastName: z
         .string()
-        .min(3, { message: "Must be 3 or more characters long" }),
-      email: z.string().email({ message: "Invalid email address" }),
+        .min(3, { message: "Must be 3 or more characters long" })
+        .max(50, { message: "Must be 50 or fewer characters long" }),
+      email: z
+        .string()
+        .email({ message: "Invalid email address" })
+        .max(100, { message: "Must be 100 or fewer characters long" }),
       password: z
         .string()
-        .min(6, { message: "Must be 6 or more characters long" }),
+        .min(6, { message: "Must be 6 or more characters long" })
+        .max(50, { message: "Must be 50 or fewer characters long" }),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -59,14 +100,18 @@ export default function Page() {
     const formParsed = RegisterForm.safeParse(registerForm);
     if (formParsed.success) {
       setError(undefined);
-      setData({
-        isLogged: true,
-        firstName: registerForm.firstName,
-        lastName: registerForm.lastName,
-        email: registerForm.email,
-      });
-      setMessage("Your account has been successfully created");
-      router.back();
+      router.push(
+        {
+          pathname: "/signup",
+          query: {
+            email: registerForm.email,
+            firstName: registerForm.firstName,
+            lastName: registerForm.lastName,
+            password: registerForm.password,
+          },
+        },
+        "/signup"
+      );
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
@@ -75,6 +120,18 @@ export default function Page() {
       );
     }
   };
+
+  useEffect(() => {
+    if (props.data?.email !== undefined) {
+      setData({
+        email: props.data.email,
+        firstName: props.data.first_name,
+        lastName: props.data.last_name,
+        userData: props.data.user_data,
+      });
+      router.push("/");
+    }
+  }, [props.data]);
 
   return (
     <>
@@ -164,11 +221,8 @@ export default function Page() {
             >
               <p className="capitalize px-8 py-2">Sign up →</p>
             </button>
-            <p className="text-sm text-green-700">
-              {message === undefined ? null : message}
-            </p>
-            <p className="text-sm text-red-700">
-              {error?.register === undefined ? null : error.register}
+            <p className="text-sm pt-1 text-red-700">
+              {props.data?.description}
             </p>
           </div>
         </div>

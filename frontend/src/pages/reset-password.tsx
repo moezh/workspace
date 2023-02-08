@@ -18,7 +18,10 @@ export default function Page() {
   );
 
   const ResetForm = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z
+      .string()
+      .email({ message: "Invalid email address" })
+      .max(100, { message: "Must be 100 or fewer characters long" }),
   });
   type ResetForm = z.infer<typeof ResetForm>;
 
@@ -40,7 +43,7 @@ export default function Page() {
     const formParsed = ResetForm.safeParse(resetForm);
     if (formParsed.success) {
       setError(undefined);
-      setData({ ...data, isLogged: false });
+      //setData({ ...data, isLogged: false });
       setMessage("Password reset link sent successfully");
     } else {
       setError(

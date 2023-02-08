@@ -7,7 +7,7 @@ export const getConfig = async (req: Request, res: Response) => {
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = new Map(result.rows.map(({ name, value }) => [name, value]));
       res.json(Object.fromEntries(data));

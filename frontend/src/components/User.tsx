@@ -9,7 +9,7 @@ const User = () => {
   if (!mounted) return null;
   return (
     <div className="w-8 h-8 flex items-center justify-center">
-      {data.isLogged === true ? (
+      {data.email !== undefined ? (
         <Link href="/user">
           <svg
             xmlns="http://www.w3.org/2000/svg"

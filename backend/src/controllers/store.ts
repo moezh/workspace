@@ -7,7 +7,7 @@ export const getConfig = async (req: Request, res: Response) => {
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = new Map(result.rows.map(({ name, value }) => [name, value]));
       res.json(Object.fromEntries(data));
@@ -41,7 +41,7 @@ export const getProducts = async (req: Request, res: Response) => {
   if (req.query.search !== undefined) values.push(req.query.search as string);
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = result.rows;
       res.json(data);
@@ -62,7 +62,7 @@ export const getProductsCount = async (req: Request, res: Response) => {
   }
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = result.rows;
       if (data.length === 0) {
@@ -86,7 +86,7 @@ export const getProduct = async (req: Request, res: Response) => {
   let values: string[] = [uid];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = result.rows;
       if (data.length === 0) {
@@ -119,7 +119,7 @@ export const getCategories = async (req: Request, res: Response) => {
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = result.rows;
       const reducedData = data.reduce(
@@ -165,7 +165,7 @@ export const getLink = async (req: Request, res: Response) => {
   let values: string[] = [gtin];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).json({ code: 500, description: err });
     } else {
       const data = result.rows;
       if (data.length === 0) {

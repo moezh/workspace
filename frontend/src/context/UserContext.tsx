@@ -1,14 +1,14 @@
 import React, { useEffect, createContext, useState, useContext } from "react";
 
 type Data = {
-  isLogged: boolean;
+  email?: string;
   firstName?: string;
   lastName?: string;
-  email?: string;
+  userData?: string;
 };
 
 const defaultData: Data = {
-  isLogged: false,
+  userData: "{}",
 };
 
 interface UserContextValue {

@@ -1,3 +1,6 @@
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
+import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,22 +11,56 @@ import GoBack from "../components/GoBack";
 import Link from "next/link";
 import { z } from "zod";
 
-export default function Page() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (context.query.email !== undefined) {
+    const { email, password } = context.query;
+    const backendPassword = readFileSync("/run/secrets/backend-password", {
+      encoding: "utf8",
+    });
+    const response = await fetch("http://backend:3001/api/user/login", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${jwt.sign("admin", backendPassword)}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const responseData = await response.json();
+    return {
+      props: {
+        data: responseData,
+      },
+    };
+  }
+  return {
+    props: {
+      data: {},
+    },
+  };
+};
+
+export default function Page(props: { data: Record<string, string> }) {
   let router = useRouter();
 
   const { data, setData } = useUserContext();
-
   const [loginForm, setLoginForm] = useState({} as LoginForm);
-  const [message, setMessage] = useState(undefined as undefined | string);
   const [error, setError] = useState(
     undefined as undefined | Record<string, string>
   );
 
   const LoginForm = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z
+      .string()
+      .email({ message: "Invalid email address" })
+      .max(100, { message: "Must be 100 or fewer characters long" }),
     password: z
       .string()
-      .min(6, { message: "Password must be 6 or more characters long" }),
+      .min(6, { message: "Password must be 6 or more characters long" })
+      .max(50, { message: "Must be 50 or fewer characters long" }),
   });
   type LoginForm = z.infer<typeof LoginForm>;
 
@@ -41,13 +78,17 @@ export default function Page() {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const formParsed = LoginForm.safeParse(loginForm);
     if (formParsed.success) {
       setError(undefined);
-      setData({ isLogged: true, email: loginForm.email });
-      setMessage("You have been successfully authenticated");
-      router.back();
+      router.push(
+        {
+          pathname: "/login",
+          query: { email: loginForm.email, password: loginForm.password },
+        },
+        "/login"
+      );
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
@@ -58,8 +99,16 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (data?.isLogged === true) router.push("/");
-  }, []);
+    if (props.data?.email !== undefined) {
+      setData({
+        email: props.data.email,
+        firstName: props.data.first_name,
+        lastName: props.data.last_name,
+        userData: props.data.user_data,
+      });
+      router.push("/");
+    }
+  }, [props.data]);
 
   return (
     <>
@@ -116,11 +165,8 @@ export default function Page() {
             >
               <p className="capitalize px-8 py-2">Login →</p>
             </button>
-            <p className="text-sm text-green-700">
-              {message === undefined ? null : message}
-            </p>
-            <p className="text-sm text-red-700">
-              {error?.login === undefined ? null : error.login}
+            <p className="text-sm pt-1 text-red-700">
+              {props.data?.description}
             </p>
             <p className="font-light pt-8 w-full text-center">
               <Link href="/signup">Need an account? Register now →</Link>
