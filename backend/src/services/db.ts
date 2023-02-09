@@ -10,5 +10,3 @@ export const pool = new Pool({
   user: "postgres",
   password: password,
 });
-
-

@@ -1,0 +1,8 @@
+{
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": "465",
+    "smtp_user": "xxxxx@gmail.com",
+    "smtp_pass": "xxxxx",
+    "smtp_from": "МH Workspace <xxxxx@gmail.com>",
+    "smtp_host": "smtp.gmail.com"
+},

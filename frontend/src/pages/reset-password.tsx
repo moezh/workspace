@@ -1,18 +1,50 @@
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
+import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useUserContext } from "../context/UserContext";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import GoBack from "../components/GoBack";
 import { z } from "zod";
 
-export default function Page() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (context.query.email !== undefined) {
+    const { email, host } = context.query;
+    const backendPassword = readFileSync("/run/secrets/backend-password", {
+      encoding: "utf8",
+    });
+    const response = await fetch("http://backend:3001/api/user/reset", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${jwt.sign("admin", backendPassword)}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        host: host,
+      }),
+    });
+    const responseData = await response.json();
+    return {
+      props: {
+        data: responseData,
+      },
+    };
+  }
+  return {
+    props: {
+      data: {},
+    },
+  };
+};
+
+export default function Page(props: { data: Record<string, string> }) {
   let router = useRouter();
 
-  const { data, setData } = useUserContext();
   const [resetForm, setResetForm] = useState({} as ResetForm);
-  const [message, setMessage] = useState(undefined as undefined | string);
   const [error, setError] = useState(
     undefined as undefined | Record<string, string>
   );
@@ -43,8 +75,15 @@ export default function Page() {
     const formParsed = ResetForm.safeParse(resetForm);
     if (formParsed.success) {
       setError(undefined);
-      //setData({ ...data, isLogged: false });
-      setMessage("Password reset link sent successfully");
+      const hostname = window.location.hostname;
+      const protocol = window.location.protocol;
+      router.push(
+        {
+          pathname: "/reset-password",
+          query: { email: resetForm.email, host: `${protocol}//${hostname}` },
+        },
+        "/reset-password"
+      );
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
@@ -94,11 +133,14 @@ export default function Page() {
             >
               <p className="capitalize px-8 py-2">Reset →</p>
             </button>
-            <p className="text-sm text-green-700">
-              {message === undefined ? null : message}
-            </p>
-            <p className="text-sm text-red-700">
-              {error?.reset === undefined ? null : error.reset}
+            <p
+              className={`text-sm pt-1 ${
+                Number(props.data?.code) === 200
+                  ? "text-green-700"
+                  : "text-red-700"
+              }`}
+            >
+              {props.data?.description}
             </p>
           </div>
         </div>

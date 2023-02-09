@@ -12,7 +12,8 @@
     "express": "4.x",
     "pg": "8.x",
     "jsonwebtoken": "9.x",
-    "bcrypt": "5.x"
+    "bcrypt": "5.x",
+    "nodemailer": "6.x"
   },
   "devDependencies": {
     "@babel/core": "7.x",
@@ -22,6 +23,7 @@
     "@types/express": "4.x",
     "@types/jsonwebtoken": "8.x",
     "@types/bcrypt": "5.x",
+    "@types/nodemailer": "6.x",
     "@types/pg": "8.x",
     "@types/jest": "29.x",
     "@types/supertest": "2.x",

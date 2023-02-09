@@ -46,6 +46,7 @@ services:
     secrets:
       - database-password
       - backend-password
+      - smtp-config
   database:
     container_name: database
     restart: on-failure
@@ -71,3 +72,5 @@ secrets:
     file: ./backend-password.txt
   cj-private-key:
     file: ./cj-private-key.txt
+  smtp-config:
+    file: ./smtp-config.txt

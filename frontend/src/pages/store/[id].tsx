@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import GoBack from "../../components/GoBack";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -96,9 +97,16 @@ export default function Page(props: {
       />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
-          {arrayToText(props.data.title)}
-        </h1>
+        <div className="flex flex-row items-start justify-start">
+          <div className="w-1/4">
+            <GoBack />
+          </div>
+          <div className="w-2/4">
+            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+              {arrayToText(props.data.title)}
+            </h1>
+          </div>
+        </div>
         <p className="pt-2 w-full text-center">
           {props.data.product_category_name}
         </p>
