@@ -14,7 +14,7 @@ VALUES
 ('profile_photo_url','/profile_picture.png'),
 ('profile_name','Moez Hachicha'),
 ('profile_job_title','Software Engineering Consultant'),
-('profile_location','Remote, Worldwide | Tunis, Tunisia'),
+('profile_location','Tunis, Tunisia'),
 ('profile_summary','Welcome to my personal workspace, where I showcase the side projects that I''m currently developing. As a software engineering consultant, with over 15 years in the industry, I possess a comprehensive understanding of both front-end and back-end technologies.'),
 ('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to reach out to me. You may contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me, by clicking the buttons below:'),
 ('contact_email','moez.hachicha@icloud.com'),
