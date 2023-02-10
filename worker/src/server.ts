@@ -6,6 +6,8 @@ import everyDay from "./everyDay";
 
 (async () => {
   every5Min();
+  everyHour();
+  everyDay();
   new CronJob("0 */5 * * * *", every5Min, null, true);
   new CronJob("0 0 * * * *", everyHour, null, true);
   new CronJob("0 0 0 * * *", everyDay, null, true);

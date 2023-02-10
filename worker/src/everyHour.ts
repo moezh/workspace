@@ -1,5 +1,3 @@
-const everyHour = async () => {
-  console.log("> Every Hour");
-};
+const everyHour = async () => {};
 
 export default everyHour;

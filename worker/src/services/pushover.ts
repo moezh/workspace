@@ -7,13 +7,15 @@ const pushoverFile = readFileSync("/run/secrets/pushover-config", {
 
 const { user, token } = JSON.parse(pushoverFile);
 
-export const pushover = (title: string, message: string) => {
+export const pushover = (title: string, message: string, url: string) => {
   const data = JSON.stringify({
     token: token,
     user: user,
     html: "1",
     title: title,
     message: message,
+    url_title: "More details",
+    url: url,
     sound: "vibrate",
   });
   const options = {

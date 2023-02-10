@@ -1,17 +1,7 @@
-import { pushover } from "./services/pushover";
-import { getRSS } from "./services/rss";
+import { getUpWorkNewJobs } from "./services/upwork";
 
 const every5Min = async () => {
-  console.log("> Every 5 Minutes");
-  const rss = await getRSS(
-    "https://www.upwork.com/ab/feed/jobs/rss?q=%28react+OR+next.js+OR+node.js+OR+typescript%29+AND+NOT+%28java+OR+php+OR+python+OR+rust+OR+golang+OR+laravel+OR+vue+OR+angular+OR+mongodb+OR+shopify%29&sort=recency&subcategory2_uid=531770282589057024%2C531770282584862733&contractor_tier=2%2C3&client_hires=1-9%2C10-&verified_payment_only=1&location=United+States&paging=0%3B10",
-    6
-  );
-  rss.map((item) => {
-    const title = `${item.title}`;
-    const message = `${item.isoDate}<br/>${item.link}<br/>${item.content}`;
-    pushover(title, message);
-  });
+  getUpWorkNewJobs();
 };
 
 export default every5Min;

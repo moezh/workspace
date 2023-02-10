@@ -4,20 +4,25 @@ import Client from "ssh2-sftp-client";
 import readLine from "readline";
 import AdmZip from "adm-zip";
 
-export const getDatafeeds = async (
-  usernameId: string,
-  subscriptionId: string
-) => {
+import { readFileSync } from "fs";
+
+const cjFile = readFileSync("/run/secrets/cj-config", {
+  encoding: "utf8",
+});
+const { userId, subscriptionId } = JSON.parse(cjFile);
+
+const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
+  encoding: "utf8",
+});
+
+export const getCjDatafeeds = async () => {
   console.log("> Download datafeeds");
-  const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
-    encoding: "utf8",
-  });
   const localPath = "./cj/datafeeds/";
   const sftp = new Client();
   await sftp.connect({
     host: "datatransfer.cj.com",
     port: 22,
-    username: usernameId,
+    username: userId,
     privateKey: privateKey,
     algorithms: {
       serverHostKey: ["ssh-rsa", "ssh-dss"],

@@ -19,7 +19,7 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 1. In the main folder of the repository, change the name of `database-password.txt.sample` to `database-password.txt` and `backend-password.txt.sample` to `backend-password.txt`. Replace the content of `database-password.txt` and `backend-password.txt` with new, unique and random passwords.
 
-1. In the main folder of the repository, change the name of `cj-private-key.txt.sample` to `cj-private-key.txt`, then replace the content of `cj-private-key.txt` with the private key from cj.
+1. In the main folder of the repository, change the name of `cj-private-key.txt.sample` to `cj-private-key.txt` and `cj-config.txt.sample` to `cj-config.txt`, then replace the content of `cj-private-key.txt` and `cj-config.txt` with the private key, user id, and subscription id from cj.
 
 1. In the main folder of the repository, change the name of `smtp-config.txt.sample` to `smtp-config.txt`, then replace the content of `smtp-config.txt` with valid SMTP parameters.
 
