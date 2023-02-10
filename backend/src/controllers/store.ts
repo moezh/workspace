@@ -99,7 +99,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
-  let sql: string = `select category from store_products_category;`;
+  let sql: string = `select category from store_products_category order by category;`;
   let values: string[] = [];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
