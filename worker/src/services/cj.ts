@@ -27,6 +27,7 @@ export const getDatafeeds = async (
   fs.rmSync(localPath, { recursive: true, force: true });
   await sftp.downloadDir(remotePath, localPath, { useFastget: true });
   sftp.end();
+  console.log("> Unzip datafeeds");
   fs.readdirSync(localPath).forEach((file) => {
     if (file.split(".").pop() === "zip") {
       const filePath = `${localPath}${file}`;
@@ -37,31 +38,29 @@ export const getDatafeeds = async (
   await pool.query("TRUNCATE TABLE store_datafeeds;");
   fs.readdirSync(localPath).forEach(async (file) => {
     if (file.split(".").pop() === "txt") {
-      console.log(`> Sync datafeed: ${file}`);
+      console.log(`> Read datafeed: ${file}`);
       const lineReader = readLine.createInterface({
         input: require("fs").createReadStream(`${localPath}${file}`),
         crlfDelay: Infinity,
       });
       let isHeader = true;
-      const clientDB = await pool.connect();
       for await (const line of lineReader) {
         if (isHeader) {
           isHeader = false;
         } else {
           const values = line.replaceAll("'", "''").replaceAll('"', "'");
-          await clientDB.query(
+          await pool.query(
             `INSERT INTO store_datafeeds VALUES (${values}) ON CONFLICT DO NOTHING;`
           );
         }
       }
-      clientDB.release();
       await pool.query(`
           DROP TABLE IF EXISTS store_products_category;
           CREATE TABLE store_products_category as (SELECT distinct(google_product_category_name) as category FROM store_datafeeds WHERE google_product_category_name <> '');
           `);
       await pool.query(`
           DROP TABLE IF EXISTS store_products_count;
-          CREATE TABLE store_products_count as (SELECT product_category_id, product_category_name, count(distinct(product_uid)) as product_count
+          CREATE TABLE store_products_count as (SELECT product_category_id, product_category_name, count(product_uid) as product_count
           FROM store_datafeeds 
           group by product_category_id, product_category_name);
           `);

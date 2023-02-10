@@ -80,11 +80,11 @@ CREATE TABLE store_datafeeds (
 "tax(rate:country:tax_ship:postal_code)" TEXT,
 "tax(rate:country:tax_ship:location_id)" TEXT,
 "tax(rate:country:tax_ship:location_group_name)" TEXT,
-"product_uid" TEXT GENERATED ALWAYS AS (COALESCE(NULLIF(REGEXP_REPLACE(mpn, '[^A-Za-z0-9]+', '', 'g'),''), gtin)) STORED,
+"product_uid" TEXT GENERATED ALWAYS AS (REGEXP_REPLACE(program_name||id, '[^A-Za-z0-9]+', '', 'g')) STORED,
 "product_category_id" TEXT GENERATED ALWAYS AS (REGEXP_REPLACE(SPLIT_PART(google_product_category_name, ' > ', -1), '[^A-Za-z0-9]+', '', 'g')) STORED,
 "product_category_name" TEXT GENERATED ALWAYS AS (SPLIT_PART(google_product_category_name, ' > ', -1)) STORED,
-"text_search" tsvector GENERATED ALWAYS AS (to_tsvector('english', coalesce(title, '') ||  ' ' || coalesce(brand, '') || ' ' || coalesce(google_product_category_name, '') || ' ' || coalesce(product_type, '') || ' ' || coalesce(color, '') || ' ' || coalesce(gender, '')  || ' ' || coalesce(material, ''))) STORED,
-PRIMARY KEY (gtin)
+"text_search" tsvector GENERATED ALWAYS AS (to_tsvector('english', COALESCE(title, '') ||  ' ' || COALESCE(brand, '') || ' ' || COALESCE(google_product_category_name, '') || ' ' || COALESCE(product_type, '') || ' ' || COALESCE(color, '') || ' ' || COALESCE(gender, '')  || ' ' || COALESCE(material, ''))) STORED,
+PRIMARY KEY (product_uid)
 );
 
 CREATE INDEX index_product_uid

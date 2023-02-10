@@ -7,11 +7,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const { gtin } = context.query;
+  const { uid } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
-  const link = await fetch(`http://backend:3001/api/store/link/${gtin}`, {
+  const link = await fetch(`http://backend:3001/api/store/link/${uid}`, {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
       "Content-Type": "application/json",

@@ -32,7 +32,6 @@ export const getProducts = async (req: Request, res: Response) => {
       req.query.category !== undefined ? "$4" : "$3"
     }) `;
   sql += `
-  GROUP BY product_uid, title, brand, product_category_name, image_link, price, sale_price 
   LIMIT $1 OFFSET $2
   `;
   let values: string[] = [limit, offset];
@@ -78,7 +77,7 @@ export const getProduct = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
   const uid = req.params.uid;
   let sql: string = `
-  SELECT  title, brand, product_category_name, description, gtin, link, image_link, additional_image_link, 
+  SELECT product_uid, title, brand, product_category_name, description, image_link, additional_image_link, 
   condition, availability, price, sale_price, age_group, gender, color, size, material, pattern 
   FROM store_datafeeds 
   WHERE product_uid = $1
@@ -92,22 +91,7 @@ export const getProduct = async (req: Request, res: Response) => {
       if (data.length === 0) {
         res.status(404).json({ code: 404, description: "Not Found" });
       } else {
-        const reducedData = data.reduce(
-          (accumulator: Record<string, string[]>, current) => {
-            Object.entries(current).forEach((entry) => {
-              const [key, value] = entry;
-              if (!accumulator[key]) {
-                accumulator[key] = [];
-              }
-              if (!accumulator[key].includes(value)) {
-                accumulator[key].push(value);
-              }
-            });
-            return accumulator;
-          },
-          {}
-        );
-        res.json(reducedData);
+        res.json(data[0]);
       }
     }
   });
@@ -160,9 +144,9 @@ export const getCategories = async (req: Request, res: Response) => {
 
 export const getLink = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
-  const gtin = req.params.gtin;
-  let sql: string = `SELECT link FROM store_datafeeds WHERE gtin = $1`;
-  let values: string[] = [gtin];
+  const uid = req.params.uid;
+  let sql: string = `SELECT link FROM store_datafeeds WHERE product_uid = $1`;
+  let values: string[] = [uid];
   db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
     if (err) {
       res.status(500).json({ code: 500, description: err });

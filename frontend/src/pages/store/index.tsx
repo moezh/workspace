@@ -144,7 +144,8 @@ export default function Page(props: {
                 <Link href={`/${product.product_uid}`}>
                   <div className="font-medium">{product.brand}</div>
                   <div>
-                    {product.sale_price === "" ? (
+                    {product.sale_price === "" ||
+                    product.sale_price === product.price ? (
                       <>{product.price}</>
                     ) : (
                       <>
