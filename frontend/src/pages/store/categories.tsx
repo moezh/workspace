@@ -69,7 +69,7 @@ export default function Categories(props: {
                 <>{level0}</>
               )}
             </div>
-            {props.categories[`${level0}`]?.map((level1) => (
+            {props.categories[`${level0.replace(" →", "")}`]?.map((level1) => (
               <div key={level1}>
                 <div
                   className="py-4 ml-2"
@@ -88,69 +88,77 @@ export default function Categories(props: {
                     <>{level1}</>
                   )}
                 </div>
-                {props.categories[`${level1}`]?.map((level2) => (
-                  <div key={level2}>
-                    <div
-                      className="py-4 ml-4"
-                      hidden={level2.slice(-1) === "→" ? false : true}
-                    >
-                      {level2.slice(-1) === "→" ? (
-                        <Link
-                          href={`/?category=${level2.replaceAll(
-                            /[^A-Za-z0-9]+/g,
-                            ""
-                          )}`}
-                        >
+                {props.categories[`${level1.replace(" →", "")}`]?.map(
+                  (level2) => (
+                    <div key={level2}>
+                      <div
+                        className="py-4 ml-4"
+                        hidden={level2.slice(-1) === "→" ? false : true}
+                      >
+                        {level2.slice(-1) === "→" ? (
+                          <Link
+                            href={`/?category=${level2.replaceAll(
+                              /[^A-Za-z0-9]+/g,
+                              ""
+                            )}`}
+                          >
+                            <>{level2}</>
+                          </Link>
+                        ) : (
                           <>{level2}</>
-                        </Link>
-                      ) : (
-                        <>{level2}</>
-                      )}
-                    </div>
-                    {props.categories[`${level2}`]?.map((level3) => (
-                      <div key={level3}>
-                        <div
-                          className="py-4 ml-6"
-                          hidden={level3.slice(-1) === "→" ? false : true}
-                        >
-                          {level3.slice(-1) === "→" ? (
-                            <Link
-                              href={`/?category=${level3.replaceAll(
-                                /[^A-Za-z0-9]+/g,
-                                ""
-                              )}`}
-                            >
-                              <>{level3}</>
-                            </Link>
-                          ) : (
-                            <>{level3}</>
-                          )}
-                        </div>
-                        {props.categories[`${level3}`]?.map((level4) => (
-                          <div key={level4}>
+                        )}
+                      </div>
+                      {props.categories[`${level2.replace(" →", "")}`]?.map(
+                        (level3) => (
+                          <div key={level3}>
                             <div
-                              className="py-4 ml-8"
-                              hidden={level4.slice(-1) === "→" ? false : true}
+                              className="py-4 ml-6"
+                              hidden={level3.slice(-1) === "→" ? false : true}
                             >
-                              {level4.slice(-1) === "→" ? (
+                              {level3.slice(-1) === "→" ? (
                                 <Link
-                                  href={`/?category=${level4.replaceAll(
+                                  href={`/?category=${level3.replaceAll(
                                     /[^A-Za-z0-9]+/g,
                                     ""
                                   )}`}
                                 >
-                                  <>{level4}</>
+                                  <>{level3}</>
                                 </Link>
                               ) : (
-                                <>{level4}</>
+                                <>{level3}</>
                               )}
                             </div>
+                            {props.categories[
+                              `${level3.replace(" →", "")}`
+                            ]?.map((level4) => (
+                              <div key={level4}>
+                                <div
+                                  className="py-4 ml-8"
+                                  hidden={
+                                    level4.slice(-1) === "→" ? false : true
+                                  }
+                                >
+                                  {level4.slice(-1) === "→" ? (
+                                    <Link
+                                      href={`/?category=${level4.replaceAll(
+                                        /[^A-Za-z0-9]+/g,
+                                        ""
+                                      )}`}
+                                    >
+                                      <>{level4}</>
+                                    </Link>
+                                  ) : (
+                                    <>{level4}</>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                        )
+                      )}
+                    </div>
+                  )
+                )}
               </div>
             ))}
           </div>
