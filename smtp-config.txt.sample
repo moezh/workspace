@@ -5,4 +5,4 @@
     "smtp_pass": "xxxxx",
     "smtp_from": "МH Workspace <xxxxx@gmail.com>",
     "smtp_host": "smtp.gmail.com"
-},
+}

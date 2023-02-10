@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Pool } from "pg";
 import bcrypt from "bcrypt";
 import { sendMail } from "../services/mailer";
-import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const login = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");

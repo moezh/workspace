@@ -23,6 +23,8 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 1. In the main folder of the repository, change the name of `smtp-config.txt.sample` to `smtp-config.txt`, then replace the content of `smtp-config.txt` with valid SMTP parameters.
 
+1. In the main folder of the repository, change the name of `pushover-config.txt.sample` to `pushover-config.txt`, then replace the content of `pushover-config.txt` with the pushover parameters.
+
 1. To set up the environment for the application, rename the `env.sample` file in the root directory to `.env`. To run the application in production mode, set the `DOCKER_ENV` variable to `prod` in the `.env` file. If `DOCKER_ENV` is not set, it defaults to `dev` (development mode).
 
 1. To spin up the entire environment, run the command: `docker compose up`.

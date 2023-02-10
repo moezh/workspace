@@ -30,6 +30,7 @@ services:
     secrets:
       - database-password
       - cj-private-key
+      - pushover-config
   backend:
     container_name: backend
     restart: on-failure
@@ -74,3 +75,5 @@ secrets:
     file: ./cj-private-key.txt
   smtp-config:
     file: ./smtp-config.txt
+  pushover-config:
+    file: ./pushover-config.txt
