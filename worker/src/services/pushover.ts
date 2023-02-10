@@ -29,11 +29,11 @@ export const pushover = (title: string, message: string) => {
   const request = https
     .request(options, (resp) => {
       resp.on("data", (d) => {
-        process.stdout.write(d);
+        console.log("Pushover: " + d);
       });
     })
     .on("error", (err) => {
-      console.log("Error: " + err.message);
+      console.log("Pushover - Error: " + err.message);
     });
   request.write(data);
   request.end();
