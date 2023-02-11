@@ -1,8 +1,8 @@
 import { getCjDatafeeds } from "./services/cj";
 
-const everyDay = async () => {
+const everyDay = () => {
   console.log("> Every 1 day");
-  await getCjDatafeeds();
+  getCjDatafeeds();
 };
 
 export default everyDay;

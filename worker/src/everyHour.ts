@@ -1,4 +1,4 @@
-const everyHour = async () => {
+const everyHour = () => {
   console.log("> Every 1 hour");
 };
 

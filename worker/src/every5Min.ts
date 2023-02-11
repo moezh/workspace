@@ -1,6 +1,6 @@
 import { getUpWorkNewJobs } from "./services/upwork";
 
-const every5Min = async () => {
+const every5Min = () => {
   console.log("> Every 5 minutes");
   getUpWorkNewJobs();
 };
