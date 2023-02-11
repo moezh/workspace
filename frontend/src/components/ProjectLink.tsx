@@ -9,6 +9,7 @@ const ProjectLink = (props: { project?: string }) => {
   if (!mounted) return null;
   const hostname = window.location.hostname;
   const protocol = window.location.protocol;
+  const port = window.location.port;
   const domainparts = hostname.split(".");
   const domain = domainparts
     .slice(domainparts.length - 2, domainparts.length)
@@ -17,7 +18,7 @@ const ProjectLink = (props: { project?: string }) => {
     return <Link href={`${protocol}//${domain}`}>{`${domain} →`}</Link>;
   } else {
     return (
-      <Link href={`${protocol}//${props.project}.${domain}`}>
+      <Link href={`${protocol}//${props.project}.${domain}:${port}`}>
         <p className="p-1">{`${props.project}.${domain} →`}</p>
       </Link>
     );
