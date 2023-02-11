@@ -1,5 +1,22 @@
 import { pushover } from "./pushover";
-import { getRSS } from "./rss";
+import Parser from "rss-parser";
+
+const getRSS = async (url: string, minutes?: number) => {
+  const parser: Parser = new Parser();
+  const rss = await parser.parseURL(url);
+  if (minutes === undefined) {
+    return rss.items;
+  } else {
+    const rssDate =
+      rss.description === undefined
+        ? new Date()
+        : new Date(rss.description?.replace("All jobs as of ", ""));
+    const startingDate = rssDate.getTime() - minutes * 60 * 1000;
+    return rss.items.filter(
+      (item) => new Date(item.isoDate as string).getTime() > startingDate
+    );
+  }
+};
 
 export const getUpWorkNewJobs = async () => {
   const rss = await getRSS(
