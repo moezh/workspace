@@ -3,12 +3,16 @@ import fs from "fs";
 import Parser from "rss-parser";
 
 export const getUpWorkNewJobs = async () => {
-  try {
-    fs.accessSync("./data/upwork/last-job-date.txt", fs.constants.F_OK);
-  } catch {
-    fs.writeFileSync("./data/upwork/last-job-date.txt", new Date().toString());
+  const dir = "./data/upwork";
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
   }
-  const lastJobDate = fs.readFileSync("./data/upwork/last-job-date.txt", {
+  try {
+    fs.accessSync(`${dir}/last-job-date.txt`, fs.constants.F_OK);
+  } catch {
+    fs.writeFileSync(`${dir}/last-job-date.txt`, new Date().toString());
+  }
+  const lastJobDate = fs.readFileSync(`${dir}/last-job-date.txt`, {
     encoding: "utf8",
   });
   const fromDate = new Date(lastJobDate).getTime();
@@ -31,9 +35,6 @@ export const getUpWorkNewJobs = async () => {
   });
   if (toDate > fromDate) {
     console.log(`Last job date: ${new Date(toDate).toString()}`);
-    fs.writeFileSync(
-      "./data/upwork/last-job-date.txt",
-      new Date(toDate).toString()
-    );
+    fs.writeFileSync(`${dir}/last-job-date.txt`, new Date(toDate).toString());
   }
 };
