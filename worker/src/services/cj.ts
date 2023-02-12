@@ -17,7 +17,7 @@ const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
 
 export const getCjDatafeeds = async () => {
   console.log("> Download datafeeds");
-  const localPath = "./cj/datafeeds/";
+  const localPath = "./data/cj/";
   const sftp = new Client();
   await sftp.connect({
     host: "datatransfer.cj.com",

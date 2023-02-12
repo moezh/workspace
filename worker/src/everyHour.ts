@@ -1,5 +1,3 @@
-const everyHour = () => {
-  console.log("> Every 1 hour");
-};
+const everyHour = () => {};
 
 export default everyHour;
