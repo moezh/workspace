@@ -19,7 +19,7 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 1. In the main folder of the repository, change the name of `database-password.txt.sample` to `database-password.txt` and `backend-password.txt.sample` to `backend-password.txt`. Replace the content of `database-password.txt` and `backend-password.txt` with new, unique and random passwords.
 
-1. In the main folder of the repository, change the name of every other `.txt.sample` files to `.txt`, then replace the content of the `.txt` file by the right informations. 
+1. In the main folder of the repository, change the name of every other `.txt.sample` files to `.txt`, then replace the content of the `.txt` file by the right informations.
 
 1. To set up the environment for the application, rename the `env.sample` file in the root directory to `.env`. To run the application in production mode, set the `DOCKER_ENV` variable to `prod` in the `.env` file. If `DOCKER_ENV` is not set, it defaults to `dev` (development mode).
 
@@ -40,7 +40,3 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 - The database (PostgreSQL) runs on port 5432. The Admin username is 'postgres' and the password is stored in the file database-password.txt (root directory).
 
 - For development testing, access the application in the browser by using 'localtest.me' instead of the typical 'localhost'.
-
-## Unit Testing
-
-- To run unit tests, use the command: `docker exec <CONTAINER_ID> yarn run test`. Please replace the <CONTAINER_ID> with the appropriate container id. To find the container ID, use the command `docker container ls` or `docker ps`.
