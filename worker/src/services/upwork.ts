@@ -17,7 +17,7 @@ export const getUpWorkNewJobs = async () => {
   });
   const fromDate = new Date(lastJobDate).getTime();
   const url =
-    "https://www.upwork.com/ab/feed/jobs/rss?subcategory2_uid=531770282589057024%2C531770282584862733&location=United+States&q=%28react+OR+next.js+OR+node.js+OR+typescript%29+AND+NOT+%28java+OR+php+OR+python+OR+rust+OR+golang+OR+laravel+OR+vue+OR+angular+OR+mongodb+OR+shopify%29&client_hires=1-9%2C10-&contractor_tier=2%2C3&verified_payment_only=1&sort=recency";
+    "https://www.upwork.com/nx/jobs/search/?q=expensify&sort=recency&t=1";
   const parser: Parser = new Parser();
   const rss = await parser.parseURL(url);
   const filtredRss = rss.items.filter(
