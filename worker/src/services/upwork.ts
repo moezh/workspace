@@ -17,7 +17,7 @@ export const getUpWorkNewJobs = async () => {
   });
   const fromDate = new Date(lastJobDate).getTime();
   const url =
-    "https://www.upwork.com/nx/jobs/search/?q=expensify&sort=recency&t=1";
+    "https://www.upwork.com/ab/feed/jobs/rss?q=expensify&sort=recency&job_type=fixed";
   const parser: Parser = new Parser();
   const rss = await parser.parseURL(url);
   const filtredRss = rss.items.filter(
