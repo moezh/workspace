@@ -28,7 +28,7 @@ export default function Page(props: { data: Record<string, string> }) {
   return (
     <>
       <Head
-        title={`${props.data.title} - ${props.data.profile_name}`}
+        title={`${props.data.profile_name} | ${props.data.title}`}
         description={props.data.profile_summary}
       />
       <Header />
@@ -37,17 +37,19 @@ export default function Page(props: { data: Record<string, string> }) {
           {props.data.title}
         </h1>
         <div className="flex flex-row items-center justify-center pt-8">
-          <div className="w-32 ml-4 mr-4">
+          {/*
+          <div className="w-28 mx-6">
             <Image
               src={props.data.profile_photo_url}
               alt={props.data.profile_name}
               width={200}
               height={200}
-              className="w-32"
+              className="w-28"
               priority
             />
           </div>
-          <div className="flex flex-col items-start justify-start">
+          */}
+          <div className="flex flex-col items-center justify-start">
             <h1 className="font-medium uppercase text-left">
               {props.data.profile_name}
             </h1>
@@ -55,8 +57,8 @@ export default function Page(props: { data: Record<string, string> }) {
             <p className="font-light text-left">
               {props.data.profile_location}
             </p>
-            <div className="w-full flex flex-row flex-wrap items-start justify-start pt-2">
-              <div className="w-6 mr-6">
+            <div className="w-full flex flex-row flex-wrap items-center justify-center pt-4">
+              <div className="w-6 mx-6">
                 <a target="_blank" href={`mailto:${props.data.contact_email}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +113,7 @@ export default function Page(props: { data: Record<string, string> }) {
             </div>
           </div>
         </div>
-        <p className="pt-4">{props.data.profile_summary}</p>
+        <p className="pt-6">{props.data.profile_summary}</p>
         <p className="font-medium uppercase pt-8 text-center">
           {props.data.skills_title}
         </p>
