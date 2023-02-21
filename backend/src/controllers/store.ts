@@ -28,9 +28,8 @@ export const getProducts = async (req: Request, res: Response) => {
   if (req.query.category !== undefined)
     sql += `AND product_category_id like $3 `;
   if (req.query.search !== undefined)
-    sql += `AND text_search @@ websearch_to_tsquery('english', ${
-      req.query.category !== undefined ? "$4" : "$3"
-    }) `;
+    sql += `AND text_search @@ websearch_to_tsquery('english', ${req.query.category !== undefined ? "$4" : "$3"
+      }) `;
   sql += `
   LIMIT $1 OFFSET $2
   `;

@@ -1,3 +1,3 @@
-const everyHour = () => {};
+const everyHour = () => { };
 
 export default everyHour;

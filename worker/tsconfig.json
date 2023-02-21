@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "target": "ES2022",
     "module": "CommonJS",
     "strict": true,
@@ -12,6 +14,10 @@
     "outDir": "./build",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

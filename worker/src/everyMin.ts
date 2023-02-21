@@ -1,3 +1,3 @@
-const everyMin = () => {};
+const everyMin = () => { };
 
 export default everyMin;
