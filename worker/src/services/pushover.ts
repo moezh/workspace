@@ -1,11 +1,11 @@
 import https from "https";
-import { readFileSync } from "fs";
+import {readFileSync} from "fs";
 
 const pushoverFile = readFileSync("/run/secrets/pushover-config", {
   encoding: "utf8",
 });
 
-const { user, token } = JSON.parse(pushoverFile);
+const {user, token} = JSON.parse(pushoverFile);
 
 export const pushover = (title: string, message: string, url: string) => {
   const data = JSON.stringify({

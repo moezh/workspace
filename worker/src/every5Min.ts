@@ -1,7 +1,3 @@
-import { getUpWorkNewJobs } from "./services/upwork";
-
-const every5Min = () => {
-  getUpWorkNewJobs();
-};
+const every5Min = () => {};
 
 export default every5Min;

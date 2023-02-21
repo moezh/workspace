@@ -1,15 +1,15 @@
-import { pool } from "./db";
+import {pool} from "./db";
 import fs from "fs";
 import Client from "ssh2-sftp-client";
 import readLine from "readline";
 import AdmZip from "adm-zip";
 
-import { readFileSync } from "fs";
+import {readFileSync} from "fs";
 
 const cjFile = readFileSync("/run/secrets/cj-config", {
   encoding: "utf8",
 });
-const { userId, subscriptionId } = JSON.parse(cjFile);
+const {userId, subscriptionId} = JSON.parse(cjFile);
 
 const privateKey = fs.readFileSync("/run/secrets/cj-private-key", {
   encoding: "utf8",
@@ -29,8 +29,8 @@ export const getCjDatafeeds = async () => {
     },
   });
   const remotePath = `/outgoing/productcatalog/${subscriptionId}`;
-  fs.rmSync(localPath, { recursive: true, force: true });
-  await sftp.downloadDir(remotePath, localPath, { useFastget: true });
+  fs.rmSync(localPath, {recursive: true, force: true});
+  await sftp.downloadDir(remotePath, localPath, {useFastget: true});
   sftp.end();
   console.log("> Unzip datafeeds");
   fs.readdirSync(localPath).forEach((file) => {

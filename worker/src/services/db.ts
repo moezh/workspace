@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import {Pool} from "pg";
 import fs from "fs";
 
 const password = fs.readFileSync("/run/secrets/database-password", {

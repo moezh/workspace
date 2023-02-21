@@ -1,5 +1,5 @@
-import { pool } from "./services/db";
-import { getCjDatafeeds } from "./services/cj";
+import {pool} from "./services/db";
+import {getCjDatafeeds} from "./services/cj";
 
 const init = async () => {
   let sql: string = `SELECT count(*) FROM store_datafeeds`;
@@ -7,7 +7,7 @@ const init = async () => {
   pool.query(
     sql,
     values,
-    async (err, result: { rows: Record<string, string>[] }) => {
+    async (err, result: {rows: Record<string, string>[];}) => {
       if (err) {
         console.log(err);
       } else {
