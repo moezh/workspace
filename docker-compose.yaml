@@ -2,29 +2,29 @@ version: "3.9"
 name: "workspace"
 services:
   frontend:
-    container_name: frontend
+    container_name: ${COMPOSE_PROJECT_NAME:-workspace}_frontend
     restart: on-failure
     depends_on:
       - backend
     build:
       context: ./frontend
       target: ${DOCKER_ENV:-dev}
-    image: workspace_frontend_${DOCKER_ENV:-dev}
+    image: ${COMPOSE_PROJECT_NAME:-workspace}_frontend
     ports:
-      - "${FRONTEND_PORT:-80}:3000"
+      - "${COMPOSE_FRONTEND_PORT:-3000}:3000"
     volumes:
       - ./frontend:/app
     secrets:
       - backend-password
   worker:
-    container_name: worker
+    container_name: ${COMPOSE_PROJECT_NAME:-workspace}_worker
     restart: on-failure
     depends_on:
       - database
     build:
       context: ./worker
       target: ${DOCKER_ENV:-dev}
-    image: workspace_worker_${DOCKER_ENV:-dev}
+    image: ${COMPOSE_PROJECT_NAME:-workspace}_worker
     volumes:
       - ./worker:/app
     secrets:
@@ -33,16 +33,16 @@ services:
       - cj-config
       - pushover-config
   backend:
-    container_name: backend
+    container_name: ${COMPOSE_PROJECT_NAME:-workspace}_backend
     restart: on-failure
     depends_on:
       - database
     build:
       context: ./backend
       target: ${DOCKER_ENV:-dev}
-    image: workspace_backend_${DOCKER_ENV:-dev}
+    image: ${COMPOSE_PROJECT_NAME:-workspace}_backend
     ports:
-      - "${BACKEND_PORT:-3001}:3001"
+      - "${COMPOSE_BACKEND_PORT:-3001}:3001"
     volumes:
       - ./backend:/app
     secrets:
@@ -50,23 +50,22 @@ services:
       - backend-password
       - smtp-config
   database:
-    container_name: database
+    container_name: ${COMPOSE_PROJECT_NAME:-workspace}_database
     restart: on-failure
     build:
       context: ./database
-    image: workspace_database_${DOCKER_ENV:-dev}
+    image: ${COMPOSE_PROJECT_NAME:-workspace}_database
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/database-password
     ports:
-      - "${DATABASE_PORT:-5432}:5432"
+      - "${COMPOSE_DATABASE_PORT:-5432}:5432"
     volumes:
       - ./database/initdb:/docker-entrypoint-initdb.d
-      - volume_${DOCKER_ENV:-dev}:/var/lib/postgresql/data
+      - volume:/var/lib/postgresql/data
     secrets:
       - database-password
 volumes:
-  volume_dev:
-  volume_prod:
+  volume:
 secrets:
   database-password:
     file: ./database-password.txt
