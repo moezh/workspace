@@ -1,7 +1,6 @@
 import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
-import Image from "next/image";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Icons from "../components/Icons";
@@ -37,18 +36,6 @@ export default function Page(props: { data: Record<string, string> }) {
           {props.data.title}
         </h1>
         <div className="flex flex-row items-center justify-center pt-8">
-          {/*
-          <div className="w-28 mx-6">
-            <Image
-              src={props.data.profile_photo_url}
-              alt={props.data.profile_name}
-              width={200}
-              height={200}
-              className="w-28"
-              priority
-            />
-          </div>
-          */}
           <div className="flex flex-col items-center justify-start">
             <h1 className="font-medium uppercase text-left">
               {props.data.profile_name}
@@ -121,13 +108,13 @@ export default function Page(props: { data: Record<string, string> }) {
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group1_title}:
         </p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
           {props.data.skill_group1_summary
             .split(",")
             .map((skill, index: number) => (
               <div
                 key={index}
-                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-6"
               >
                 <Icons name={skill} />
                 <div className="pt-1">{skill}</div>
@@ -137,13 +124,13 @@ export default function Page(props: { data: Record<string, string> }) {
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group2_title}:
         </p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
           {props.data.skill_group2_summary
             .split(",")
             .map((skill, index: number) => (
               <div
                 key={index}
-                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-6"
               >
                 <Icons name={skill} />
                 <div className="pt-1">{skill}</div>
@@ -153,13 +140,13 @@ export default function Page(props: { data: Record<string, string> }) {
         <p className="font-medium pt-6 text-center">
           {props.data.skill_group3_title}:
         </p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
           {props.data.skill_group3_summary
             .split(",")
             .map((skill, index: number) => (
               <div
                 key={index}
-                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-4"
+                className="w-28 flex flex-col items-center justify-center ml-1 mr-1 mb-6"
               >
                 <Icons name={skill} />
                 <div className="pt-1">{skill}</div>
@@ -169,7 +156,7 @@ export default function Page(props: { data: Record<string, string> }) {
         <p className="font-medium uppercase pt-8 text-center">
           {props.data.projects_title}
         </p>
-        <p className="pt-4">{props.data.projects_summary}</p>
+        <p className="pt-6">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.projects.split(",").map((project, index: number) => (
             <div

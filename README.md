@@ -1,4 +1,4 @@
-# My Personal Workspace | com6.cc (MH)
+# My Personal Workspace
 
 This workspace is hosted at **https://com6.cc** and is built using the following technologies:
 
@@ -31,7 +31,7 @@ This workspace is hosted at **https://com6.cc** and is built using the following
 
 ## Technical Notes
 
-- The front-end (NextJs/TypeScript/TailwindCSS) runs on external port 80 and internal port 3000.
+- The front-end (NextJs/TypeScript/TailwindCSS) runs on port 3000.
 
 - The backend (ExpressJs/TypeScript) runs on port 3001. The Admin username is 'admin' and the password is stored in the file backend-password.txt (root directory).
 
