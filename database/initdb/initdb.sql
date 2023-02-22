@@ -14,8 +14,8 @@ VALUES
 ('profile_name','Moez Hachicha'),
 ('profile_job_title','Software Engineering Consultant'),
 ('profile_location','Remote, Worldwide'),
-('profile_summary','Welcome to my personal workspace, where I deploy and host the side projects that I''m currently working on. With more than 15 years of experience in software engineering, I have a comprehensive understanding of both front-end and back-end technologies. My workspace serves as a hub for me to bring my creative ideas to life, turning them into dynamic and lively solutions.'),
-('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to reach out to me. You may contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me, by clicking the buttons below:'),
+('profile_summary','Welcome to my personal workspace, where I deploy and host the side projects that I''m currently working on. As an experienced software engineering consultant with proficiency in both front-end and back-end technologies, I specialize in developing end-to-end solutions that span the entire development lifecycle. This workspace serves as a central hub for me where I bring my ideas to life, transforming my initial visions into fully functional and production-ready systems.'),
+('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me on Calendly, by clicking the buttons below:'),
 ('contact_email','moez.hachicha@icloud.com'),
 ('contact_whatapp','21655334476'),
 ('contact_linkedin_url','https://www.linkedin.com/in/moez-hachicha/'),
@@ -35,7 +35,7 @@ VALUES
 ('blog_summary','A blog where I share my knowledge and insights on technologies used in this workspace, providing search engine rankings for this workspace.'),
 ('store_summary','An automated affiliate store that curates items from affiliate partners, simplifying my affiliate link promotion in one convenient platform.'),
 ('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
-('workout_summary','A mobile and web application that showcases my proficiency in creating high-performance applications using the latest technologies.');
+('workout_summary','A mobile and web application that showcases my proficiency in creating end-to-end applications using the latest technologies.');
 
 CREATE TABLE users (
     email VARCHAR(100) PRIMARY KEY NOT NULL,
