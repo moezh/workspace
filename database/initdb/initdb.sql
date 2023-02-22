@@ -13,7 +13,7 @@ VALUES
 ('title','Personal Workspace'),
 ('profile_photo_url','/moezhachicha.png'),
 ('profile_name','Moez Hachicha'),
-('profile_job_title','Software Engineer & Tech Lead'),
+('profile_job_title','Software Engineering Consultant'),
 ('profile_location','Remote, Worldwide'),
 ('profile_summary','Welcome to my personal workspace, where I deploy and host the side projects that I''m currently working on. With more than 15 years of experience in software engineering, I have a comprehensive understanding of both front-end and back-end technologies. My workspace serves as a hub for me to bring my creative ideas to life, turning them into dynamic and lively solutions.'),
 ('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to reach out to me. You may contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me, by clicking the buttons below:'),
