@@ -11,7 +11,7 @@ services:
       target: ${DOCKER_ENV:-dev}
     image: workspace_frontend_${DOCKER_ENV:-dev}
     ports:
-      - "80:3000"
+      - "${FRONTEND_PORT:-80}:3000"
     volumes:
       - ./frontend:/app
     secrets:
@@ -42,7 +42,7 @@ services:
       target: ${DOCKER_ENV:-dev}
     image: workspace_backend_${DOCKER_ENV:-dev}
     ports:
-      - "3001:3001"
+      - "${BACKEND_PORT:-3001}:3001"
     volumes:
       - ./backend:/app
     secrets:
@@ -58,7 +58,7 @@ services:
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/database-password
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT:-5432}:5432"
     volumes:
       - ./database/initdb:/docker-entrypoint-initdb.d
       - volume_${DOCKER_ENV:-dev}:/var/lib/postgresql/data
