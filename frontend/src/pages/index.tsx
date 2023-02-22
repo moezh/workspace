@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Icons from "../components/Icons";
 import Logo from "../components/Logo";
 import Github from "../components/Github";
+import Projects from "../components/Projects";
 import Footer from "../components/Footer";
 import ProjectLink from "../components/ProjectLink";
 
@@ -158,7 +159,7 @@ export default function Page(props: { data: Record<string, string> }) {
         </p>
         <p className="pt-6">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
-          {props.data.projects.split(",").map((project, index: number) => (
+          {props.data.projects_featured.split(",").map((project, index: number) => (
             <div
               key={index}
               className={`w-1/2 flex flex-col items-center justify-start pb-6 ${
@@ -179,7 +180,10 @@ export default function Page(props: { data: Record<string, string> }) {
       <div className="pt-6">
         <Github github_url={props.data.github_url} />
       </div>
-      <Footer />
+      <div className="pt-8 -mb-8 font-light font-sans text-center capitalize">
+        <Projects projects={props.data.projects} />
+      </div>
+      <Footer/>
     </>
   );
 }

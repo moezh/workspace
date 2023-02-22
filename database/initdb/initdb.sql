@@ -30,11 +30,12 @@ VALUES
 ('skill_group3_summary','Linux,Docker,AWS'),
 ('projects_title','Personal Side Projects'),
 ('projects_summary','Side projects allow me to experiment with new technologies and explore new ideas. The projects I am currently developing under this workspace are:'),
-('projects','workout,web3'),
+('projects','blog,store,workout,web3'),
+('projects_featured','workout,web3'),
 ('projects_under_construction','workout,web3'),
 ('blog_summary','A blog where I share my knowledge and insights on technologies used in this workspace, providing search engine rankings for this workspace.'),
 ('store_summary','An automated affiliate store that curates items from affiliate partners, simplifying my affiliate link promotion in one convenient platform.'),
-('web3_summary','This side project showcases my ability to stay current with the latest technologies and trends related to web3, blockchain, and crypto.'),
+('web3_summary','This side project showcases my ability to stay current with the latest technologies related to web3, blockchain, and crypto.'),
 ('workout_summary','A mobile and web application that showcases my proficiency in creating end-to-end applications using the latest technologies.');
 
 CREATE TABLE users (
