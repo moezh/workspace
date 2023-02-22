@@ -14,7 +14,7 @@ VALUES
 ('profile_name','Moez Hachicha'),
 ('profile_job_title','Software Engineering Consultant'),
 ('profile_location','Remote, Worldwide'),
-('profile_summary','Welcome to my personal workspace, where I deploy and host the side projects that I''m currently working on. As an experienced software engineering consultant with proficiency in both front-end and back-end technologies, I specialize in developing end-to-end solutions that span the entire development lifecycle. This workspace serves as a central hub for me where I bring my ideas to life, transforming my initial visions into fully functional and production-ready systems.'),
+('profile_summary','Welcome to my personal workspace, where I deploy and host the side projects that I''m currently working on. As an experienced software engineering consultant with proficiency in both front-end and back-end technologies, I specialize in developing end-to-end solutions that span the entire development lifecycle. This workspace serves as a central hub where I bring my ideas to life, transforming my initial visions into fully functional and production-ready systems.'),
 ('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me on Calendly, by clicking the buttons below:'),
 ('contact_email','moez.hachicha@icloud.com'),
 ('contact_whatapp','21655334476'),
