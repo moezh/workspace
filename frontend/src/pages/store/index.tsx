@@ -1,5 +1,5 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -30,9 +30,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ? Number(configData.productsPerPage)
     : 24;
   const offset = page * limit - limit;
-  let urlProducts = `http://backend:3001/api/store/products?limit=${
-    limit + 1
-  }&offset=${offset}`;
+  let urlProducts = `http://backend:3001/api/store/products?limit=${limit + 1
+    }&offset=${offset}`;
   if (category !== "") urlProducts += `&category=${category}`;
   if (search !== "") urlProducts += `&search=${search}`;
   const products = await fetch(urlProducts, {
@@ -70,9 +69,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function Page(props: {
-  config: { store_title: string; store_summary: string };
+  config: {store_title: string; store_summary: string;};
   products: Record<string, string>[];
-  count: { product_category_name: string; product_count: string };
+  count: {product_category_name: string; product_count: string;};
   currentPage: number;
   currentCategory: string;
   currentSearch: string;
@@ -81,11 +80,10 @@ export default function Page(props: {
   return (
     <>
       <Head
-        title={`${props.config.store_title} - ${
-          props.currentSearch !== ""
+        title={`${props.config.store_title} - ${props.currentSearch !== ""
             ? "Search"
             : props.count.product_category_name
-        }`}
+          }`}
         description={props.config.store_summary}
       />
       <Header />
@@ -145,7 +143,7 @@ export default function Page(props: {
                   <div className="font-medium">{product.brand}</div>
                   <div>
                     {product.sale_price === "" ||
-                    product.sale_price === product.price ? (
+                      product.sale_price === product.price ? (
                       <>{product.price}</>
                     ) : (
                       <>
@@ -169,15 +167,13 @@ export default function Page(props: {
           <div className="flex flex-row items-start justify-center">
             <div className="flex flex-col items-center justify-center mr-2 w-8">
               <Link
-                href={`/?page=${Number(props.currentPage) - 1}${
-                  props.currentCategory !== ""
+                href={`/?page=${Number(props.currentPage) - 1}${props.currentCategory !== ""
                     ? `&category=${props.currentCategory}`
                     : ""
-                }${
-                  props.currentSearch !== ""
+                  }${props.currentSearch !== ""
                     ? `&search=${props.currentSearch}`
                     : ""
-                }`}
+                  }`}
                 hidden={props.currentPage > 1 ? false : true}
               >
                 <svg
@@ -200,15 +196,13 @@ export default function Page(props: {
             </div>
             <div className="flex flex-col items-center justify-center ml-2 w-8">
               <Link
-                href={`/?page=${Number(props.currentPage) + 1}${
-                  props.currentCategory !== ""
+                href={`/?page=${Number(props.currentPage) + 1}${props.currentCategory !== ""
                     ? `&category=${props.currentCategory}`
                     : ""
-                }${
-                  props.currentSearch !== ""
+                  }${props.currentSearch !== ""
                     ? `&search=${props.currentSearch}`
                     : ""
-                }`}
+                  }`}
                 hidden={!props.nextPage}
               >
                 <svg

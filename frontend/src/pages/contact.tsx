@@ -1,9 +1,10 @@
-import { GetStaticProps } from "next";
-import { readFileSync } from "fs";
+import {GetStaticProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import GoBack from "../components/GoBack";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -16,7 +17,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  return { props: { data: resultData } };
+  return {props: {data: resultData}};
 };
 
 export default function Page(props: {
@@ -36,9 +37,16 @@ export default function Page(props: {
       />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
-          Contact / Get In Touch
-        </h1>
+        <div className="flex flex-row items-start justify-start">
+          <div className="w-1/4">
+            <GoBack />
+          </div>
+          <div className="w-2/4">
+            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+              Contact / Get In Touch
+            </h1>
+          </div>
+        </div>
         <div className="pt-8">
           <p>{props.data.contact_summary}</p>
           <div className="w-full flex flex-row flex-wrap items-center justify-center pt-8">

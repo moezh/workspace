@@ -87,19 +87,16 @@ CREATE TABLE workout_workouts (
     type VARCHAR(250) NOT NULL,
     name VARCHAR(250) NOT NULL,
     description TEXT NOT NULL DEFAULT '',
-    work_seconds VARCHAR(10) NOT NULL,
-    rest_Seconds VARCHAR(10) NOT NULL,
-    workout_circuit VARCHAR(10) NOT NULL,
-    workout_target TEXT NOT NULL
+    target TEXT NOT NULL
 );
 
-INSERT INTO workout_workouts (id, type, name, description, work_seconds, rest_Seconds, workout_circuit, workout_target)
+INSERT INTO workout_workouts (id, type, name, description, target)
 VALUES
-('FullBodyWorkout','Full Body Workout','Upper, Lower & Core','This workout exercises your whole body, with all muscle groups being used and stimulated in one single session.','30','10','1','Cardio-Upper Body,Strength-Shoulders,Strength-Glutes,Strength-Abs,Cardio-Lower Body,Strength-Chest,Strength-Hamstrings,Strength-Obliques,Cardio-Core,Strength-Triceps,Strength-Quadriceps,Strength-Lower Back'),
-('UpperBodyWorkout','Upper Body Workout','Chest, Shoulders & Arms','This workout exercises your upper body, with all muscle groups located in this part being used and stimulated in one single session.','30','10','3','Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps'),
-('CoreWorkout','Core Workout','Abs, Obliques & Lower Back','This workout exercises your core, with all muscle groups located in this part being used and stimulated in one single session.','30','10','3','Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back'),
-('LowerBodyWorkout','Lower Body Workout','Glutes & Legs','This workout exercises your lower body, with all muscle groups located in this part being used and stimulated in one single session.','30','10','3','Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings'),
-('CardioWorkout','Cardio Workout','HIIT & Cardio','This workout exercises your cardio-vascular system, with your heart and lungs being used and stimulated in one single session.','30','10','2','Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body');
+('FullBodyWorkout','Full Body Workout','Upper, Lower & Core','This workout exercises your whole body, with all muscle groups being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Glutes,Strength-Abs,Cardio-Lower Body,Strength-Chest,Strength-Hamstrings,Strength-Obliques,Cardio-Core,Strength-Triceps,Strength-Quadriceps,Strength-Lower Back'),
+('UpperBodyWorkout','Upper Body Workout','Chest, Shoulders & Arms','This workout exercises your upper body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps,Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps,Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps'),
+('CoreWorkout','Core Workout','Abs, Obliques & Lower Back','This workout exercises your core, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back,Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back,Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back'),
+('LowerBodyWorkout','Lower Body Workout','Glutes & Legs','This workout exercises your lower body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings,Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings,Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings'),
+('CardioWorkout','Cardio Workout','HIIT & Cardio','This workout exercises your cardio-vascular system, with your heart and lungs being used and stimulated in one single session.','Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body');
 
 CREATE TABLE workout_programs (
     id VARCHAR(100) PRIMARY KEY NOT NULL,
