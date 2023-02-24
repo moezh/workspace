@@ -14,3 +14,102 @@ export const getConfig = async (req: Request, res: Response) => {
     }
   });
 };
+
+export const getExercises = async (req: Request, res: Response) => {
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_exercises`;
+  let values: string[] = [];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      res.json(data);
+    }
+  });
+};
+
+export const getExercise = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_exercises WHERE id = $1`;
+  let values: string[] = [id];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      if (data.length === 0) {
+        res.status(404).json({ code: 404, description: "Not Found" });
+      } else {
+        res.json(data[0]);
+      }
+    }
+  });
+};
+
+export const getWorkouts = async (req: Request, res: Response) => {
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_workouts`;
+  let values: string[] = [];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      res.json(data);
+    }
+  });
+};
+
+export const getWorkout = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_workouts WHERE id = $1`;
+  let values: string[] = [id];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      if (data.length === 0) {
+        res.status(404).json({ code: 404, description: "Not Found" });
+      } else {
+        res.json(data[0]);
+      }
+    }
+  });
+};
+
+export const getPrograms = async (req: Request, res: Response) => {
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_programs`;
+  let values: string[] = [];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      res.json(data);
+    }
+  });
+};
+
+export const getProgram = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const db: Pool = req.app.get("db");
+  let sql: string = `SELECT * FROM workout_programs WHERE id = $1`;
+  let values: string[] = [id];
+  db.query(sql, values, (err, result: { rows: Record<string, string>[] }) => {
+    if (err) {
+      res.status(500).json({ code: 500, description: err });
+    } else {
+      const data = result.rows;
+      if (data.length === 0) {
+        res.status(404).json({ code: 404, description: "Not Found" });
+      } else {
+        res.json(data[0]);
+      }
+    }
+  });
+};

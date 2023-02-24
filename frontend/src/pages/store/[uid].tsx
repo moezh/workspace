@@ -28,25 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { data: resultData } };
 };
 
-const linksToImages = (links: string) =>
-  links.split(",").map((e: string, index: number) => {
-    if (e === "") {
-      return <></>;
-    } else {
-      return (
-        <Image
-          key={index}
-          src={e}
-          alt={e.substring(e.lastIndexOf("/") + 1)}
-          width="640"
-          height="640"
-          className="w-[320px] h-auto mx-1 mb-2"
-          priority
-        />
-      );
-    }
-  });
-
 export default function Page(props: { data: Record<string, string> }) {
   const imagesArray = Array.from(
     new Set(
