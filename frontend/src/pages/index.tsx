@@ -180,7 +180,7 @@ export default function Page(props: {data: Record<string, string>;}) {
         <Github github_url={props.data.github_url} />
       </div>
       <div className="pt-8 -mb-8 font-light text-center capitalize">
-        <Projects projects={props.data.projects} />
+        Other side projects: <Projects projects={props.data.projects_footer_link} />
       </div>
       <Footer />
     </>
