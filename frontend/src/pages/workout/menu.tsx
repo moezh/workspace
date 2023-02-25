@@ -43,7 +43,7 @@ export default function Categories(props: {
             <Logo />
           </Link>
         </h1>
-        <div className="w-[280px] pt-8 capitalize">
+        <div className="w-[280px] pt-4 uppercase font-serif">
           <div className="py-4">
             <Link href="/">
               <span>Dashboard →</span>

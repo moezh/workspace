@@ -1,5 +1,5 @@
-import { GetStaticProps } from "next";
-import { readFileSync } from "fs";
+import {GetStaticProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
@@ -21,10 +21,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  return { props: { data: resultData } };
+  return {props: {data: resultData}};
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   return (
     <>
       <Head
@@ -33,16 +33,16 @@ export default function Page(props: { data: Record<string, string> }) {
       />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
+        <h1 className="text-xl uppercase font-serif text-center">
           {props.data.title}
         </h1>
         <div className="flex flex-row items-center justify-center pt-8">
           <div className="flex flex-col items-center justify-start">
-            <h1 className="font-medium uppercase text-left">
+            <h2 className="text-lg uppercase font-serif">
               {props.data.profile_name}
-            </h1>
-            <h2 className="text-left">{props.data.profile_job_title}</h2>
-            <p className="font-light text-left">
+            </h2>
+            <p>{props.data.profile_job_title}</p>
+            <p className="font-light">
               {props.data.profile_location}
             </p>
             <div className="w-full flex flex-row flex-wrap items-center justify-center pt-4">
@@ -102,11 +102,11 @@ export default function Page(props: { data: Record<string, string> }) {
           </div>
         </div>
         <p className="pt-6">{props.data.profile_summary}</p>
-        <p className="font-medium uppercase pt-8 text-center">
+        <p className="text-lg uppercase font-serif pt-8 text-center">
           {props.data.skills_title}
         </p>
         <p className="pt-4">{props.data.skills_summary}</p>
-        <p className="font-medium pt-6 text-center">
+        <p className="uppercase pt-6 text-center">
           {props.data.skill_group1_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
@@ -122,7 +122,7 @@ export default function Page(props: { data: Record<string, string> }) {
               </div>
             ))}
         </div>
-        <p className="font-medium pt-6 text-center">
+        <p className="uppercase pt-6 text-center">
           {props.data.skill_group2_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
@@ -138,7 +138,7 @@ export default function Page(props: { data: Record<string, string> }) {
               </div>
             ))}
         </div>
-        <p className="font-medium pt-6 text-center">
+        <p className="uppercase pt-6 text-center">
           {props.data.skill_group3_title}:
         </p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
@@ -154,17 +154,16 @@ export default function Page(props: { data: Record<string, string> }) {
               </div>
             ))}
         </div>
-        <p className="font-medium uppercase pt-8 text-center">
+        <p className="text-lg uppercase font-serif pt-8 text-center">
           {props.data.projects_title}
         </p>
-        <p className="pt-6">{props.data.projects_summary}</p>
+        <p className="pt-4">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
           {props.data.projects_featured.split(",").map((project, index: number) => (
             <div
               key={index}
-              className={`w-1/2 flex flex-col items-center justify-start pb-6 ${
-                index % 2 === 0 ? "pr-2" : "pl-2"
-              }`}
+              className={`w-1/2 flex flex-col items-center justify-start pb-6 ${index % 2 === 0 ? "pr-2" : "pl-2"
+                }`}
             >
               <Logo project={project} />
               {props.data.projects_under_construction.includes(project) ? (
@@ -180,10 +179,10 @@ export default function Page(props: { data: Record<string, string> }) {
       <div className="pt-6">
         <Github github_url={props.data.github_url} />
       </div>
-      <div className="pt-8 -mb-8 font-light font-sans text-center capitalize">
+      <div className="pt-8 -mb-8 font-light text-center capitalize">
         <Projects projects={props.data.projects} />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

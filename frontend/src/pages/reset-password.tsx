@@ -1,17 +1,17 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import {useRouter} from "next/router";
+import {useState} from "react";
 import GoBack from "../components/GoBack";
-import { z } from "zod";
+import {z} from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.email !== undefined) {
-    const { email, host } = context.query;
+    const {email, host} = context.query;
     const backendPassword = readFileSync("/run/secrets/backend-password", {
       encoding: "utf8",
     });
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   let router = useRouter();
 
   const [resetForm, setResetForm] = useState({} as ResetForm);
@@ -52,16 +52,16 @@ export default function Page(props: { data: Record<string, string> }) {
   const ResetForm = z.object({
     email: z
       .string()
-      .email({ message: "Invalid email address" })
-      .max(100, { message: "Must be 100 or fewer characters long" }),
+      .email({message: "Invalid email address"})
+      .max(100, {message: "Must be 100 or fewer characters long"}),
   });
   type ResetForm = z.infer<typeof ResetForm>;
 
-  const handleChange = (event: { target: { name: string; value: string } }) => {
-    setResetForm({ ...resetForm, [event.target.name]: event.target.value });
+  const handleChange = (event: {target: {name: string; value: string;};}) => {
+    setResetForm({...resetForm, [event.target.name]: event.target.value});
   };
 
-  const handleKeyDown = (target: { code: string; keyCode: number }) => {
+  const handleKeyDown = (target: {code: string; keyCode: number;}) => {
     if (
       target.code === "Enter" ||
       target.code === "NumpadEnter" ||
@@ -80,14 +80,14 @@ export default function Page(props: { data: Record<string, string> }) {
       router.push(
         {
           pathname: "/reset-password",
-          query: { email: resetForm.email, host: `${protocol}//${hostname}` },
+          query: {email: resetForm.email, host: `${protocol}//${hostname}`},
         },
         "/reset-password"
       );
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
-          return { ...acc, [c.path[0]]: c.message };
+          return {...acc, [c.path[0]]: c.message};
         }, {})
       );
     }
@@ -103,14 +103,14 @@ export default function Page(props: { data: Record<string, string> }) {
             <GoBack />
           </div>
           <div className="w-1/3">
-            <h1 className="font-medium text-xl uppercase font-serif text-center">
+            <h1 className="text-xl uppercase font-serif text-center">
               Reset
             </h1>
           </div>
         </div>
         <div className="w-[280px] mx-auto py-8">
           <div className="flex flex-col items-start justify-start">
-            <p className="font-medium uppercase pt-4">Reset your password?</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-4">Reset your password?</p>
             <p className="pt-1">
               Enter your email to have a reset link emailed to you.
             </p>
@@ -134,11 +134,10 @@ export default function Page(props: { data: Record<string, string> }) {
               <p className="capitalize px-8 py-2">Reset →</p>
             </button>
             <p
-              className={`text-sm pt-1 ${
-                Number(props.data?.code) === 200
-                  ? "text-green-700"
-                  : "text-red-700"
-              }`}
+              className={`text-sm pt-1 ${Number(props.data?.code) === 200
+                ? "text-green-700"
+                : "text-red-700"
+                }`}
             >
               {props.data?.description}
             </p>

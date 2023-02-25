@@ -81,8 +81,8 @@ export default function Page(props: {
     <>
       <Head
         title={`${props.config.store_title} - ${props.currentSearch !== ""
-            ? "Search"
-            : props.count.product_category_name
+          ? "Search"
+          : props.count.product_category_name
           }`}
         description={props.config.store_summary}
       />
@@ -111,7 +111,7 @@ export default function Page(props: {
           </div>
         </div>
         <div className="flex flex-col items-center justify-start pt-4">
-          <h1 className="font-medium text-xl uppercase font-serif">
+          <h1 className="text-xl uppercase font-serif">
             {props.currentSearch !== ""
               ? "Search"
               : props.count.product_category_name}
@@ -138,10 +138,10 @@ export default function Page(props: {
                   priority
                 />
               </Link>
-              <div className="font-light pt-2 p-8">
+              <div className="pt-2 p-8">
                 <Link href={`/${product.product_uid}`}>
-                  <div className="font-medium">{product.brand}</div>
-                  <div>
+                  <div className="uppercase font-serif">{product.brand}</div>
+                  <div className="font-light">
                     {product.sale_price === "" ||
                       product.sale_price === product.price ? (
                       <>{product.price}</>
@@ -168,8 +168,8 @@ export default function Page(props: {
             <div className="flex flex-col items-center justify-center mr-2 w-8">
               <Link
                 href={`/?page=${Number(props.currentPage) - 1}${props.currentCategory !== ""
-                    ? `&category=${props.currentCategory}`
-                    : ""
+                  ? `&category=${props.currentCategory}`
+                  : ""
                   }${props.currentSearch !== ""
                     ? `&search=${props.currentSearch}`
                     : ""
@@ -197,8 +197,8 @@ export default function Page(props: {
             <div className="flex flex-col items-center justify-center ml-2 w-8">
               <Link
                 href={`/?page=${Number(props.currentPage) + 1}${props.currentCategory !== ""
-                    ? `&category=${props.currentCategory}`
-                    : ""
+                  ? `&category=${props.currentCategory}`
+                  : ""
                   }${props.currentSearch !== ""
                     ? `&search=${props.currentSearch}`
                     : ""

@@ -1,18 +1,18 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useUserContext } from "../context/UserContext";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import {useUserContext} from "../context/UserContext";
+import {useRouter} from "next/router";
+import {useState, useEffect} from "react";
 import GoBack from "../components/GoBack";
-import { z } from "zod";
+import {z} from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.email !== undefined) {
-    const { email, firstName, lastName, password } = context.query;
+    const {email, firstName, lastName, password} = context.query;
     const backendPassword = readFileSync("/run/secrets/backend-password", {
       encoding: "utf8",
     });
@@ -44,10 +44,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   let router = useRouter();
 
-  const { data, setData } = useUserContext();
+  const {data, setData} = useUserContext();
   const [registerForm, setRegisterForm] = useState({} as RegisterForm);
   const [error, setError] = useState(
     undefined as undefined | Record<string, string>
@@ -57,20 +57,20 @@ export default function Page(props: { data: Record<string, string> }) {
     .object({
       firstName: z
         .string()
-        .min(3, { message: "Must be 3 or more characters long" })
-        .max(50, { message: "Must be 50 or fewer characters long" }),
+        .min(3, {message: "Must be 3 or more characters long"})
+        .max(50, {message: "Must be 50 or fewer characters long"}),
       lastName: z
         .string()
-        .min(3, { message: "Must be 3 or more characters long" })
-        .max(50, { message: "Must be 50 or fewer characters long" }),
+        .min(3, {message: "Must be 3 or more characters long"})
+        .max(50, {message: "Must be 50 or fewer characters long"}),
       email: z
         .string()
-        .email({ message: "Invalid email address" })
-        .max(100, { message: "Must be 100 or fewer characters long" }),
+        .email({message: "Invalid email address"})
+        .max(100, {message: "Must be 100 or fewer characters long"}),
       password: z
         .string()
-        .min(6, { message: "Must be 6 or more characters long" })
-        .max(50, { message: "Must be 50 or fewer characters long" }),
+        .min(6, {message: "Must be 6 or more characters long"})
+        .max(50, {message: "Must be 50 or fewer characters long"}),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -79,14 +79,14 @@ export default function Page(props: { data: Record<string, string> }) {
     });
   type RegisterForm = z.infer<typeof RegisterForm>;
 
-  const handleChange = (event: { target: { name: string; value: string } }) => {
+  const handleChange = (event: {target: {name: string; value: string;};}) => {
     setRegisterForm({
       ...registerForm,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleKeyDown = (target: { code: string; keyCode: number }) => {
+  const handleKeyDown = (target: {code: string; keyCode: number;}) => {
     if (
       target.code === "Enter" ||
       target.code === "NumpadEnter" ||
@@ -115,7 +115,7 @@ export default function Page(props: { data: Record<string, string> }) {
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
-          return { ...acc, [c.path[0]]: c.message };
+          return {...acc, [c.path[0]]: c.message};
         }, {})
       );
     }
@@ -143,14 +143,14 @@ export default function Page(props: { data: Record<string, string> }) {
             <GoBack />
           </div>
           <div className="w-1/3">
-            <h1 className="font-medium text-xl uppercase font-serif text-center">
+            <h1 className="text-xl uppercase font-serif text-center">
               Sign up
             </h1>
           </div>
         </div>
         <div className="w-[280px] mx-auto py-8">
           <div className="flex flex-col items-start justify-start">
-            <p className="font-medium uppercase pt-4">Create an account</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-4">Create an account</p>
             <p className="pt-1">Sign up and activate your account.</p>
             <form>
               <input

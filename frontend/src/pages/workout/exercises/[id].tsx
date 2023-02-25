@@ -47,7 +47,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.name}
             </h1>
           </div>
@@ -57,14 +57,14 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <source src={`${props.config.bucket_url}${props.data.id}.mp4`} />
           </video>
         </div>
-        <div className="text-center pt-6">
-          <p className="font-medium uppercase">
+        <div className="pt-6">
+          <p className="uppercase font-serif">
             Instruction
           </p>
           {props.data.instruction.split(".").map((i: string, index: number) => (
             i === "" ? null :
-              <div key={index}>
-                <p className="font-medium pt-4">
+              <div key={`instruction-${index}`}>
+                <p className="uppercase pt-4">
                   Step {index + 1}:
                 </p>
                 <p className="pt-2 w-full">
@@ -73,12 +73,17 @@ export default function Page(props: {config: Record<string, string>, data: Recor
               </div>
           ))}
         </div>
-        <div className="text-center pt-6 pb-8">
-          <p className="font-medium uppercase">
+        <div className="pt-8 pb-2">
+          <p className="uppercase font-serif">
             Hints
           </p>
-          <p className="w-full pt-2">
-            {props.data.hints}
+          <p className="w-full pt-1">
+            {props.data.hints.split(".").map((h: string, index: number) => (
+              h === "" ? null :
+                <div key={`hint-${index}`}>
+                  <p className="pt-2">{h}.</p>
+                </div>
+            ))}
           </p>
         </div>
       </div >

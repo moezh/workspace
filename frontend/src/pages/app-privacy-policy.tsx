@@ -1,6 +1,7 @@
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import GoBack from "../components/GoBack";
 
 export default function Page() {
   return (
@@ -11,9 +12,16 @@ export default function Page() {
       />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
-          Mobile App Privacy Policy
-        </h1>
+        <div className="flex flex-row items-start justify-start">
+          <div className="w-1/4">
+            <GoBack />
+          </div>
+          <div className="w-2/4">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
+              Mobile App Privacy Policy
+            </h1>
+          </div>
+        </div>
         <div className="pt-8">
           <div className="w-full">
             <p>
@@ -36,7 +44,7 @@ export default function Page() {
               are not responsible for any of the data collected by any such
               third party.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               COLLECTION OF YOUR INFORMATION
             </p>
             <p>
@@ -137,7 +145,7 @@ export default function Page() {
               Personal and other information you may provide when entering
               contests or giveaways and/or responding to surveys.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               USE OF YOUR INFORMATION
             </p>
             <p>
@@ -190,7 +198,7 @@ export default function Page() {
             <p>- Respond to product and customer service requests.</p>
             <p>- Send you a newsletter.</p>
             <p>- Solicit support for the Application.</p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               DISCLOSURE OF YOUR INFORMATION
             </p>
             <p>
@@ -298,7 +306,7 @@ export default function Page() {
               third parties, you are responsible for contacting the third party
               directly.
             </p>
-            <p className="font-medium uppercase pt-6">TRACKING TECHNOLOGIES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">TRACKING TECHNOLOGIES</p>
             <p className="uppercase pt-6">Cookies and Web Beacons</p>
             <p>
               We may use cookies, web beacons, tracking pixels, and other
@@ -345,7 +353,7 @@ export default function Page() {
               altering your browser's cookies files may also clear certain
               opt-out cookies, plug-ins, or settings.
             </p>
-            <p className="font-medium uppercase pt-6">THIRD-PARTY WEBSITES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">THIRD-PARTY WEBSITES</p>
             <p>
               The Application may contain links to third-party websites and
               applications of interest, including advertisements and external
@@ -362,7 +370,7 @@ export default function Page() {
               policies of any third parties, including other sites, services or
               applications that may be linked to or from the Application.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECURITY OF YOUR INFORMATION
             </p>
             <p>
@@ -377,14 +385,14 @@ export default function Page() {
               cannot guarantee complete security if you provide personal
               information.
             </p>
-            <p className="font-medium uppercase pt-6">POLICY FOR CHILDREN</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">POLICY FOR CHILDREN</p>
             <p>
               We do not knowingly solicit information from or market to children
               under the age of 13. If you become aware of any data we have
               collected from children under age 13, please contact us using the
               contact information provided below.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               CONTROLS FOR DO-NOT-TRACK FEATURES
             </p>
             <p>
@@ -400,7 +408,7 @@ export default function Page() {
               inform you about that practice in a revised version of this
               Privacy Policy.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               OPTIONS REGARDING YOUR INFORMATION
             </p>
             <p className="uppercase pt-6">Account Information</p>
@@ -434,7 +442,7 @@ export default function Page() {
               other communications from third parties, you are responsible for
               contacting the third party directly.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               CALIFORNIA PRIVACY RIGHTS
             </p>
             <p>
@@ -461,7 +469,7 @@ export default function Page() {
               the data may not be completely or comprehensively removed from our
               systems.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               QUESTIONS AND CONTACT INFORMATION
             </p>
             <p>

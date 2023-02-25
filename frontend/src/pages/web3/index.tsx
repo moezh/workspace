@@ -1,5 +1,5 @@
-import { GetStaticProps } from "next";
-import { readFileSync } from "fs";
+import {GetStaticProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -16,16 +16,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  return { props: { data: resultData } };
+  return {props: {data: resultData}};
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   return (
     <>
       <Head title="MH's Web3" />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
+        <h1 className="text-xl uppercase font-serif text-center">
           Coming Soon
         </h1>
         <p className="pt-2 text-center pb-6">Under Construction!</p>

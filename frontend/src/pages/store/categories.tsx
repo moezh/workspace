@@ -1,5 +1,5 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   const categoriesData = await categories.json();
   return {
-    props: { config: configData, categories: categoriesData },
+    props: {config: configData, categories: categoriesData},
   };
 };
 
@@ -58,7 +58,7 @@ export default function Categories(props: {
         </h1>
         {props.categories["Root"]?.map((level0) => (
           <div key={level0} className="w-[280px]">
-            <div className="py-4 uppercase">
+            <div className="py-4 uppercase font-serif mt-4">
               {level0.slice(-1) === "→" ? (
                 <Link
                   href={`/?category=${level0.replaceAll(/[^A-Za-z0-9]+/g, "")}`}

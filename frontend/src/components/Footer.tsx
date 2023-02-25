@@ -3,7 +3,7 @@ import HomeLink from "./HomeLink";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col items-center justify-center text-center font-light font-sans pt-8 pb-4">
+    <footer className="flex flex-col items-center justify-center text-center font-light pt-8 pb-4">
       <div>
         <Link href="/contact">Contact</Link>
         <span className="ml-1 mr-1">|</span>

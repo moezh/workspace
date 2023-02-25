@@ -49,30 +49,31 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               Workouts
             </h1>
           </div>
         </div>
-        <p className="w-full text-center pt-8">
+        <p className="w-full pt-8">
           {props.config.workouts_summary}
         </p>
-        <div className="flex flex-wrap flex-row items-center justify-center pt-8">
+        <div className="flex flex-wrap flex-row items-start justify-start pt-8">
           {props.data.map((workout: Record<string, string>, index: number) => (
-            <div key={`${index}-${workout.id}`} className="h-[300px] mb-8 mx-4">
+            <div key={`${index}-${workout.id}`} className="mb-4 pr-4 w-full h-[300px] md:w-1/2">
               <Link href={`/workouts/${workout.id}`}>
                 <Image
                   src={`${props.config.bucket_url}${workout.id}.jpg`}
                   alt={workout.name}
                   width={400}
                   height={300}
-                  className="rounded-sm"
+                  className="rounded-sm h-[300px] w-full"
+                  style={{objectFit: "cover", objectPosition: "50% 35%"}}
                   priority
                 />
-                <div className="relative -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
+                <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
                   <div className="flex flex-col items-start justify-start">
                     <p className="font-light">{workout.type}</p>
-                    <p className="font-medium">{workout.name}</p>
+                    <p className="uppercase font-serif">{workout.name}</p>
                   </div>
                 </div>
               </Link>

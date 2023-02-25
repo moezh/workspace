@@ -1,19 +1,19 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useUserContext } from "../context/UserContext";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import {useUserContext} from "../context/UserContext";
+import {useRouter} from "next/router";
+import {useState, useEffect} from "react";
 import GoBack from "../components/GoBack";
 import Link from "next/link";
-import { z } from "zod";
+import {z} from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.email !== undefined) {
-    const { email, password } = context.query;
+    const {email, password} = context.query;
     const backendPassword = readFileSync("/run/secrets/backend-password", {
       encoding: "utf8",
     });
@@ -43,10 +43,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   let router = useRouter();
 
-  const { data, setData } = useUserContext();
+  const {data, setData} = useUserContext();
   const [loginForm, setLoginForm] = useState({} as LoginForm);
   const [error, setError] = useState(
     undefined as undefined | Record<string, string>
@@ -55,20 +55,20 @@ export default function Page(props: { data: Record<string, string> }) {
   const LoginForm = z.object({
     email: z
       .string()
-      .email({ message: "Invalid email address" })
-      .max(100, { message: "Must be 100 or fewer characters long" }),
+      .email({message: "Invalid email address"})
+      .max(100, {message: "Must be 100 or fewer characters long"}),
     password: z
       .string()
-      .min(6, { message: "Password must be 6 or more characters long" })
-      .max(50, { message: "Must be 50 or fewer characters long" }),
+      .min(6, {message: "Password must be 6 or more characters long"})
+      .max(50, {message: "Must be 50 or fewer characters long"}),
   });
   type LoginForm = z.infer<typeof LoginForm>;
 
-  const handleChange = (event: { target: { name: string; value: string } }) => {
-    setLoginForm({ ...loginForm, [event.target.name]: event.target.value });
+  const handleChange = (event: {target: {name: string; value: string;};}) => {
+    setLoginForm({...loginForm, [event.target.name]: event.target.value});
   };
 
-  const handleKeyDown = (target: { code: string; keyCode: number }) => {
+  const handleKeyDown = (target: {code: string; keyCode: number;}) => {
     if (
       target.code === "Enter" ||
       target.code === "NumpadEnter" ||
@@ -85,14 +85,14 @@ export default function Page(props: { data: Record<string, string> }) {
       router.push(
         {
           pathname: "/login",
-          query: { email: loginForm.email, password: loginForm.password },
+          query: {email: loginForm.email, password: loginForm.password},
         },
         "/login"
       );
     } else {
       setError(
         formParsed.error.errors.reduce((acc, c) => {
-          return { ...acc, [c.path[0]]: c.message };
+          return {...acc, [c.path[0]]: c.message};
         }, {})
       );
     }
@@ -120,14 +120,14 @@ export default function Page(props: { data: Record<string, string> }) {
             <GoBack />
           </div>
           <div className="w-1/3">
-            <h1 className="font-medium text-xl uppercase font-serif text-center">
+            <h1 className="text-xl uppercase font-serif text-center">
               Sign in
             </h1>
           </div>
         </div>
         <div className="w-[280px] mx-auto py-8">
           <div className="flex flex-col items-start justify-start">
-            <p className="font-medium uppercase pt-4">Authentification</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-4">Authentification</p>
             <p className="pt-1">Please login to your account</p>
             <form>
               <input

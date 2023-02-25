@@ -49,27 +49,27 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               Exercices
             </h1>
           </div>
         </div>
-        <p className="w-full text-center pt-8">
+        <p className="w-full pt-8">
           {props.config.exercises_summary}
         </p>
-        <div className="w-full flex flex-wrap flex-row items-center justify-center pt-8">
+        <div className="w-full flex flex-wrap flex-row items-start justify-start pt-8">
           {props.data.filter((exercice) => exercice.id.slice(-5) !== "Right").map((exercice: Record<string, string>, index: number) => (
-            <div key={`${index}-${exercice.id}`} className="pb-8 px-4">
+            <div key={`${index}-${exercice.id}`} className="mb-4 pr-4 w-1/2 sm:w-1/3 md:w-1/4">
               <Link href={`/exercises/${exercice.id}`}>
                 <Image
                   src={`${props.config.bucket_url}${exercice.id}.jpg`}
                   alt={exercice.name}
-                  width={200}
-                  height={200}
-                  className="rounded-sm"
+                  width={300}
+                  height={300}
+                  className="rounded-sm w-full h-auto"
                   priority
                 />
-                <p className="w-[200px] text-center pt-2">
+                <p className="w-full text-center pt-2">
                   {exercice.name}
                 </p>
               </Link>

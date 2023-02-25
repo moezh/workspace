@@ -1,5 +1,5 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const { uid } = context.query;
+  const {uid} = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -24,11 +24,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  if (resultData.code === 404) return { notFound: true };
-  return { props: { data: resultData } };
+  if (resultData.code === 404) return {notFound: true};
+  return {props: {data: resultData}};
 };
 
-export default function Page(props: { data: Record<string, string> }) {
+export default function Page(props: {data: Record<string, string>;}) {
   const imagesArray = Array.from(
     new Set(
       `${props.data.image_link},${props.data.additional_image_link}`.split(",")
@@ -47,7 +47,7 @@ export default function Page(props: { data: Record<string, string> }) {
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.title}
             </h1>
           </div>
@@ -84,7 +84,7 @@ export default function Page(props: { data: Record<string, string> }) {
             )}
             <div className="flex flex-row items-start justify-start text-center pt-1">
               {props.data.sale_price === "" ||
-              props.data.sale_price === props.data.price ? (
+                props.data.sale_price === props.data.price ? (
                 <p className="w-full">
                   <span className="capitalize pr-2">Price:</span>
                   <span className="font-light">{props.data.price}</span>
@@ -104,12 +104,12 @@ export default function Page(props: { data: Record<string, string> }) {
                 href={`/link/${props.data.product_uid}`}
                 className="border border-gray-900 dark:border-white rounded-sm"
               >
-                <p className="capitalize font-light px-8 py-2">buy now →</p>
+                <p className="capitalize px-8 py-2">buy now →</p>
               </Link>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start pt-2">
-            <p className="w-full font-light pb-4">{props.data.description}</p>
+          <div className="flex flex-col items-start justify-start pt-4">
+            <p className="w-full pb-4">{props.data.description}</p>
             {props.data.availability === "" ? null : (
               <p className="w-full">
                 <span className="capitalize pr-2">Availability:</span>
@@ -160,7 +160,7 @@ export default function Page(props: { data: Record<string, string> }) {
             )}
             <div className="w-[260px] flex flex-col items-start justify-start pt-2">
               <Link href={`/link/${props.data.product_uid}`}>
-                <p className="font-medium capitalize py-2">more details →</p>
+                <p className="capitalize py-2">more details →</p>
               </Link>
             </div>
           </div>

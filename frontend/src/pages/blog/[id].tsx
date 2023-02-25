@@ -1,5 +1,5 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
+import {GetServerSideProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const { id } = context.query;
+  const {id} = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -21,19 +21,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  if (resultData.code === 404) return { notFound: true };
-  return { props: { data: resultData } };
+  if (resultData.code === 404) return {notFound: true};
+  return {props: {data: resultData}};
 };
 
 export default function Page(props: {
-  data: { title: string; summary: string; tags: string; content_html: string };
+  data: {title: string; summary: string; tags: string; content_html: string;};
 }) {
   return (
     <>
       <Head title={props.data.title} description={props.data.summary} />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
+        <h1 className="text-xl uppercase font-serif text-center">
           {props.data.title}
         </h1>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
@@ -43,7 +43,7 @@ export default function Page(props: {
             </span>
           ))}
         </div>
-        <div className="pt-6">
+        <div className="pt-8">
           <div
             dangerouslySetInnerHTML={{
               __html: props.data.content_html,

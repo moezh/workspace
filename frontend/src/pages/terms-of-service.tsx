@@ -34,14 +34,14 @@ export default function Page(props: {data: {profile_name: string;};}) {
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               Terms of Service
             </h1>
           </div>
         </div>
         <div className="pt-8">
           <div className="w-full">
-            <p className="font-medium uppercase">OVERVIEW</p>
+            <p className="text-lg uppercase font-serif pb-2">OVERVIEW</p>
             <p>
               This website is operated by {props.data.profile_name}. Throughout
               the site, the terms “we”, “us” and “our” refer to{" "}
@@ -80,7 +80,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               following the posting of any changes constitutes acceptance of
               those changes.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 1 – ONLINE WEBSITE TERMS
             </p>
             <p>
@@ -96,7 +96,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               A breach or violation of any of the Terms will result in an
               immediate termination of your Services.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 2 – GENERAL CONDITIONS
             </p>
             <p>
@@ -114,7 +114,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               included for convenience only and will not limit or otherwise
               affect these Terms.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 3 – ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION
             </p>
             <p>
@@ -131,7 +131,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               obligation to update any information on our site. You agree that
               it is your responsibility to monitor changes to our site.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 4 – MODIFICATIONS TO THE SERVICE AND PRICES
             </p>
             <p>
@@ -142,7 +142,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               modification, price change, suspension or discontinuance of the
               Service.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 5 – PRODUCTS OR SERVICES (if applicable)
             </p>
             <p>
@@ -166,7 +166,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               you will meet your expectations, or that any errors in the Service
               will be corrected.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 6 – ACCURACY OF BILLING AND ACCOUNT INFORMATION
             </p>
             <p>
@@ -191,7 +191,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               needed.
             </p>
             <p>For more detail, please review our Returns Policy.</p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 7 – OPTIONAL TOOLS
             </p>
             <p>
@@ -210,7 +210,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               release of new tools and resources). Such new features and/or
               services shall also be subject to these Terms of Service.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 8 – THIRD-PARTY LINKS
             </p>
             <p>
@@ -230,7 +230,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               concerns, or questions regarding third-party products should be
               directed to the third-party.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 9 – AFFILIATES LINKS
             </p>
             <p>
@@ -238,7 +238,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               provide a means for us to earn fees by linking to affiliated
               sites.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 10 – USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS
             </p>
             <p>
@@ -269,14 +269,14 @@ export default function Page(props: {data: {profile_name: string;};}) {
               their accuracy. We take no responsibility and assume no liability
               for any comments posted by you or any third-party.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 11 – PERSONAL INFORMATION
             </p>
             <p>
               Your submission of personal information through the store is
               governed by our Privacy Policy. To view our Privacy Policy.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 12 – ERRORS, INACCURACIES AND OMISSIONS
             </p>
             <p>
@@ -296,7 +296,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               should be taken to indicate that all information in the Service or
               on any related website has been modified or updated.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 13 – PROHIBITED USES
             </p>
             <p>
@@ -323,7 +323,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               Service or any related website for violating any of the prohibited
               uses.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 14 – DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY
             </p>
             <p>
@@ -361,7 +361,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               or jurisdictions, our liability shall be limited to the maximum
               extent permitted by law.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 15 – INDEMNIFICATION
             </p>
             <p>
@@ -374,7 +374,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               Service or the documents they incorporate by reference, or your
               violation of any law or the rights of a third-party.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 16 – SEVERABILITY
             </p>
             <p>
@@ -386,7 +386,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               shall not affect the validity and enforceability of any other
               remaining provisions.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 17 – TERMINATION
             </p>
             <p>
@@ -403,7 +403,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               including the date of termination; and/or accordingly may deny you
               access to our Services (or any part thereof).
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 18 – ENTIRE AGREEMENT
             </p>
             <p>
@@ -419,7 +419,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               in the interpretation of these Terms of Service shall not be
               construed against the drafting party.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 19 – GOVERNING LAW
             </p>
             <p>
@@ -427,7 +427,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               provide you Services shall be governed by and construed in
               accordance with the laws of Tunisia.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 20 – CHANGES TO TERMS OF SERVICE
             </p>
             <p>
@@ -440,7 +440,7 @@ export default function Page(props: {data: {profile_name: string;};}) {
               following the posting of any changes to these Terms of Service
               constitutes acceptance of those changes.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 21 – CONTACT INFORMATION
             </p>
             <p>Questions about the Terms of Service should be sent to us.</p>

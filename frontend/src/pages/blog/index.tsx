@@ -62,7 +62,7 @@ export default function Page(props: {
       />
       <Header />
       <div className="w-full pt-4">
-        <h1 className="font-medium text-xl uppercase font-serif text-center">
+        <h1 className="text-xl uppercase font-serif text-center">
           {props.config.blog_title}
         </h1>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-1">
@@ -108,7 +108,7 @@ export default function Page(props: {
               className="sm:w-full md:w-1/2 lg:w-1/3 flex flex-col items-start justify-start p-2 mb-4"
             >
               <Link href={`/${post.id}`}>
-                <p className="font-medium">{post.title}</p>
+                <p className="text-lg font-serif">{post.title}</p>
               </Link>
               <div className="w-full flex flex-row flex-wrap items-start justify-start pt-1">
                 {post.tags.split(",").map((tag, index: number) => (
@@ -127,7 +127,7 @@ export default function Page(props: {
               <p className="pt-1">{post.summary}</p>
               <div className="pt-1">
                 <Link href={`/${post.id}`}>
-                  <p className="font-medium capitalize">Read full post →</p>
+                  <p className="font-light capitalize">Read full post →</p>
                 </Link>
               </div>
             </div>

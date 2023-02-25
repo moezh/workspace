@@ -48,12 +48,12 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.name}
             </h1>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center pt-8">
+        <div className="flex flex-col items-start justify-start pt-8">
           <Image
             src={`${props.config.bucket_url}${props.data.id}.jpg`}
             alt={props.data.name}
@@ -61,13 +61,12 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             height={750}
             className="rounded-sm h-[300px] w-full"
             style={{objectFit: "cover", objectPosition: "50% 35%"}}
-            quality={100}
             priority
           />
           <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
             <div className="flex flex-col items-start justify-start">
               <p className="font-light">{props.data.type}</p>
-              <p className="font-medium">{props.data.name}</p>
+              <p className="uppercase font-serif">{props.data.name}</p>
               <p className="font-light pt-2">{props.data.description}</p>
             </div>
           </div>

@@ -17,14 +17,14 @@ export default function Page() {
             <GoBack />
           </div>
           <div className="w-2/4">
-            <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
               Privacy Policy
             </h1>
           </div>
         </div>
         <div className="pt-8">
           <div className="w-full">
-            <p className="font-medium uppercase">
+            <p className="text-lg uppercase font-serif pb-2">
               SECTION 1 – WHAT DO WE DO WITH YOUR INFORMATION?
             </p>
             <p>
@@ -37,7 +37,7 @@ export default function Page() {
               marketing (if applicable): With your permission, we may send you
               emails about our store, new products and other updates.
             </p>
-            <p className="font-medium uppercase pt-6">SECTION 2 – CONSENT</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 2 – CONSENT</p>
             <p>
               How do you get my consent? When you provide us with personal
               information to complete a transaction, verify your credit card,
@@ -54,18 +54,18 @@ export default function Page() {
               continued collection, use or disclosure of your information, at
               anytime, by contacting us
             </p>
-            <p className="font-medium uppercase pt-6">SECTION 3 – DISCLOSURE</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 3 – DISCLOSURE</p>
             <p>
               We may disclose your personal information if we are required by
               law to do so or if you violate our Terms of Service.
             </p>
-            <p className="font-medium uppercase pt-6">SECTION 4 – AFFILIATES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 4 – AFFILIATES</p>
             <p>
               We are a participant in affiliate advertising programs designed to
               provide a means for us to earn fees by linking to affiliated
               sites.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 5 – THIRD-PARTY SERVICES
             </p>
             <p>
@@ -98,7 +98,7 @@ export default function Page() {
               our Site. We are not responsible for the privacy practices of
               other sites and encourage you to read their privacy statements.
             </p>
-            <p className="font-medium uppercase pt-6">SECTION 6 – SECURITY</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 6 – SECURITY</p>
             <p>
               To protect your personal information, we take reasonable
               precautions and follow industry best practices to make sure it is
@@ -110,7 +110,7 @@ export default function Page() {
               secure, we follow all PCI-DSS requirements and implement
               additional generally accepted industry standards.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 7 – AGE OF CONSENT
             </p>
             <p>
@@ -120,7 +120,7 @@ export default function Page() {
               have given us your consent to allow any of your minor dependents
               to use this Site.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               SECTION 8 – CHANGES TO THIS PRIVACY POLICY
             </p>
             <p>
@@ -134,7 +134,7 @@ export default function Page() {
               another company, your information may be transferred to the new
               owners so that we may continue to sell products to you.
             </p>
-            <p className="font-medium uppercase pt-6">
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
               QUESTIONS AND CONTACT INFORMATION
             </p>
             <p>
