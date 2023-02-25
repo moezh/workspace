@@ -53,24 +53,23 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             </h1>
           </div>
         </div>
-        <div className="w-full pt-8">
-          <div className="relative w-full h-[300px] rounded-sm">
-            <div className="relative h-full bg-black opacity-50 rounded-sm text-white">
-              <div className="flex flex-col items-center justify-center text-center h-full mx-4 pb-20">
-                <p className="uppercase">{props.data.type}</p>
-                <p className="pt-4 text-lg uppercase font-serif">{props.data.name}</p>
-                <p className="pt-4 font-light">{props.data.description}</p>
-              </div>
+        <div className="flex flex-col items-center justify-center pt-8">
+          <Image
+            src={`${props.config.bucket_url}${props.data.id}.jpg`}
+            alt={props.data.name}
+            width={1000}
+            height={750}
+            className="rounded-sm h-[300px] w-full"
+            style={{objectFit: "cover", objectPosition: "50% 35%"}}
+            quality={100}
+            priority
+          />
+          <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
+            <div className="flex flex-col items-start justify-start">
+              <p className="font-light">{props.data.type}</p>
+              <p className="font-medium">{props.data.name}</p>
+              <p className="font-light pt-2">{props.data.description}</p>
             </div>
-            <Image
-              src={`${props.config.bucket_url}${props.data.id}.jpg`}
-              alt={props.data.name}
-              className="rounded-sm -z-10"
-              style={{objectFit: "cover", objectPosition: "50% 35%"}}
-              quality={100}
-              fill
-              priority
-            />
           </div>
         </div>
       </div>

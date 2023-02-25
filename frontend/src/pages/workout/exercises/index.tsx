@@ -57,7 +57,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
         <p className="w-full text-center pt-8">
           {props.config.exercises_summary}
         </p>
-        <div className="w-full flex flex-wrap flex-row items-center justify-center pt-6">
+        <div className="w-full flex flex-wrap flex-row items-center justify-center pt-8">
           {props.data.filter((exercice) => exercice.id.slice(-5) !== "Right").map((exercice: Record<string, string>, index: number) => (
             <div key={`${index}-${exercice.id}`} className="pb-8 px-4">
               <Link href={`/exercises/${exercice.id}`}>
