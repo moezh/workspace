@@ -17,7 +17,7 @@ export const getConfig = async (req: Request, res: Response) => {
 
 export const getExercises = async (req: Request, res: Response) => {
   const db: Pool = req.app.get("db");
-  let sql: string = `SELECT id, name, instruction, hints FROM workout_exercises`;
+  let sql: string = `SELECT id, name, instruction, hints FROM workout_exercises ORDER BY id`;
   let values: string[] = [];
   db.query(sql, values, (err, result: {rows: Record<string, string>[];}) => {
     if (err) {

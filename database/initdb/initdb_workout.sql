@@ -10,6 +10,9 @@ VALUES
 ('subdomain','workout'),
 ('workout_title','MH Workout'),
 ('workout_summary','An easy-to-use, short and effective home workout app to get toned, burn fat or build muscle in just a few minutes a day. All workouts are created based on your personal fitness profile to get you the best results. Just answer a few simple questions about your workout goal, intensity and frequency preferences, and you''ll have a fitness experience tailored just for you.'),
+('exercises_summary','This list of exercises without equipment can be done daily anytime, anywhere. Even if you travel for work, if you have some space to stretch out, then you can exercise.'),
+('workouts_summary','This list of workouts without equipment can be done daily anytime, anywhere. Even if you travel for work, if you have some space to stretch out, then you can workout.'),
+('programs_summary',''),
 ('bucket_url','https://objectstorage.eu-marseille-1.oraclecloud.com/n/axrso0xdipxv/b/bucket/o/workout');
 
 CREATE TABLE workout_exercises (

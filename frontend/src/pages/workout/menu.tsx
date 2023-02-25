@@ -1,5 +1,5 @@
-import { GetStaticProps } from "next";
-import { readFileSync } from "fs";
+import {GetStaticProps} from "next";
+import {readFileSync} from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Link from "next/link";
@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   const configData = await config.json();
   return {
-    props: { config: configData },
+    props: {config: configData},
   };
 };
 
@@ -43,6 +43,23 @@ export default function Categories(props: {
             <Logo />
           </Link>
         </h1>
+        <div className="w-[280px] pt-8 capitalize">
+          <div className="py-4">
+            <Link href="/">
+              <span>Dashboard →</span>
+            </Link>
+          </div>
+          <div className="py-4">
+            <Link href="/workouts">
+              <span>Workouts →</span>
+            </Link>
+          </div>
+          <div className="py-4">
+            <Link href="/exercises">
+              <span>Exercises →</span>
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   );

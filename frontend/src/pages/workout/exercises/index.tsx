@@ -6,6 +6,7 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import GoBack from "../../../components/GoBack";
 import Image from "next/image";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -23,23 +24,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
-  const workout = await fetch(`http://backend:3001/api/workout/workouts/${id}`, {
+  const exercise = await fetch(`http://backend:3001/api/workout/exercises/`, {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
       "Content-Type": "application/json",
     },
   });
-  const workoutData = await workout.json();
-  if (workoutData.code === 404) return {notFound: true};
-  return {props: {config: configData, data: workoutData}};
+  const exerciseData = await exercise.json();
+  if (exerciseData.code === 404) return {notFound: true};
+  return {props: {config: configData, data: exerciseData}};
 };
 
-export default function Page(props: {config: Record<string, string>, data: Record<string, string>;}) {
+export default function Page(props: {config: Record<string, string>, data: Record<string, string>[];}) {
   return (
     <>
       <Head
-        title={`${props.data.name}`}
-        description={`${props.data.name} - ${props.data.description}`}
+        title={"Exercices"}
+        description={props.config.exercises_summary}
       />
       <Header />
       <div className="w-full pt-4">
@@ -49,31 +50,33 @@ export default function Page(props: {config: Record<string, string>, data: Recor
           </div>
           <div className="w-2/4">
             <h1 className="w-full font-medium text-xl uppercase font-serif text-center">
-              {props.data.name}
+              Exercices
             </h1>
           </div>
         </div>
-        <div className="w-full pt-8">
-          <div className="relative w-full h-[300px] rounded-sm">
-            <div className="relative h-full bg-black opacity-50 rounded-sm text-white">
-              <div className="flex flex-col items-center justify-center text-center h-full mx-4 pb-20">
-                <p className="uppercase">{props.data.type}</p>
-                <p className="pt-4 text-lg uppercase font-serif">{props.data.name}</p>
-                <p className="pt-4 font-light">{props.data.description}</p>
-              </div>
+        <p className="w-full text-center pt-8">
+          {props.config.exercises_summary}
+        </p>
+        <div className="w-full flex flex-wrap flex-row items-center justify-center pt-6">
+          {props.data.filter((exercice) => exercice.id.slice(-5) !== "Right").map((exercice: Record<string, string>, index: number) => (
+            <div key={`${index}-${exercice.id}`} className="pb-8 px-4">
+              <Link href={`/exercises/${exercice.id}`}>
+                <Image
+                  src={`${props.config.bucket_url}${exercice.id}.jpg`}
+                  alt={exercice.name}
+                  width={200}
+                  height={200}
+                  className="rounded-sm"
+                  priority
+                />
+                <p className="w-[200px] text-center pt-2">
+                  {exercice.name}
+                </p>
+              </Link>
             </div>
-            <Image
-              src={`${props.config.bucket_url}${props.data.id}.jpg`}
-              alt={props.data.name}
-              className="rounded-sm -z-10"
-              style={{objectFit: "cover", objectPosition: "50% 35%"}}
-              quality={100}
-              fill
-              priority
-            />
-          </div>
+          ))}
         </div>
-      </div>
+      </div >
       <Footer />
     </>);
 }
