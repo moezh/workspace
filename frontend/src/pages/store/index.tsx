@@ -135,6 +135,7 @@ export default function Page(props: {
                   width="400"
                   height="400"
                   className="h-[200px] w-auto"
+                  quality={100}
                   priority
                 />
               </Link>

@@ -23,8 +23,9 @@ export const getExercises = async (req: Request, res: Response) => {
     if (err) {
       res.status(500).json({code: 500, description: err});
     } else {
-      const data = result.rows;
-      res.json(data);
+      let exercises = result.rows;
+      exercises = exercises.filter((exercise) => exercise.id.slice(-5) !== "Right");
+      res.json(exercises);
     }
   });
 };
@@ -65,7 +66,7 @@ export const getWorkouts = async (req: Request, res: Response) => {
 export const getWorkout = async (req: Request, res: Response) => {
   const id = req.params.id;
   const db: Pool = req.app.get("db");
-  let sql: string = `SELECT * FROM workout_workouts WHERE id = $1`;
+  let sql: string = `SELECT id, type, name, description, target, repeat FROM workout_workouts WHERE id = $1`;
   let values: string[] = [id];
   db.query(sql, values, (err, result: {rows: Record<string, string>[];}) => {
     if (err) {
@@ -76,13 +77,13 @@ export const getWorkout = async (req: Request, res: Response) => {
         res.status(404).json({code: 404, description: "Not Found"});
       } else {
         let workout = data[0];
-        let exercises: Record<string, string>[] = [];
-        let sqlExercises: string = `SELECT * FROM workout_exercises ORDER BY RANDOM ()`;
+        let sqlExercises: string = `SELECT id, name, category, target, target_muscles FROM workout_exercises ORDER BY RANDOM ()`;
         db.query(sqlExercises, [], (err, result: {rows: Record<string, string>[];}) => {
           if (err) {
             res.status(500).json({code: 500, description: err});
           } else {
-            exercises = result.rows;
+            let exercises = result.rows;
+            exercises = exercises.filter((exercise) => exercise.id.slice(-5) !== "Right");
             let filtredExercises: Record<string, string>[] = [];
             workout.target.split(",").map((item) => {
               const [category, target] = item.split("-");
@@ -91,6 +92,9 @@ export const getWorkout = async (req: Request, res: Response) => {
                 (exercise.target.includes(target) || exercise.target_muscles.includes(target))
               ))[0];
               if (exercise !== undefined) {
+                delete exercise.category;
+                delete exercise.target;
+                delete exercise.target_muscles;
                 filtredExercises.push(exercise);
                 exercises = exercises.filter((item) => (item.id !== exercise.id));
               };

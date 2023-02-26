@@ -69,6 +69,7 @@ export default function Page(props: {data: Record<string, string>;}) {
                     width="640"
                     height="640"
                     className="w-[320px] h-auto mx-1 mb-2"
+                    quality={100}
                     priority
                   />
                 </Link>

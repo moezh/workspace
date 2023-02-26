@@ -13,6 +13,7 @@ const Logo = (props: {project?: string;}) => {
           width={870}
           height={372}
           className="h-[35px] w-auto"
+          quality={100}
           priority
         />
       </div>
@@ -23,6 +24,7 @@ const Logo = (props: {project?: string;}) => {
           width={870}
           height={372}
           className="h-[35px] w-auto"
+          quality={100}
           priority
         />
       </div>

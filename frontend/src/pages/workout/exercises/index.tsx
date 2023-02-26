@@ -39,7 +39,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
   return (
     <>
       <Head
-        title={"Exercices"}
+        title={"Exercises"}
         description={props.config.exercises_summary}
       />
       <Header />
@@ -50,7 +50,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
           </div>
           <div className="w-2/4">
             <h1 className="w-full text-xl uppercase font-serif text-center">
-              Exercices
+              Exercises
             </h1>
           </div>
         </div>
@@ -58,19 +58,20 @@ export default function Page(props: {config: Record<string, string>, data: Recor
           {props.config.exercises_summary}
         </p>
         <div className="w-full flex flex-wrap flex-row items-start justify-start pt-8">
-          {props.data.filter((exercice) => exercice.id.slice(-5) !== "Right").map((exercice: Record<string, string>, index: number) => (
-            <div key={`${index}-${exercice.id}`} className="mb-4 pr-4 w-1/2 sm:w-1/3 md:w-1/4">
-              <Link href={`/exercises/${exercice.id}`}>
+          {props.data.map((exercise: Record<string, string>, index: number) => (
+            <div key={`${index}-${exercise.id}`} className="mb-4 pr-4 w-1/2 sm:w-1/3 md:w-1/4">
+              <Link href={`/exercises/${exercise.id}`}>
                 <Image
-                  src={`${props.config.bucket_url}${exercice.id}.jpg`}
-                  alt={exercice.name}
+                  src={`${props.config.bucket_url}${exercise.id}.jpg`}
+                  alt={exercise.name}
                   width={300}
                   height={300}
                   className="rounded-sm w-full h-auto"
+                  quality={100}
                   priority
                 />
                 <p className="w-full text-center pt-2">
-                  {exercice.name}
+                  {exercise.name}
                 </p>
               </Link>
             </div>

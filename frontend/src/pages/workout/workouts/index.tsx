@@ -68,6 +68,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                   height={300}
                   className="rounded-sm h-[300px] w-full"
                   style={{objectFit: "cover", objectPosition: "50% 35%"}}
+                  quality={100}
                   priority
                 />
                 <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
