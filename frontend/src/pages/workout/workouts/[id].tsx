@@ -70,7 +70,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
               quality={100}
               priority
             />
-            <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
+            <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-30 text-white rounded-sm p-4">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-light pt-2">{props.data.type}</p>
                 <p className="uppercase font-serif pt-1">{props.data.name}</p>
@@ -93,6 +93,15 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="sticky top-0 w-full flex flex-col items-center justify-center bg-white dark:bg-black">
+          <div className="w-[260px] bg-black dark:bg-white rounded-sm my-2">
+            <Link
+              href={`/workouts/start`}
+            >
+              <p className="capitalize text-white dark:text-black px-8 py-2 text-center">Start workout →</p>
+            </Link>
           </div>
         </div>
         <div className="pt-8">
@@ -124,15 +133,6 @@ export default function Page(props: {config: Record<string, string>, data: Recor
               </div>
             </div>
           ))}
-        </div>
-        <div className="sticky bottom-0 flex flex-col items-center justify-center py-2 bg-white dark:bg-black">
-          <div className="w-full bg-black dark:bg-white rounded-sm">
-            <Link
-              href={`/workouts/start`}
-            >
-              <p className="capitalize text-white dark:text-black px-8 py-2 text-center">Start workout →</p>
-            </Link>
-          </div>
         </div>
       </div>
       <Footer />

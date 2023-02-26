@@ -73,7 +73,9 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                 <p className="w-full text-center pt-2">
                   {exercise.name}
                 </p>
+
               </Link>
+
             </div>
           ))}
         </div>

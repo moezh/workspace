@@ -71,7 +71,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                   quality={100}
                   priority
                 />
-                <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-40 text-white rounded-sm p-4">
+                <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-30 text-white rounded-sm p-4">
                   <div className="flex flex-col items-start justify-start">
                     <p className="font-light">{workout.type}</p>
                     <p className="uppercase font-serif">{workout.name}</p>
