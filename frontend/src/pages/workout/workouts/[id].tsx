@@ -96,7 +96,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
           </div>
         </div>
         <div className="sticky top-0 w-full flex flex-col items-center justify-center bg-white dark:bg-black">
-          <div className="w-[260px] bg-black dark:bg-white rounded-sm my-2">
+          <div className="w-full bg-black dark:bg-white rounded-sm my-2">
             <Link
               href={`/workouts/start`}
             >
@@ -107,7 +107,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
         <div className="pt-8">
           {exercises.map((exercise: Record<string, string>) => (
             <div className="flex flex-row items-center justify-start mb-4">
-              <div className="w-full max-w-[175px] mr-2">
+              <div className="w-full max-w-[200px] mr-2">
                 <Link href={`/exercises/${exercise.id}`}>
                   <Image
                     src={`${props.config.bucket_url}${exercise.id}.jpg`}
@@ -120,7 +120,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                   />
                 </Link>
               </div>
-              <div className="w-full ml-8 text-left">
+              <div className="w-full ml-2 text-left">
                 <Link href={`/exercises/${exercise.id}`}>
                   <p className="uppercase">{exercise.name}</p>
                 </Link>
