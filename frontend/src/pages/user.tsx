@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <>
       <Head
-        title="User Profile"
+        title="User Settings"
         description={`${data?.firstName} ${data?.lastName}`}
       />
       <Header />
@@ -29,7 +29,7 @@ export default function Page() {
           </div>
           <div className="w-1/3">
             <h1 className="text-xl uppercase font-serif text-center">
-              User Profile
+              User Settings
             </h1>
           </div>
         </div>

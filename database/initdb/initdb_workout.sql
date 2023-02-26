@@ -90,16 +90,17 @@ CREATE TABLE workout_workouts (
     type VARCHAR(250) NOT NULL,
     name VARCHAR(250) NOT NULL,
     description TEXT NOT NULL DEFAULT '',
-    target TEXT NOT NULL
+    target TEXT NOT NULL,
+    repeat VARCHAR(10) NOT NULL DEFAULT '1'
 );
 
-INSERT INTO workout_workouts (id, type, name, description, target)
+INSERT INTO workout_workouts (id, type, name, description, target, repeat)
 VALUES
-('FullBodyWorkout','Full Body Workout','Upper, Lower & Core','This workout exercises your whole body, with all muscle groups being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Glutes,Strength-Abs,Cardio-Lower Body,Strength-Chest,Strength-Hamstrings,Strength-Obliques,Cardio-Core,Strength-Triceps,Strength-Quadriceps,Strength-Lower Back'),
-('UpperBodyWorkout','Upper Body Workout','Chest, Shoulders & Arms','This workout exercises your upper body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps,Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps,Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps'),
-('CoreWorkout','Core Workout','Abs, Obliques & Lower Back','This workout exercises your core, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back,Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back,Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back'),
-('LowerBodyWorkout','Lower Body Workout','Glutes & Legs','This workout exercises your lower body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings,Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings,Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings'),
-('CardioWorkout','Cardio Workout','HIIT & Cardio','This workout exercises your cardio-vascular system, with your heart and lungs being used and stimulated in one single session.','Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body');
+('FullBodyWorkout','Full Body Workout','Upper, Lower & Core','This workout exercises your whole body, with all muscle groups being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Glutes,Strength-Abs,Cardio-Lower Body,Strength-Chest,Strength-Hamstrings,Strength-Obliques,Cardio-Core,Strength-Triceps,Strength-Quadriceps,Strength-Lower Back','1'),
+('UpperBodyWorkout','Upper Body Workout','Chest, Shoulders & Arms','This workout exercises your upper body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Upper Body,Strength-Shoulders,Strength-Chest,Strength-Triceps','3'),
+('CoreWorkout','Core Workout','Abs, Obliques & Lower Back','This workout exercises your core, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Core,Strength-Abs,Strength-Obliques,Strength-Lower Back','3'),
+('LowerBodyWorkout','Lower Body Workout','Glutes & Legs','This workout exercises your lower body, with all muscle groups located in this part being used and stimulated in one single session.','Cardio-Lower Body,Strength-Glutes,Strength-Quadriceps,Strength-Hamstrings','3'),
+('CardioWorkout','Cardio Workout','HIIT & Cardio','This workout exercises your cardio-vascular system, with your heart and lungs being used and stimulated in one single session.','Cardio-Upper Body,Cardio-Core,Cardio-Lower Body,Cardio-Upper Body,Cardio-Core,Cardio-Lower Body','2');
 
 CREATE TABLE workout_programs (
     id VARCHAR(100) PRIMARY KEY NOT NULL,

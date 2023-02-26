@@ -81,7 +81,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             {props.data.hints.split(".").map((h: string, index: number) => (
               h === "" ? null :
                 <div key={`hint-${index}`}>
-                  <p className="pt-2">{h}.</p>
+                  <p className="pt-2">• {h}.</p>
                 </div>
             ))}
           </p>

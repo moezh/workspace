@@ -158,16 +158,16 @@ export default function Page(props: {data: Record<string, string>;}) {
           {props.data.projects_title}
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-4">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
           {props.data.projects_featured.split(",").map((project, index: number) => (
             <div
               key={index}
-              className={`w-1/2 flex flex-col items-center justify-start pb-6 ${index % 2 === 0 ? "pr-2" : "pl-2"
+              className={`w-1/2 flex flex-col items-start justify-start pb-6 ${index % 2 === 0 ? "pr-2" : "pl-2"
                 }`}
             >
               <Logo project={project} />
               {props.data.projects_under_construction.includes(project) ? (
-                <p className="p-1 capitalize">Coming soon</p>
+                <p className="pt-1 capitalize">Coming soon</p>
               ) : (
                 <ProjectLink project={project} />
               )}

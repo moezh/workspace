@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
-const ProjectLink = (props: { project?: string }) => {
+const ProjectLink = (props: {project?: string;}) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -19,7 +19,7 @@ const ProjectLink = (props: { project?: string }) => {
   } else {
     return (
       <Link href={`${protocol}//${props.project}.${domain}:${port}`}>
-        <p className="p-1">{`${props.project}.${domain} →`}</p>
+        <p className="pt-1">{`${props.project}.${domain} →`}</p>
       </Link>
     );
   }
