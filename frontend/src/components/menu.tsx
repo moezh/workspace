@@ -7,6 +7,12 @@ const Menu = (props: {menu: Record<string, string[]>; url: string;}) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const handleClick = () => {
+        const body = document.getElementsByTagName('body')[0];
+        if (isVisible) {
+            body.style.overflow = 'auto';
+        } else {
+            body.style.overflow = 'hidden';
+        }
         setIsVisible(!isVisible);
     };
 
@@ -20,7 +26,7 @@ const Menu = (props: {menu: Record<string, string[]>; url: string;}) => {
             {isVisible === true ?
                 <div className="fixed inset-0 backdrop-blur-sm bg-gray-500/30">
                     <div className="flex flex-row items-start justify-start w-full h-screen">
-                        <div className="bg-white dark:bg-black w-[290px] min-w-[290px] h-full flex flex-col items-start justify-start overflow-x-hidden overflow-y-visible">
+                        <div className="bg-white dark:bg-black w-[290px] min-w-[290px] h-full flex flex-col items-start justify-start overflow-x-hidden overflow-y-visible pb-8">
                             <div className="p-4"><Logo /></div>
                             {props.menu["Root"]?.map((level0) => (
                                 <div key={level0} className="w-[290px] px-4">
@@ -135,7 +141,7 @@ const Menu = (props: {menu: Record<string, string[]>; url: string;}) => {
                                 </div>
                             ))}
                         </div>
-                        <div onClick={handleClick} className="w-full h-full">
+                        <div onClick={handleClick} className="w-full h-full" onScrollCapture={() => (null)}>
                             <button className="fixed top-0 right-0 p-4">
                                 <svg
                                     className="h-7 w-7"
