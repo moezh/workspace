@@ -28,7 +28,7 @@ const Logo = (props: {project?: string;}) => {
           priority
         />
       </div>
-      <div className="text-xl font-semibold tracking-wider pt-[13px] ml-2 capitalize">
+      <div className="text-xl font-sans font-semibold tracking-wider pt-[13px] ml-2 capitalize">
         {props.project !== undefined ? props.project : <CurrentProject />}
       </div>
     </div>

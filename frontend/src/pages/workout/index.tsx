@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import Link from "next/link";
 import GooglePlay from "../../components/GooglePlay";
+import Menu from "../../components/menu";
 
 export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -24,10 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Page(props: {
-  config: {
-    workout_title: string;
-    workout_summary: string;
-  };
+  config: Record<string, string>;
 }) {
   return (
     <>
@@ -39,21 +36,7 @@ export default function Page(props: {
       <div className="w-full">
         <div className="flex flex-row items-start justify-start py-1">
           <div className="w-1/2 flex flex-col items-start justify-start">
-            <Link href={`/menu`}>
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-            </Link>
+            <Menu menu={JSON.parse(props.config.workout_menu)} url="/" />
           </div>
           <div className="w-1/2 flex flex-col items-end justify-start"></div>
         </div>

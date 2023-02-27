@@ -52,7 +52,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             </h1>
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-start bg-white pt-6 my-2 rounded-sm">
+        <div className="w-full flex flex-col items-center justify-start bg-white pt-6 my-2 rounded-sm dark:opacity-95">
           <video autoPlay loop muted style={{width: '640px', height: '480px'}}>
             <source src={`${props.config.bucket_url}${props.data.id}.mp4`} />
           </video>

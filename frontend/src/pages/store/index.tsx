@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "../../components/Search";
+import Menu from "../../components/menu";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -26,6 +27,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
+  const categories = await fetch("http://backend:3001/api/store/categories", {
+    headers: {
+      Authorization: `Bearer ${jwt.sign("admin", password)}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const categoriesData = await categories.json();
   const limit = configData.productsPerPage
     ? Number(configData.productsPerPage)
     : 24;
@@ -58,6 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       config: configData,
+      categories: categoriesData,
       products: productsData,
       count: countData,
       currentPage: page,
@@ -71,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function Page(props: {
   config: {store_title: string; store_summary: string;};
   products: Record<string, string>[];
+  categories: Record<string, string[]>;
   count: {product_category_name: string; product_count: string;};
   currentPage: number;
   currentCategory: string;
@@ -90,21 +100,7 @@ export default function Page(props: {
       <div className="w-full">
         <div className="flex flex-row items-start justify-start py-1">
           <div className="w-1/2 flex flex-col items-start justify-center">
-            <Link href={`/categories`}>
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-            </Link>
+            <Menu menu={props.categories} url="/?category=" />
           </div>
           <div className="w-1/2 flex flex-col items-end justify-center">
             <Search />

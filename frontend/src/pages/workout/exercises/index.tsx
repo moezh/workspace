@@ -66,16 +66,14 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                   alt={exercise.name}
                   width={300}
                   height={300}
-                  className="rounded-sm w-full h-auto"
+                  className="rounded-sm w-full h-auto dark:opacity-95"
                   quality={100}
                   priority
                 />
                 <p className="w-full text-center pt-2">
                   {exercise.name}
                 </p>
-
               </Link>
-
             </div>
           ))}
         </div>
