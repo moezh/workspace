@@ -1,0 +1,39 @@
+name: deploy
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy_prod:
+    name: "Deploy to production"
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+	SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/prod.key
+          chmod 600 ~/.ssh/prod.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/prod.key
+            StrictHostKeyChecking no
+          END
+
+      - name: Stop the server
+        run: ssh staging 'cd $SSH_DIR && docker compose down'
+
+      - name: Check out the source
+        run: ssh staging 'cd $SSH_DIR && git fetch && git reset --hard origin/main'
+	
+      - name: Start the server
+        run: ssh staging 'cd $SSH_DIR && docker compose build'
+
+      - name: Start the server
+        run: ssh staging 'cd $SSH_DIR && docker compose up -d'
