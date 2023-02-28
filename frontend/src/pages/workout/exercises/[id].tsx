@@ -64,6 +64,7 @@ export default function Page(props: {
             loop
             muted
             style={{ width: "640px", height: "480px" }}
+            className="dark:opacity-95"
           >
             <source src={`${props.config.bucket_url}${props.data.id}.mp4`} />
           </video>
