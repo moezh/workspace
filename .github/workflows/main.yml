@@ -18,6 +18,7 @@ jobs:
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/prod.key
+            StrictHostKeyChecking no
           END
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
