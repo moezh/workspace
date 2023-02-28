@@ -43,4 +43,4 @@ jobs:
       - name: Start the server
         run: ssh production "cd $SSH_DIR && docker compose up -d"
         env:
-          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
+          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
