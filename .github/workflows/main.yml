@@ -7,11 +7,6 @@ jobs:
     name: Deploy to production
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    env:
-        SSH_HOST: ${{ secrets.SSH_HOST }}
-        SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
-        SSH_USER: ${{ secrets.SSH_USER }}
-        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
       - name: Configure SSH
         run: |
@@ -25,11 +20,23 @@ jobs:
             IdentityFile ~/.ssh/prod.key
             StrictHostKeyChecking no
           END
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Stop the server
         run: ssh staging 'cd $SSH_DIR && docker compose down'
+        env:
+          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Check out the source
         run: ssh staging 'cd $SSH_DIR && git fetch && git reset --hard origin/main'
+        env:
+          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
         run: ssh staging 'cd $SSH_DIR && docker compose build'
+        env:
+          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
         run: ssh staging 'cd $SSH_DIR && docker compose up -d'
+        env:
+          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
