@@ -162,7 +162,7 @@ export default function Page(props: { data: Record<string, string> }) {
             .map((project, index: number) => (
               <div
                 key={index}
-                className={`w-1/2 flex flex-col items-start justify-start pb-6 ${
+                className={`w-1/2 flex flex-col items-center justify-center pb-6 ${
                   index % 2 === 0 ? "pr-2" : "pl-2"
                 }`}
               >
@@ -172,7 +172,7 @@ export default function Page(props: { data: Record<string, string> }) {
                 ) : (
                   <ProjectLink project={project} />
                 )}
-                <p className="pt-1">{props.data[`${project}_summary`]}</p>
+                <p className="pt-2">{props.data[`${project}_summary`]}</p>
               </div>
             ))}
         </div>
