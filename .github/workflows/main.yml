@@ -27,19 +27,19 @@ jobs:
       - name: Go to the base directory
         run: ssh production 'cd $SSH_DIR'
         env:
-          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
+          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Stop the server
         run: ssh production 'cd $SSH_DIR && docker compose down'
         env:
-          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
+          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Check out the source
         run: ssh production 'cd $SSH_DIR && git fetch && git reset --hard origin/main'
         env:
-          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
+          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
         run: ssh production 'cd $SSH_DIR && docker compose build'
         env:
-          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
+          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
         run: ssh production 'cd $SSH_DIR && docker compose up -d'
         env:
