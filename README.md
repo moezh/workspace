@@ -1,4 +1,4 @@
-# My Personal Workspace (MH)
+# My Personal Workspace
 
 This workspace is hosted at **https://com6.cc** and is built using the following technologies:
 

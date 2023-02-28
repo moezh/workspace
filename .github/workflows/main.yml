@@ -24,23 +24,19 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Go to the base directory
-        run: ssh production "cd $SSH_DIR"
-        env:
-          SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
-      - name: Stop the server
+      - name: Stop docker containers
         run: ssh production "cd $SSH_DIR && docker compose down"
         env:
           SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
-      - name: Check out the source
+      - name: Fetch the code source
         run: ssh production "cd $SSH_DIR && git fetch && git reset --hard origin/main"
         env:
           SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
-      - name: Start the server
+      - name: Build docker images
         run: ssh production "cd $SSH_DIR && docker compose build"
         env:
           SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
-      - name: Start the server
+      - name: Start docker containers
         run: ssh production "cd $SSH_DIR && docker compose up -d"
         env:
           SSH_DIR: ${{ secrets.SSH_BASE_DIR }}
