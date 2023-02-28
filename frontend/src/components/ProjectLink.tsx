@@ -1,7 +1,7 @@
 import Link from "next/link";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
-const ProjectLink = (props: {project?: string;}) => {
+const ProjectLink = (props: { project?: string }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);

@@ -1,14 +1,14 @@
 import Head from "../components/Head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {useUserContext} from "../context/UserContext";
-import {useRouter} from "next/router";
+import { useUserContext } from "../context/UserContext";
+import { useRouter } from "next/router";
 import GoBack from "../components/GoBack";
 
 export default function Page() {
   const router = useRouter();
 
-  const {data, setData} = useUserContext();
+  const { data, setData } = useUserContext();
 
   const handleLogout = () => {
     setData({});

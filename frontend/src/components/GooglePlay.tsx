@@ -1,7 +1,7 @@
 import Image from "next/image";
 import googlePlayBadge from "../../public/google-play-badge.png";
 
-const GooglePlay = (props: {url: string;}) => {
+const GooglePlay = (props: { url: string }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <a target="_blank" href={props.url}>

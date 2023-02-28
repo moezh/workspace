@@ -1,5 +1,5 @@
-import {GetServerSideProps} from "next";
-import {readFileSync} from "fs";
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const {id} = context.query;
+  const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -21,12 +21,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  if (resultData.code === 404) return {notFound: true};
-  return {props: {data: resultData}};
+  if (resultData.code === 404) return { notFound: true };
+  return { props: { data: resultData } };
 };
 
 export default function Page(props: {
-  data: {title: string; summary: string; tags: string; content_html: string;};
+  data: { title: string; summary: string; tags: string; content_html: string };
 }) {
   return (
     <>

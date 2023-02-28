@@ -1,5 +1,5 @@
-import {GetServerSideProps} from "next";
-import {readFileSync} from "fs";
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
 import Header from "../../../components/Header";
@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const {id} = context.query;
+  const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -31,17 +31,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const exerciseData = await exercise.json();
-  if (exerciseData.code === 404) return {notFound: true};
-  return {props: {config: configData, data: exerciseData}};
+  if (exerciseData.code === 404) return { notFound: true };
+  return { props: { config: configData, data: exerciseData } };
 };
 
-export default function Page(props: {config: Record<string, string>, data: Record<string, string>[];}) {
+export default function Page(props: {
+  config: Record<string, string>;
+  data: Record<string, string>[];
+}) {
   return (
     <>
-      <Head
-        title={"Exercises"}
-        description={props.config.exercises_summary}
-      />
+      <Head title={"Exercises"} description={props.config.exercises_summary} />
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
@@ -54,12 +54,13 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             </h1>
           </div>
         </div>
-        <p className="w-full pt-8">
-          {props.config.exercises_summary}
-        </p>
+        <p className="w-full pt-8">{props.config.exercises_summary}</p>
         <div className="w-full flex flex-wrap flex-row items-start justify-start pt-8">
           {props.data.map((exercise: Record<string, string>, index: number) => (
-            <div key={`${index}-${exercise.id}`} className="mb-4 pr-4 w-1/2 sm:w-1/3 md:w-1/4">
+            <div
+              key={`${index}-${exercise.id}`}
+              className="mb-4 pr-4 w-1/2 sm:w-1/3 md:w-1/4"
+            >
               <Link href={`/exercises/${exercise.id}`}>
                 <Image
                   src={`${props.config.bucket_url}${exercise.id}.jpg`}
@@ -70,14 +71,13 @@ export default function Page(props: {config: Record<string, string>, data: Recor
                   quality={100}
                   priority
                 />
-                <p className="w-full text-center pt-2">
-                  {exercise.name}
-                </p>
+                <p className="w-full text-center pt-2">{exercise.name}</p>
               </Link>
             </div>
           ))}
         </div>
-      </div >
+      </div>
       <Footer />
-    </>);
+    </>
+  );
 }

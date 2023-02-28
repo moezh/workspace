@@ -37,7 +37,9 @@ export default function Page() {
               marketing (if applicable): With your permission, we may send you
               emails about our store, new products and other updates.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 2 – CONSENT</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              SECTION 2 – CONSENT
+            </p>
             <p>
               How do you get my consent? When you provide us with personal
               information to complete a transaction, verify your credit card,
@@ -54,12 +56,16 @@ export default function Page() {
               continued collection, use or disclosure of your information, at
               anytime, by contacting us
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 3 – DISCLOSURE</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              SECTION 3 – DISCLOSURE
+            </p>
             <p>
               We may disclose your personal information if we are required by
               law to do so or if you violate our Terms of Service.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 4 – AFFILIATES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              SECTION 4 – AFFILIATES
+            </p>
             <p>
               We are a participant in affiliate advertising programs designed to
               provide a means for us to earn fees by linking to affiliated
@@ -98,7 +104,9 @@ export default function Page() {
               our Site. We are not responsible for the privacy practices of
               other sites and encourage you to read their privacy statements.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">SECTION 6 – SECURITY</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              SECTION 6 – SECURITY
+            </p>
             <p>
               To protect your personal information, we take reasonable
               precautions and follow industry best practices to make sure it is

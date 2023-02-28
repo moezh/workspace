@@ -1,5 +1,5 @@
-import {GetServerSideProps} from "next";
-import {readFileSync} from "fs";
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const {uid} = context.query;
+  const { uid } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -24,11 +24,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  if (resultData.code === 404) return {notFound: true};
-  return {props: {data: resultData}};
+  if (resultData.code === 404) return { notFound: true };
+  return { props: { data: resultData } };
 };
 
-export default function Page(props: {data: Record<string, string>;}) {
+export default function Page(props: { data: Record<string, string> }) {
   const imagesArray = Array.from(
     new Set(
       `${props.data.image_link},${props.data.additional_image_link}`.split(",")
@@ -85,7 +85,7 @@ export default function Page(props: {data: Record<string, string>;}) {
             )}
             <div className="flex flex-row items-start justify-start text-center pt-1">
               {props.data.sale_price === "" ||
-                props.data.sale_price === props.data.price ? (
+              props.data.sale_price === props.data.price ? (
                 <p className="w-full">
                   <span className="capitalize pr-2">Price:</span>
                   <span className="font-light">{props.data.price}</span>

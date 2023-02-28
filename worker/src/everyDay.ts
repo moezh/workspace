@@ -1,4 +1,4 @@
-import {getCjDatafeeds} from "./services/cj";
+import { getCjDatafeeds } from "./services/cj";
 
 const everyDay = () => {
   getCjDatafeeds();

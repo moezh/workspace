@@ -4,11 +4,26 @@ type Data = {
   email?: string;
   firstName?: string;
   lastName?: string;
-  userData?: string;
+  userData?: {};
+  workoutData?: {
+    level: string;
+    workTime: number;
+    restTime: number;
+    currentWorkout: {
+      id: string;
+      type: string;
+      name: string;
+      description: string;
+      exercises: {
+        id: string;
+        name: string;
+      }[];
+    };
+  };
 };
 
 const defaultData: Data = {
-  userData: "{}",
+  userData: {},
 };
 
 interface UserContextValue {

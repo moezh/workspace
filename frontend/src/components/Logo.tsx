@@ -3,7 +3,7 @@ import logoBlack from "../../public/logo_black.png";
 import logoWhite from "../../public/logo_white.png";
 import CurrentProject from "./CurrentProject";
 
-const Logo = (props: {project?: string;}) => {
+const Logo = (props: { project?: string }) => {
   return (
     <div className="flex flex-row items-start justify-center">
       <div className="block dark:hidden">

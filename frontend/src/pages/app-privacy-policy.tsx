@@ -306,7 +306,9 @@ export default function Page() {
               third parties, you are responsible for contacting the third party
               directly.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">TRACKING TECHNOLOGIES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              TRACKING TECHNOLOGIES
+            </p>
             <p className="uppercase pt-6">Cookies and Web Beacons</p>
             <p>
               We may use cookies, web beacons, tracking pixels, and other
@@ -353,7 +355,9 @@ export default function Page() {
               altering your browser's cookies files may also clear certain
               opt-out cookies, plug-ins, or settings.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">THIRD-PARTY WEBSITES</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              THIRD-PARTY WEBSITES
+            </p>
             <p>
               The Application may contain links to third-party websites and
               applications of interest, including advertisements and external
@@ -385,7 +389,9 @@ export default function Page() {
               cannot guarantee complete security if you provide personal
               information.
             </p>
-            <p className="text-lg uppercase font-serif pb-2 pt-6">POLICY FOR CHILDREN</p>
+            <p className="text-lg uppercase font-serif pb-2 pt-6">
+              POLICY FOR CHILDREN
+            </p>
             <p>
               We do not knowingly solicit information from or market to children
               under the age of 13. If you become aware of any data we have

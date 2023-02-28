@@ -1,5 +1,7 @@
-import {GetServerSideProps} from "next";
-import {readFileSync} from "fs";
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
+import { useEffect } from "react";
+import { useUserContext } from "../../../context/UserContext";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
 import Header from "../../../components/Header";
@@ -13,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const {id} = context.query;
+  const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -24,22 +26,43 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
-  const workout = await fetch(`http://backend:3001/api/workout/workouts/${id}`, {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const workout = await fetch(
+    `http://backend:3001/api/workout/workouts/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${jwt.sign("admin", password)}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const workoutData = await workout.json();
-  if (workoutData.code === 404) return {notFound: true};
-  return {props: {config: configData, data: workoutData}};
+  if (workoutData.code === 404) return { notFound: true };
+  return { props: { config: configData, data: workoutData } };
 };
 
-export default function Page(props: {config: Record<string, string>, data: Record<string, string>;}) {
-  const level = "beginner";
-  const workTime = 30;
-  const restTime = 15;
-  const exercises = JSON.parse(props.data.exercises);
+export default function Page(props: {
+  config: Record<string, string>;
+  data: Record<string, string>;
+}) {
+  const { data, setData } = useUserContext();
+
+  const workoutData = {
+    level: "beginner",
+    workTime: 30,
+    restTime: 10,
+    currentWorkout: {
+      id: props.data.id,
+      type: props.data.type,
+      name: props.data.name,
+      description: props.data.description,
+      exercises: JSON.parse(props.data.exercises),
+    },
+  };
+
+  useEffect(() => {
+    setData({ ...data, workoutData: workoutData });
+  }, []);
+
   return (
     <>
       <Head
@@ -66,7 +89,7 @@ export default function Page(props: {config: Record<string, string>, data: Recor
               width={1000}
               height={750}
               className="rounded-sm h-[300px] w-full"
-              style={{objectFit: "cover", objectPosition: "50% 35%"}}
+              style={{ objectFit: "cover", objectPosition: "50% 35%" }}
               quality={100}
               priority
             />
@@ -80,15 +103,23 @@ export default function Page(props: {config: Record<string, string>, data: Recor
             <div className="relative w-full -top-[400px] h-[100px] text-white p-4">
               <div className="w-full flex flex-row">
                 <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">{exercises.length}</p>
+                  <p className="capitalize font-serif">
+                    {workoutData.currentWorkout.exercises.length}
+                  </p>
                   <p className="font-light">Exercises</p>
                 </div>
                 <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">{Math.floor(exercises.length * (workTime + restTime) / 60)}</p>
+                  <p className="capitalize font-serif">
+                    {Math.floor(
+                      (workoutData.currentWorkout.exercises.length *
+                        (workoutData.workTime + workoutData.restTime)) /
+                        60
+                    )}
+                  </p>
                   <p className="font-light">Minutes</p>
                 </div>
                 <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">{level}</p>
+                  <p className="capitalize font-serif">{workoutData.level}</p>
                   <p className="font-light">Level</p>
                 </div>
               </div>
@@ -97,44 +128,48 @@ export default function Page(props: {config: Record<string, string>, data: Recor
         </div>
         <div className="sticky top-0 w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
           <div className="w-full bg-black dark:bg-neutral-100 rounded-sm my-2">
-            <Link
-              href={`/workouts/start`}
-            >
-              <p className="capitalize text-white dark:text-black px-8 py-2 text-center">Start workout →</p>
+            <Link href={`/workouts/play`}>
+              <p className="capitalize text-white dark:text-black px-8 py-2 text-center">
+                Start workout →
+              </p>
             </Link>
           </div>
         </div>
         <div className="pt-8">
-          {exercises.map((exercise: Record<string, string>) => (
-            <div className="flex flex-row items-center justify-start mb-4">
-              <div className="w-full max-w-[200px] mr-2">
-                <Link href={`/exercises/${exercise.id}`}>
-                  <Image
-                    src={`${props.config.bucket_url}${exercise.id}.jpg`}
-                    alt={exercise.name}
-                    width={300}
-                    height={300}
-                    className="rounded-sm dark:opacity-95"
-                    quality={100}
-                    priority
-                  />
-                </Link>
+          {workoutData.currentWorkout.exercises.map(
+            (exercise: Record<string, string>, index: number) => (
+              <div
+                key={index}
+                className="flex flex-row items-center justify-start mb-4"
+              >
+                <div className="w-full max-w-[200px] mr-2">
+                  <Link href={`/exercises/${exercise.id}`}>
+                    <Image
+                      src={`${props.config.bucket_url}${exercise.id}.jpg`}
+                      alt={exercise.name}
+                      width={300}
+                      height={300}
+                      className="rounded-sm dark:opacity-95"
+                      quality={100}
+                      priority
+                    />
+                  </Link>
+                </div>
+                <div className="w-full ml-2 text-left">
+                  <Link href={`/exercises/${exercise.id}`}>
+                    <p className="uppercase">{exercise.name}</p>
+                  </Link>
+                  <p className="font-light">{workoutData.workTime} seconds</p>
+                </div>
+                <div className="w-full max-w-[25px] ml-2 text-right">
+                  <Link href={`/exercises/${exercise.id}`}>→</Link>
+                </div>
               </div>
-              <div className="w-full ml-2 text-left">
-                <Link href={`/exercises/${exercise.id}`}>
-                  <p className="uppercase">{exercise.name}</p>
-                </Link>
-                <p className="font-light">{workTime} seconds</p>
-              </div>
-              <div className="w-full max-w-[25px] ml-2 text-right">
-                <Link href={`/exercises/${exercise.id}`}>
-                  →
-                </Link>
-              </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
       <Footer />
-    </>);
+    </>
+  );
 }

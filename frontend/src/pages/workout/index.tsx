@@ -1,5 +1,5 @@
-import {GetStaticProps} from "next";
-import {readFileSync} from "fs";
+import { GetStaticProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -19,13 +19,11 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   const configData = await config.json();
   return {
-    props: {config: configData},
+    props: { config: configData },
   };
 };
 
-export default function Page(props: {
-  config: Record<string, string>;
-}) {
+export default function Page(props: { config: Record<string, string> }) {
   return (
     <>
       <Head
@@ -41,9 +39,7 @@ export default function Page(props: {
           <div className="w-1/2 flex flex-col items-end justify-start"></div>
         </div>
         <div className="flex flex-col items-center justify-start pt-2">
-          <h1 className="text-xl uppercase font-serif">
-            Coming Soon
-          </h1>
+          <h1 className="text-xl uppercase font-serif">Coming Soon</h1>
           <p className="pt-2 text-center pb-6">Under Construction!</p>
         </div>
       </div>

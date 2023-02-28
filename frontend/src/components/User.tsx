@@ -1,9 +1,9 @@
-import {useUserContext} from "../context/UserContext";
-import {useState, useEffect} from "react";
+import { useUserContext } from "../context/UserContext";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const User = () => {
-  const {data} = useUserContext();
+  const { data } = useUserContext();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -17,7 +17,8 @@ const User = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6">
+            className="w-6 h-6"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

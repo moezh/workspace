@@ -3,8 +3,8 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      'sans': ['"Helvetica Neue"'],
-      'serif': ["Georgia"],
+      sans: ['"Helvetica Neue"'],
+      serif: ["Georgia"],
     },
     extend: {},
   },

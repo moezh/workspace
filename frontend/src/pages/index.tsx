@@ -1,5 +1,5 @@
-import {GetStaticProps} from "next";
-import {readFileSync} from "fs";
+import { GetStaticProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
@@ -21,10 +21,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  return {props: {data: resultData}};
+  return { props: { data: resultData } };
 };
 
-export default function Page(props: {data: Record<string, string>;}) {
+export default function Page(props: { data: Record<string, string> }) {
   return (
     <>
       <Head
@@ -42,9 +42,7 @@ export default function Page(props: {data: Record<string, string>;}) {
               {props.data.profile_name}
             </h2>
             <p>{props.data.profile_job_title}</p>
-            <p className="font-light">
-              {props.data.profile_location}
-            </p>
+            <p className="font-light">{props.data.profile_location}</p>
             <div className="w-full flex flex-row flex-wrap items-center justify-center pt-4">
               <div className="w-6 mx-6">
                 <a target="_blank" href={`mailto:${props.data.contact_email}`}>
@@ -159,28 +157,32 @@ export default function Page(props: {data: Record<string, string>;}) {
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
         <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
-          {props.data.projects_featured.split(",").map((project, index: number) => (
-            <div
-              key={index}
-              className={`w-1/2 flex flex-col items-start justify-start pb-6 ${index % 2 === 0 ? "pr-2" : "pl-2"
+          {props.data.projects_featured
+            .split(",")
+            .map((project, index: number) => (
+              <div
+                key={index}
+                className={`w-1/2 flex flex-col items-start justify-start pb-6 ${
+                  index % 2 === 0 ? "pr-2" : "pl-2"
                 }`}
-            >
-              <Logo project={project} />
-              {props.data.projects_under_construction.includes(project) ? (
-                <p className="pt-1 capitalize">Coming soon</p>
-              ) : (
-                <ProjectLink project={project} />
-              )}
-              <p className="pt-1">{props.data[`${project}_summary`]}</p>
-            </div>
-          ))}
+              >
+                <Logo project={project} />
+                {props.data.projects_under_construction.includes(project) ? (
+                  <p className="pt-1 capitalize">Coming soon</p>
+                ) : (
+                  <ProjectLink project={project} />
+                )}
+                <p className="pt-1">{props.data[`${project}_summary`]}</p>
+              </div>
+            ))}
         </div>
       </div>
       <div className="pt-6">
         <Github github_url={props.data.github_url} />
       </div>
       <div className="pt-8 -mb-8 font-light text-center capitalize">
-        Other side projects: <Projects projects={props.data.projects_footer_link} />
+        Other side projects:{" "}
+        <Projects projects={props.data.projects_footer_link} />
       </div>
       <Footer />
     </>

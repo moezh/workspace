@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const Projects = (props: {projects: string;}) => {
+const Projects = (props: { projects: string }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -22,7 +22,9 @@ const Projects = (props: {projects: string;}) => {
           <Link href={`${protocol}//${workspace}.${domain}:${port}`}>
             {workspace}
           </Link>
-          {index < workspaces.length - 1 ? <span className="px-1">|</span> : null}
+          {index < workspaces.length - 1 ? (
+            <span className="px-1">|</span>
+          ) : null}
         </span>
       ))}
     </span>

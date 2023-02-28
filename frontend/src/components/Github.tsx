@@ -1,4 +1,4 @@
-const Github = (props: {github_url: string;}) => {
+const Github = (props: { github_url: string }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <a target="_blank" href={props.github_url}>

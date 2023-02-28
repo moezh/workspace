@@ -1,6 +1,6 @@
 import express from "express";
-import {pool} from "./services/db";
-import {readFileSync} from "fs";
+import { pool } from "./services/db";
+import { readFileSync } from "fs";
 import indexRouter from "./routes";
 
 const app = express();

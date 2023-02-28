@@ -1,11 +1,11 @@
-import {GetStaticProps} from "next";
-import {readFileSync} from "fs";
+import { GetStaticProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
-import {useState} from "react";
+import { useState } from "react";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const postsData = await posts.json();
-  return {props: {config: configData, posts: postsData}};
+  return { props: { config: configData, posts: postsData } };
 };
 
 export default function Page(props: {
@@ -44,7 +44,7 @@ export default function Page(props: {
 }) {
   const [currentTag, setCurrentTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const filtredPosts = props.posts.filter((post: {tags: string;}) =>
+  const filtredPosts = props.posts.filter((post: { tags: string }) =>
     post.tags.includes(currentTag)
   );
   const totalPages = Math.ceil(
@@ -83,13 +83,13 @@ export default function Page(props: {
               onClick={
                 tag === currentTag
                   ? () => {
-                    setCurrentTag("");
-                    setCurrentPage(1);
-                  }
+                      setCurrentTag("");
+                      setCurrentPage(1);
+                    }
                   : () => {
-                    setCurrentTag(tag);
-                    setCurrentPage(1);
-                  }
+                      setCurrentTag(tag);
+                      setCurrentPage(1);
+                    }
               }
               className={
                 tag === currentTag

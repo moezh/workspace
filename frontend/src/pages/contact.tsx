@@ -1,5 +1,5 @@
-import {GetStaticProps} from "next";
-import {readFileSync} from "fs";
+import { GetStaticProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../components/Head";
 import Header from "../components/Header";
@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   const resultData = await result.json();
-  return {props: {data: resultData}};
+  return { props: { data: resultData } };
 };
 
 export default function Page(props: {

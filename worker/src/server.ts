@@ -1,4 +1,4 @@
-import {CronJob} from "cron";
+import { CronJob } from "cron";
 
 import init from "./init";
 import everyMin from "./everyMin";

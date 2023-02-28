@@ -1,5 +1,5 @@
-import {GetServerSideProps} from "next";
-import {readFileSync} from "fs";
+import { GetServerSideProps } from "next";
+import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
 import Header from "../../../components/Header";
@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const {id} = context.query;
+  const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -22,18 +22,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
-  const exercise = await fetch(`http://backend:3001/api/workout/exercises/${id}`, {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const exercise = await fetch(
+    `http://backend:3001/api/workout/exercises/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${jwt.sign("admin", password)}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const exerciseData = await exercise.json();
-  if (exerciseData.code === 404) return {notFound: true};
-  return {props: {config: configData, data: exerciseData}};
+  if (exerciseData.code === 404) return { notFound: true };
+  return { props: { config: configData, data: exerciseData } };
 };
 
-export default function Page(props: {config: Record<string, string>, data: Record<string, string>;}) {
+export default function Page(props: {
+  config: Record<string, string>;
+  data: Record<string, string>;
+}) {
   return (
     <>
       <Head
@@ -53,40 +59,40 @@ export default function Page(props: {config: Record<string, string>, data: Recor
           </div>
         </div>
         <div className="w-full flex flex-col items-center justify-start bg-white pt-6 my-2 rounded-sm dark:opacity-95">
-          <video autoPlay loop muted style={{width: '640px', height: '480px'}}>
+          <video
+            autoPlay
+            loop
+            muted
+            style={{ width: "640px", height: "480px" }}
+          >
             <source src={`${props.config.bucket_url}${props.data.id}.mp4`} />
           </video>
         </div>
         <div className="pt-6">
-          <p className="uppercase font-serif">
-            Instruction
-          </p>
-          {props.data.instruction.split(".").map((i: string, index: number) => (
-            i === "" ? null :
+          <div className="uppercase font-serif">Instruction</div>
+          {props.data.instruction.split(".").map((i: string, index: number) =>
+            i === "" ? null : (
               <div key={`instruction-${index}`}>
-                <p className="uppercase pt-4">
-                  Step {index + 1}:
-                </p>
-                <p className="pt-2 w-full">
-                  {i}.
-                </p>
+                <div className="uppercase pt-4">Step {index + 1}:</div>
+                <div className="pt-2 w-full">{i}.</div>
               </div>
-          ))}
+            )
+          )}
         </div>
         <div className="pt-8 pb-2">
-          <p className="uppercase font-serif">
-            Hints
-          </p>
-          <p className="w-full pt-1">
-            {props.data.hints.split(".").map((h: string, index: number) => (
-              h === "" ? null :
+          <div className="uppercase font-serif">Hints</div>
+          <div className="w-full pt-1">
+            {props.data.hints.split(".").map((h: string, index: number) =>
+              h === "" ? null : (
                 <div key={`hint-${index}`}>
-                  <p className="pt-2">• {h}.</p>
+                  <div className="pt-2">• {h}.</div>
                 </div>
-            ))}
-          </p>
+              )
+            )}
+          </div>
         </div>
-      </div >
+      </div>
       <Footer />
-    </>);
+    </>
+  );
 }
