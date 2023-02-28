@@ -14,29 +14,32 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/prod.key
           chmod 600 ~/.ssh/prod.key
           cat >>~/.ssh/config <<END
-          Host staging
+          Host production
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/prod.key
-            StrictHostKeyChecking no
           END
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Go to the base directory
+        run: ssh production 'cd $SSH_DIR'
+        env:
+          SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Stop the server
-        run: ssh staging 'cd $SSH_DIR && docker compose down'
+        run: ssh production 'cd $SSH_DIR && docker compose down'
         env:
           SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Check out the source
-        run: ssh staging 'cd $SSH_DIR && git fetch && git reset --hard origin/main'
+        run: ssh production 'cd $SSH_DIR && git fetch && git reset --hard origin/main'
         env:
           SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
-        run: ssh staging 'cd $SSH_DIR && docker compose build'
+        run: ssh production 'cd $SSH_DIR && docker compose build'
         env:
           SH_DIR: ${{ secrets.SSH_BASE_DIR }}
       - name: Start the server
-        run: ssh staging 'cd $SSH_DIR && docker compose up -d'
+        run: ssh production 'cd $SSH_DIR && docker compose up -d'
         env:
           SH_DIR: ${{ secrets.SSH_BASE_DIR }}
