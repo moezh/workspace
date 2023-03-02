@@ -48,8 +48,10 @@ export default function Page(props: {
 
   const workoutData = {
     level: data.workoutData?.level || "beginner",
+    dayPerWeeks: data.workoutData?.dayPerWeeks || 5,
     workTime: data.workoutData?.workTime || 30,
     restTime: data.workoutData?.restTime || 10,
+    currentProgram: data.workoutData?.currentProgram || undefined,
     currentWorkout: {
       id: props.data.id,
       type: props.data.type,
@@ -127,7 +129,7 @@ export default function Page(props: {
             </div>
           </div>
         </div>
-        <div className="sticky top-0 w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
+        <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
           <div className="w-full bg-black dark:bg-neutral-100 rounded-sm my-2">
             <Link href={`/workouts/play`}>
               <p className="capitalize text-white dark:text-black px-8 py-2 text-center">
@@ -136,7 +138,7 @@ export default function Page(props: {
             </Link>
           </div>
         </div>
-        <div className="pt-8">
+        <div className="pt-4">
           {workoutData.currentWorkout.exercises.map(
             (exercise: Record<string, string>, index: number) => (
               <div

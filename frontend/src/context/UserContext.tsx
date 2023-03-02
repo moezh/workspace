@@ -8,8 +8,20 @@ type Data = {
   };
   workoutData?: {
     level: string;
+    dayPerWeeks: number;
     workTime: number;
     restTime: number;
+    currentProgram?: {
+      id: string;
+      type: string;
+      name: string;
+      description: string;
+      total_weeks: number;
+      workouts: {
+        id: string;
+        name: string;
+      }[];
+    };
     currentWorkout?: {
       id: string;
       type: string;

@@ -246,7 +246,7 @@ export default function Page(props: { config: Record<string, string> }) {
               <DarkModeToggler />
             </div>
           </div>
-          <div className="w-full flex flex-row items-center justify-center">
+          <div className="w-full flex flex-row items-center justify-center pt-1">
             <div className="uppercase">
               {data.workoutData.currentWorkout.exercises[index].name}
             </div>

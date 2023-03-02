@@ -139,7 +139,7 @@ export default function Page(props: { config: Record<string, string> }) {
             </div>
           </div>
         </div>
-        <div className="sticky top-0 w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
+        <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
           <div className="w-full bg-black dark:bg-neutral-100 rounded-sm my-2">
             <Link href={`/`}>
               <p className="capitalize text-white dark:text-black px-8 py-2 text-center">
@@ -148,7 +148,7 @@ export default function Page(props: { config: Record<string, string> }) {
             </Link>
           </div>
         </div>
-        <div className="pt-8">
+        <div className="pt-4">
           <div>A Little Reminder:</div>
           <div className="font-light">
             If you're looking to maximize the results of your workout, good
