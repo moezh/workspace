@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { useUserContext } from "../../../context/UserContext";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
-import Close from "../../../components/Close";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import DarkModeToggler from "../../../components/DarkModeToggler";
@@ -51,7 +50,7 @@ export default function Page(props: { config: Record<string, string> }) {
   };
 
   const prevExercise = () => {
-    if (data.workoutData && index > 0) {
+    if (index > 0) {
       setIndex(index - 1);
       startRestPeriod();
       const video = videoRef.current as HTMLVideoElement;
@@ -62,22 +61,31 @@ export default function Page(props: { config: Record<string, string> }) {
   };
 
   const nextExercise = () => {
-    if (
-      data.workoutData &&
-      index < data.workoutData.currentWorkout.exercises.length - 1
-    ) {
-      setIndex(index + 1);
-      startRestPeriod();
-      const video = videoRef.current as HTMLVideoElement;
-      video.load();
-      isPlaying ? video.play() : video.pause();
-      speechSynthesis.cancel();
+    if (data.workoutData?.currentWorkout) {
+      if (index < data.workoutData.currentWorkout.exercises.length - 1) {
+        setIndex(index + 1);
+        startRestPeriod();
+        const video = videoRef.current as HTMLVideoElement;
+        video.load();
+        isPlaying ? video.play() : video.pause();
+        speechSynthesis.cancel();
+      }
+      if (index === data.workoutData.currentWorkout.exercises.length - 1) {
+        finishWorkout();
+      }
     }
-    if (
-      data.workoutData &&
-      index === data.workoutData.currentWorkout.exercises.length - 1
-    ) {
-      finishWorkout();
+  };
+
+  const closeWorkout = () => {
+    if (confirm("Your progress won't be saved!")) {
+      speechSynthesis.cancel();
+      if (data.workoutData?.currentWorkout) {
+        setData({
+          ...data,
+          workoutData: { ...data.workoutData, currentWorkout: undefined },
+        });
+      }
+      router.back();
     }
   };
 
@@ -86,15 +94,35 @@ export default function Page(props: { config: Record<string, string> }) {
     utterance.text = "Congratulations! Your workout is completed.";
     speechSynthesis.speak(utterance);
     setIsFinished(true);
+    if (data.workoutData?.currentWorkout) {
+      setData({
+        ...data,
+        workoutData: {
+          ...data.workoutData,
+          currentWorkout: undefined,
+          log: [
+            {
+              timestamp: Date.now().toString(),
+              workoutId: data.workoutData.currentWorkout.id,
+              workoutName: data.workoutData.currentWorkout.name,
+              timer: timer,
+              exercises: data.workoutData.currentWorkout.exercises.length,
+              level: data.workoutData.level,
+            },
+            ...data.workoutData.log,
+          ],
+        },
+      });
+    }
     router.push({
-      pathname: "/workouts/ended",
+      pathname: "/workouts/completed",
     });
   };
 
   const startRestPeriod = () => {
     if (data.workoutData) {
       setIsRest(true);
-      setCountDown(Number(data.workoutData.restTime));
+      setCountDown(data.workoutData.restTime);
       setSide("Left");
     }
   };
@@ -102,7 +130,7 @@ export default function Page(props: { config: Record<string, string> }) {
   const startWorkPeriod = () => {
     if (data.workoutData) {
       setIsRest(false);
-      setCountDown(Number(data.workoutData.workTime));
+      setCountDown(data.workoutData.workTime);
       setSide("Left");
     }
   };
@@ -116,7 +144,7 @@ export default function Page(props: { config: Record<string, string> }) {
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      if (isPlaying && data.workoutData) {
+      if (data.workoutData?.currentWorkout && isPlaying) {
         setTimer(timer + 1);
         if (timer === 0) {
           startRestPeriod();
@@ -136,13 +164,19 @@ export default function Page(props: { config: Record<string, string> }) {
               if (countDown === 3) utterance.text = "2";
               if (countDown === 4) utterance.text = "3";
               if (countDown === Math.ceil(data.workoutData.workTime / 2) + 1) {
-                const exercise =
-                  data.workoutData.currentWorkout.exercises[index];
                 if (
-                  exercise.id.slice(-4) === "Left" ||
-                  exercise.id.slice(-5) === "Right"
+                  data.workoutData.currentWorkout.exercises[index].id.slice(
+                    -4
+                  ) === "Left" ||
+                  data.workoutData.currentWorkout.exercises[index].id.slice(
+                    -5
+                  ) === "Right"
                 ) {
-                  if (exercise.id.slice(-4) === side) {
+                  if (
+                    data.workoutData.currentWorkout.exercises[index].id.slice(
+                      -4
+                    ) === side
+                  ) {
                     utterance.text = "Change side.";
                     changeSide();
                   }
@@ -171,7 +205,7 @@ export default function Page(props: { config: Record<string, string> }) {
     };
   });
 
-  if (!data.workoutData || isFinished) return null;
+  if (!data.workoutData?.currentWorkout || isFinished) return null;
 
   let utterance = new SpeechSynthesisUtterance();
   let samantha = speechSynthesis.getVoices().find((v) => v.name == "Samantha");
@@ -186,14 +220,23 @@ export default function Page(props: { config: Record<string, string> }) {
       <div className="w-full h-screen py-4 flex flex-col items-center justify-between">
         <div className="flex-shrink w-full">
           <div className="flex flex-row items-start justify-start">
-            <div
+            <button
               className="w-1/4 flex flex-row items-center justify-start"
-              onClick={() => {
-                speechSynthesis.cancel();
-              }}
+              onClick={closeWorkout}
             >
-              <Close />
-            </div>
+              <svg
+                className="h-7 w-7"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
             <div className="w-2/4 flex flex-row items-center justify-center">
               <h1 className="w-full text-xl uppercase font-serif text-center">
                 {data.workoutData.currentWorkout.name}

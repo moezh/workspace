@@ -1,15 +1,16 @@
 import React, { useEffect, createContext, useState, useContext } from "react";
 
 type Data = {
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  userData?: {};
+  userData?: {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+  };
   workoutData?: {
     level: string;
     workTime: number;
     restTime: number;
-    currentWorkout: {
+    currentWorkout?: {
       id: string;
       type: string;
       name: string;
@@ -19,12 +20,18 @@ type Data = {
         name: string;
       }[];
     };
+    log: {
+      timestamp: string;
+      workoutId: string;
+      workoutName: string;
+      level: string;
+      timer: number;
+      exercises: number;
+    }[];
   };
 };
 
-const defaultData: Data = {
-  userData: {},
-};
+const defaultData: Data = { userData: {} };
 
 interface UserContextValue {
   data: Data;

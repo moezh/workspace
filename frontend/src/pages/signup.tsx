@@ -124,10 +124,12 @@ export default function Page(props: { data: Record<string, string> }) {
   useEffect(() => {
     if (props.data?.email !== undefined) {
       setData({
-        email: props.data.email,
-        firstName: props.data.first_name,
-        lastName: props.data.last_name,
-        userData: props.data.user_data,
+        ...data,
+        userData: {
+          email: props.data.email,
+          firstName: props.data.first_name,
+          lastName: props.data.last_name,
+        },
       });
       router.push("/");
     }

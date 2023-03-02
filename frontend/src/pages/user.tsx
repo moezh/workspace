@@ -11,15 +11,17 @@ export default function Page() {
   const { data, setData } = useUserContext();
 
   const handleLogout = () => {
-    setData({});
+    setData({ ...data, userData: undefined });
     router.push("/");
   };
+
+  if (!data.userData?.email) return null;
 
   return (
     <>
       <Head
         title="Settings"
-        description={`${data?.firstName} ${data?.lastName}'s settings`}
+        description={`${data.userData?.firstName} ${data.userData?.lastName}'s settings`}
       />
       <Header />
       <div className="w-full pt-4">
@@ -36,10 +38,10 @@ export default function Page() {
         <div className="w-[280px] mx-auto py-8">
           <div className="flex flex-col items-center justify-start">
             <p className="text-lg uppercase font-serif pb-2">
-              {data?.firstName} {data?.lastName}
+              {data.userData?.firstName} {data.userData?.lastName}
             </p>
-            <p className="pt-1">{data?.email}</p>
-            {data.email !== undefined ? (
+            <p className="pt-1">{data.userData?.email}</p>
+            {data.userData?.email !== undefined ? (
               <button
                 onClick={handleLogout}
                 aria-label="Logout"
