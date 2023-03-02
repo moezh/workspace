@@ -67,7 +67,7 @@ export default function Page(props: {
                   alt={exercise.name}
                   width={300}
                   height={300}
-                  className="rounded-sm w-full h-auto dark:opacity-95"
+                  className="rounded-sm w-full max-w-[200px] h-auto dark:opacity-95"
                   quality={100}
                   priority
                 />

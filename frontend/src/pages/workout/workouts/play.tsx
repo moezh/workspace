@@ -4,11 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { useUserContext } from "../../../context/UserContext";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
-import GoBack from "../../../components/GoBack";
-import Link from "next/link";
+import Close from "../../../components/Close";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import DarkModeToggler from "../../../components/DarkModeToggler";
 
 export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
@@ -32,14 +31,13 @@ export default function Page(props: { config: Record<string, string> }) {
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isRest, setIsRest] = useState(true);
-  const [isNewExercise, setIsNewExercise] = useState(true);
   const [timer, setTimer] = useState(0);
-  const [timerExercise, setTimerExercise] = useState(0);
+  const [countDown, setCountDown] = useState(0);
+  const [side, setSide] = useState("Left");
+  const [isFinished, setIsFinished] = useState(false);
 
-  //let timerId: NodeJS.Timeout;
+  let router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  if (!data.workoutData) return null;
 
   const handlePlayPause = () => {
     const video = videoRef.current as HTMLVideoElement;
@@ -49,6 +47,18 @@ export default function Page(props: { config: Record<string, string> }) {
       video.play();
     }
     setIsPlaying(!isPlaying);
+    speechSynthesis.cancel();
+  };
+
+  const prevExercise = () => {
+    if (data.workoutData && index > 0) {
+      setIndex(index - 1);
+      startRestPeriod();
+      const video = videoRef.current as HTMLVideoElement;
+      video.load();
+      isPlaying ? video.play() : video.pause();
+      speechSynthesis.cancel();
+    }
   };
 
   const nextExercise = () => {
@@ -57,55 +67,115 @@ export default function Page(props: { config: Record<string, string> }) {
       index < data.workoutData.currentWorkout.exercises.length - 1
     ) {
       setIndex(index + 1);
-      setIsNewExercise(true);
-      setTimerExercise(0);
-      setIsRest(true);
+      startRestPeriod();
       const video = videoRef.current as HTMLVideoElement;
       video.load();
       isPlaying ? video.play() : video.pause();
+      speechSynthesis.cancel();
+    }
+    if (
+      data.workoutData &&
+      index === data.workoutData.currentWorkout.exercises.length - 1
+    ) {
+      finishWorkout();
     }
   };
 
-  const prevExercise = () => {
-    if (index > 0) {
-      setIndex(index - 1);
-      setIsNewExercise(true);
-      setTimerExercise(0);
+  const finishWorkout = () => {
+    setIsPlaying(false);
+    utterance.text = "Congratulations! Your workout is completed.";
+    speechSynthesis.speak(utterance);
+    setIsFinished(true);
+    router.push({
+      pathname: "/workouts/ended",
+    });
+  };
+
+  const startRestPeriod = () => {
+    if (data.workoutData) {
       setIsRest(true);
-      const video = videoRef.current as HTMLVideoElement;
-      video.load();
-      isPlaying ? video.play() : video.pause();
+      setCountDown(Number(data.workoutData.restTime));
+      setSide("Left");
     }
   };
 
-  useEffect(() => {
-    if (timerExercise === 0) {
-      if (isNewExercise) {
-        setIsNewExercise(false);
-      } else {
-        if (!isRest) nextExercise();
-        setIsRest(!isRest);
-      }
+  const startWorkPeriod = () => {
+    if (data.workoutData) {
+      setIsRest(false);
+      setCountDown(Number(data.workoutData.workTime));
+      setSide("Left");
     }
-  }, [timerExercise]);
+  };
+
+  const changeSide = () => {
+    const video = videoRef.current as HTMLVideoElement;
+    setSide(side === "Left" ? "Right" : "Left");
+    video.load();
+    isPlaying ? video.play() : video.pause();
+  };
 
   useEffect(() => {
-    let timerId: NodeJS.Timeout;
-    if (isPlaying && data.workoutData) {
-      timerId = setTimeout(() => {
-        if (data.workoutData) {
-          setTimer(timer + 1);
-          setTimerExercise(
-            (timerExercise + 1) %
-              (isRest ? data.workoutData.restTime : data.workoutData.workTime)
-          );
+    const timerId = setInterval(() => {
+      if (isPlaying && data.workoutData) {
+        setTimer(timer + 1);
+        if (timer === 0) {
+          startRestPeriod();
+        } else {
+          setCountDown(countDown - 1);
+          if (countDown === 0) {
+            if (isRest) {
+              startWorkPeriod();
+            } else {
+              startRestPeriod();
+              nextExercise();
+            }
+          } else {
+            if (!isRest) {
+              if (countDown === 1) utterance.text = "Stop!";
+              if (countDown === 2) utterance.text = "1";
+              if (countDown === 3) utterance.text = "2";
+              if (countDown === 4) utterance.text = "3";
+              if (countDown === Math.ceil(data.workoutData.workTime / 2) + 1) {
+                const exercise =
+                  data.workoutData.currentWorkout.exercises[index];
+                if (
+                  exercise.id.slice(-4) === "Left" ||
+                  exercise.id.slice(-5) === "Right"
+                ) {
+                  if (exercise.id.slice(-4) === side) {
+                    utterance.text = "Change side.";
+                    changeSide();
+                  }
+                } else {
+                  utterance.text = "Halfway.";
+                }
+              }
+            }
+            if (isRest) {
+              if (countDown === 1) utterance.text = "Begin!";
+              if (countDown === 2) utterance.text = "1";
+              if (countDown === 3) utterance.text = "2";
+              if (countDown === 4) utterance.text = "3";
+              if (countDown === data.workoutData.restTime)
+                utterance.text = `"Get ready for : ${data.workoutData.workTime} seconds of ${data.workoutData.currentWorkout.exercises[index].name}`;
+            }
+            speechSynthesis.speak(utterance);
+          }
         }
-      }, 1000);
-    }
+      } else {
+        clearInterval(timerId);
+      }
+    }, 1000);
     return () => {
-      clearTimeout(timerId);
+      clearInterval(timerId);
     };
   });
+
+  if (!data.workoutData || isFinished) return null;
+
+  let utterance = new SpeechSynthesisUtterance();
+  let samantha = speechSynthesis.getVoices().find((v) => v.name == "Samantha");
+  if (samantha) utterance.voice = samantha;
 
   return (
     <>
@@ -113,43 +183,32 @@ export default function Page(props: { config: Record<string, string> }) {
         title={`${data.workoutData.currentWorkout.name}`}
         description={`${data.workoutData.currentWorkout.name} - ${data.workoutData.currentWorkout.description}`}
       />
-      <Header />
-      <div className="w-full pt-4 pb-4">
-        <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
-            <GoBack />
+      <div className="w-full h-screen py-4 flex flex-col items-center justify-between">
+        <div className="flex-shrink w-full">
+          <div className="flex flex-row items-start justify-start">
+            <div
+              className="w-1/4 flex flex-row items-center justify-start"
+              onClick={() => {
+                speechSynthesis.cancel();
+              }}
+            >
+              <Close />
+            </div>
+            <div className="w-2/4 flex flex-row items-center justify-center">
+              <h1 className="w-full text-xl uppercase font-serif text-center">
+                {data.workoutData.currentWorkout.name}
+              </h1>
+            </div>
+            <div className="w-1/4 flex flex-row items-center justify-end">
+              <DarkModeToggler />
+            </div>
           </div>
-          <div className="w-2/4">
-            <h1 className="w-full text-xl uppercase font-serif text-center">
-              {data.workoutData.currentWorkout.name}
-            </h1>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-center pt-2">
           <div className="w-full flex flex-row items-center justify-center">
-            <div className="uppercase pr-1">
+            <div className="uppercase">
               {data.workoutData.currentWorkout.exercises[index].name}
             </div>
-            <Link
-              href={`/exercises/${data.workoutData.currentWorkout.exercises[index].id}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                />
-              </svg>
-            </Link>
           </div>
-          <div className="w-full flex flex-row items-start justify-start pt-4">
+          <div className="w-full flex flex-row items-start justify-start pt-1">
             <div className="w-1/2 flex flex-col items-center justify-center">
               <div className="text-lg font-serif">
                 {index + 1} of{" "}
@@ -164,26 +223,61 @@ export default function Page(props: { config: Record<string, string> }) {
               <div className="font-light">Overall time</div>
             </div>
           </div>
-          <div className="w-full flex flex-col items-center justify-start bg-white pt-6 my-2 rounded-sm dark:opacity-95">
+          <div className="h-1 w-full rounded-full bg-gray-100  dark:bg-gray-800 mt-2">
+            <div
+              className="h-1 rounded-full bg-black dark:bg-white"
+              style={{
+                width: `${
+                  ((index + 1) /
+                    data.workoutData.currentWorkout.exercises.length) *
+                  100
+                }%`,
+              }}
+            ></div>
+          </div>
+        </div>
+        <div className="w-full h-full flex flex-col items-center justify-center py-2">
+          <div className="w-full h-full max-h-[360px] flex flex-col items-center justify-center bg-white rounded-sm dark:opacity-95">
             <video
               ref={videoRef}
               autoPlay
               loop
               muted
-              style={{ width: "640px", height: "480px" }}
-              className={`${
+              className={`h-full w-auto ${
                 !isPlaying || isRest ? "opacity-50" : "dark:opacity-95"
               }`}
             >
               <source
-                src={`${props.config.bucket_url}${data.workoutData.currentWorkout.exercises[index].id}.mp4`}
+                src={`${
+                  props.config.bucket_url
+                }${data.workoutData.currentWorkout.exercises[index].id.replace(
+                  "Left",
+                  side
+                )}.mp4`}
               />
             </video>
-            <div className="relative h-0 -top-[240px] text-center text-black font-serif uppercase">
+            <div className="relative h-0 -top-[50%] text-center text-black font-serif uppercase">
               {isPlaying ? (!isRest ? null : "Get Ready") : "Paused"}
             </div>
           </div>
-          <div className="w-full flex flex-row items-center justify-center pt-4">
+        </div>
+        <div className="flex-shrink w-full">
+          <div className="h-1 w-full rounded-full bg-gray-100  dark:bg-gray-800">
+            <div
+              className="h-1 rounded-full bg-black dark:bg-white"
+              style={{
+                width: `${
+                  100 -
+                  (countDown /
+                    (isRest
+                      ? Number(data.workoutData.restTime)
+                      : Number(data.workoutData.workTime))) *
+                    100
+                }%`,
+              }}
+            ></div>
+          </div>
+          <div className="w-full flex flex-row items-center justify-center pt-2">
             <div className="w-1/3 flex flex-col items-start justify-end">
               {index > 0 ? (
                 <button
@@ -201,7 +295,7 @@ export default function Page(props: { config: Record<string, string> }) {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
                     />
                   </svg>
                   <Image
@@ -211,7 +305,7 @@ export default function Page(props: { config: Record<string, string> }) {
                     alt={data.workoutData.currentWorkout.exercises[index].name}
                     width={300}
                     height={300}
-                    className="rounded-sm w-[100px] h-[100px] dark:opacity-95 ml-2"
+                    className="rounded-sm w-[100px] h-[100px] dark:opacity-95 ml-1"
                     priority
                   />
                 </button>
@@ -223,9 +317,7 @@ export default function Page(props: { config: Record<string, string> }) {
                 className="flex flex-col items-center justify-center"
               >
                 <div className="text-lg font-serif text-center">
-                  {new Date(timerExercise * 1000)
-                    .toISOString()
-                    .substring(17, 19)}
+                  {new Date(countDown * 1000).toISOString().substring(17, 19)}
                 </div>
                 <div className="font-light">Seconds</div>
                 <div className="h-10 pt-1">
@@ -276,7 +368,7 @@ export default function Page(props: { config: Record<string, string> }) {
                     alt={data.workoutData.currentWorkout.exercises[index].name}
                     width={300}
                     height={300}
-                    className="rounded-sm w-[100px] h-[100px] dark:opacity-95 mr-2"
+                    className="rounded-sm w-[100px] h-[100px] dark:opacity-95 mr-1"
                     priority
                   />
                   <svg
@@ -290,7 +382,7 @@ export default function Page(props: { config: Record<string, string> }) {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
                     />
                   </svg>
                 </button>
@@ -299,7 +391,6 @@ export default function Page(props: { config: Record<string, string> }) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

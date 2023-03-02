@@ -63,7 +63,7 @@ export default function Page(props: {
             autoPlay
             loop
             muted
-            style={{ width: "640px", height: "480px" }}
+            style={{ width: "auto", height: "360px" }}
             className="dark:opacity-95"
           >
             <source src={`${props.config.bucket_url}${props.data.id}.mp4`} />
