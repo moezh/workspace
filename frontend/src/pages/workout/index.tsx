@@ -28,10 +28,9 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Page(props: { config: Record<string, string> }) {
   const { data, setData } = useUserContext();
 
-  const workoutData = data.workoutData || JSON.parse(props.config.default_data);
-
   useEffect(() => {
-    setData({ ...data, workoutData: workoutData });
+    if (!data.workoutData)
+      setData({ ...data, workoutData: JSON.parse(props.config.default_data) });
   }, []);
 
   const sevenDaysAgo = (Date.now() - 1000 * 60 * 60 * 24 * 7).toString();
@@ -121,18 +120,24 @@ export default function Page(props: { config: Record<string, string> }) {
             </div>
             <div className="mb-4 h-[300px] w-full pt-4 rounded-sm">
               <Link href={"/programs/personalProgram"}>
-                <Image
-                  src={`${props.config.bucket_url}${data.workoutData?.currentProgram?.id}.jpg`}
-                  alt={
-                    data.workoutData?.currentProgram?.name || "Current Program"
-                  }
-                  width={400}
-                  height={300}
-                  className="rounded-sm h-[300px] w-full"
-                  style={{ objectFit: "cover", objectPosition: "50% 35%" }}
-                  quality={100}
-                  priority
-                />
+                {data.workoutData?.currentProgram?.id ? (
+                  <Image
+                    src={`${props.config.bucket_url}${data.workoutData?.currentProgram?.id}.jpg`}
+                    alt={
+                      data.workoutData?.currentProgram?.name ||
+                      "Current Program"
+                    }
+                    width={400}
+                    height={300}
+                    className="rounded-sm h-[300px] w-full"
+                    style={{ objectFit: "cover", objectPosition: "50% 35%" }}
+                    quality={100}
+                    priority
+                  />
+                ) : (
+                  <div className="h-[300px] w-full"></div>
+                )}
+
                 <div className="relative flex flex-row items-start justify-start w-full -top-[300px] h-[300px] bg-black bg-opacity-30 text-white rounded-sm pl-4 pt-4">
                   <div className="w-1/2 flex flex-col items-start justify-start">
                     <p className="font-light">
