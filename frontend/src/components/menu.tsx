@@ -24,7 +24,7 @@ const Menu = (props: { menu: Record<string, string[]>; url: string }) => {
   return (
     <>
       {isVisible === true ? (
-        <div className="fixed inset-0 backdrop-blur-sm bg-gray-500/30">
+        <div className="fixed inset-0 backdrop-blur-sm bg-gray-500/30 z-50">
           <div className="flex flex-row items-start justify-start w-full h-screen">
             <div className="bg-white dark:bg-black w-[290px] min-w-[290px] h-full flex flex-col items-start justify-start overflow-x-hidden overflow-y-visible pb-8">
               <div className="p-4">

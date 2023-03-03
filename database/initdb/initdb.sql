@@ -21,7 +21,7 @@ VALUES
 ('contact_linkedin_url','https://www.linkedin.com/in/moez-hachicha/'),
 ('contact_calendly_url','https://calendly.com/moezh/30min'),
 ('skills_title','Technologies I Master'),
-('skills_summary','I am always keeping up with the latest developments in the field to ensure that I am using the most appropriate technology for each project. My expertise includes proficiency in a wide range of technologies, including those used to build this workspace:'),
+('skills_summary','I am always keeping up with the latest developments in the field to ensure that I am using the most appropriate technology for each project. My expertise includes proficiency in a wide range of technologies, including those used to build this workspace and its projects:'),
 ('skill_group1_title','Front-end'),
 ('skill_group1_summary','React Native,ReactJs,NextJs,TailwindCSS,Javascript,HTML/CSS'),
 ('skill_group2_title','Back-end'),

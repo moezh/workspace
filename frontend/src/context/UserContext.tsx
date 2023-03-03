@@ -13,14 +13,12 @@ type Data = {
     restTime: number;
     currentProgram?: {
       id: string;
-      type: string;
+      goal: string;
       name: string;
       description: string;
       total_weeks: number;
-      workouts: {
-        id: string;
-        name: string;
-      }[];
+      workouts: string;
+      currentDay: number;
     };
     currentWorkout?: {
       id: string;

@@ -1,37 +1,25 @@
-import { GetServerSideProps } from "next";
-import { readFileSync } from "fs";
-import jwt from "jsonwebtoken";
+import Head from "../../../components/Head";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import GoBack from "../../../components/GoBack";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=600"
+export default function Page() {
+  return (
+    <>
+      <Head title="" description="" />
+      <Header />
+      <div className="w-full pt-4">
+        <div className="flex flex-row items-start justify-start">
+          <div className="w-1/4">
+            <GoBack />
+          </div>
+          <div className="w-2/4">
+            <h1 className="w-full text-xl uppercase font-serif text-center"></h1>
+          </div>
+        </div>
+        <div className="pt-8"></div>
+      </div>
+      <Footer />
+    </>
   );
-  const { id } = context.query;
-  const password = readFileSync("/run/secrets/backend-password", {
-    encoding: "utf8",
-  });
-  const config = await fetch("http://backend:3001/api/workout/", {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
-  const configData = await config.json();
-  const program = await fetch(
-    `http://backend:3001/api/workout/programs/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${jwt.sign("admin", password)}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const programData = await program.json();
-  if (programData.code === 404) return { notFound: true };
-  return { props: { config: configData, data: programData } };
-};
-
-export default function Page(props: { data: Record<string, string> }) {
-  return <>{props.data.id}</>;
 }
