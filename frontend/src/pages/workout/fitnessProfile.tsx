@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import { useState, useEffect } from "react";
 import jwt from "jsonwebtoken";
@@ -8,21 +8,10 @@ import Footer from "../../components/Footer";
 import GoBack from "../../components/GoBack";
 import { useUserContext } from "../../context/UserContext";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=600"
-  );
+export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
-  const config = await fetch("http://backend:3001/api/workout/", {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
-  const configData = await config.json();
   const program = await fetch(`http://backend:3001/api/workout/programs/`, {
     headers: {
       Authorization: `Bearer ${jwt.sign("admin", password)}`,
@@ -31,22 +20,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   const programData = await program.json();
   if (programData.code === 404) return { notFound: true };
-  return { props: { config: configData, data: programData } };
+  return { props: { data: programData } };
 };
 
-export default function Page(props: {
-  config: Record<string, string>;
-  data: Record<string, string>[];
-}) {
+export default function Page(props: { data: Record<string, string>[] }) {
   const { data, setData } = useUserContext();
 
-  const [level, setLevel] = useState(data.workoutData?.level || "beginner");
-  const [goal, setGoal] = useState(
-    data.workoutData?.currentProgram?.goal || "General Fitness"
-  );
-  const [dayPerWeeks, setDayPerWeeks] = useState(
-    data.workoutData?.dayPerWeeks || 5
-  );
+  const [level, setLevel] = useState("");
+  const [goal, setGoal] = useState("");
+  const [daysPerWeek, setdaysPerWeek] = useState(0);
 
   const changeLevel = (val: string) => {
     if (val !== level) {
@@ -54,9 +36,9 @@ export default function Page(props: {
     }
   };
 
-  const changeDayPerWeeks = (val: number) => {
-    if (val !== dayPerWeeks) {
-      setDayPerWeeks(val);
+  const changeDaysPerWeek = (val: number) => {
+    if (val !== daysPerWeek) {
+      setdaysPerWeek(val);
     }
   };
 
@@ -67,34 +49,42 @@ export default function Page(props: {
   };
 
   const saveChange = () => {
-    if (data.workoutData?.currentProgram) {
-      const newProgram = props.data.filter(
-        (program) => program.goal === goal
-      )[0];
-      if (newProgram) {
-        const workoutData = {
-          ...data.workoutData,
-          level: level,
-          dayPerWeeks: dayPerWeeks,
-          currentProgram: {
-            ...data.workoutData.currentProgram,
-            id: newProgram.id,
-            goal: newProgram.goal,
-            name: newProgram.name,
-            description: newProgram.description,
-            total_weeks: Number(newProgram.total_weeks),
-            workouts:
-              newProgram[`days_per_week_${data.workoutData?.dayPerWeeks || 5}`],
-          },
-        };
-        setData({ ...data, workoutData: workoutData });
-      }
+    const newProgram = props.data.filter((program) => program.goal === goal)[0];
+    if (newProgram && data.workoutData) {
+      const workoutData = {
+        ...data.workoutData,
+        level: level,
+        daysPerWeek: daysPerWeek,
+        currentProgram: {
+          id: newProgram.id,
+          goal: newProgram.goal,
+          name: newProgram.name,
+          description: newProgram.description,
+          total_weeks: Number(newProgram.total_weeks),
+          workouts: newProgram[`days_per_week_${daysPerWeek}`],
+          currentDay: data.workoutData?.currentProgram?.currentDay || 1,
+        },
+      };
+      setData({ ...data, workoutData: workoutData });
     }
   };
 
   useEffect(() => {
-    saveChange();
-  }, [level, goal, dayPerWeeks]);
+    if (
+      level !== data.workoutData?.level ||
+      daysPerWeek !== data.workoutData?.daysPerWeek ||
+      goal !== data.workoutData?.currentProgram?.goal
+    )
+      saveChange();
+  }, [level, goal, daysPerWeek]);
+
+  useEffect(() => {
+    if (data.workoutData?.currentProgram) {
+      setLevel(data.workoutData?.level);
+      setdaysPerWeek(data.workoutData?.daysPerWeek);
+      setGoal(data.workoutData?.currentProgram?.goal);
+    }
+  }, [data]);
 
   return (
     <>
@@ -176,19 +166,19 @@ export default function Page(props: {
           </div>
           <div className="w-full pt-4">What is your primary workout goal?</div>
           <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4">
-            <div className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2">
+            <div className="w-1/2 sm:w-1/3  flex flex-col pb-4 pr-2">
               <button
-                onClick={() => changeGoal("Fat Loss")}
+                onClick={() => changeGoal("General Fitness")}
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
                   className={`capitalize font-light ${
-                    goal === "Fat Loss"
+                    goal === "General Fitness"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
                   } p-1`}
                 >
-                  Fat Loss
+                  General Fitness
                 </div>
               </button>
             </div>
@@ -208,19 +198,19 @@ export default function Page(props: {
                 </div>
               </button>
             </div>
-            <div className="w-1/2 sm:w-1/3  flex flex-col pb-4 pr-2">
+            <div className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2">
               <button
-                onClick={() => changeGoal("General Fitness")}
+                onClick={() => changeGoal("Fat Loss")}
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
                   className={`capitalize font-light ${
-                    goal === "General Fitness"
+                    goal === "Fat Loss"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
                   } p-1`}
                 >
-                  General Fitness
+                  Fat Loss
                 </div>
               </button>
             </div>
@@ -232,12 +222,12 @@ export default function Page(props: {
             {[2, 3, 4, 5, 6, 7].map((val) => (
               <div key={val} className="w-1/3 flex flex-col pb-4 pr-2">
                 <button
-                  onClick={() => changeDayPerWeeks(val)}
+                  onClick={() => changeDaysPerWeek(val)}
                   className="capitalize rounded-sm border border-black dark:border-white"
                 >
                   <div
                     className={`capitalize font-light ${
-                      dayPerWeeks === val
+                      daysPerWeek === val
                         ? "bg-black text-white dark:bg-white dark:text-black"
                         : ""
                     } p-1`}

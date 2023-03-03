@@ -13,7 +13,7 @@ VALUES
 ('workout_menu','{"Root":["workouts →","exercises →"]}'),
 ('exercises_summary','This list of exercises without equipment can be done daily anytime, anywhere. Even if you travel for work, if you have some space to stretch out, then you can exercise.'),
 ('workouts_summary','This list of workouts without equipment can be done daily anytime, anywhere. Even if you travel for work, if you have some space to stretch out, then you can workout.'),
-('programs_summary',''),
+('default_data','{"level":"beginner","daysPerWeek":2,"workTime":30,"restTime":10,"currentProgram":{"id":"GeneralFitnessProgram","goal":"General Fitness","name":"Tone & Sculpt","description":"This workout exercises your whole body, with all muscle groups being used and stimulated in one single session.","total_weeks":12,"workouts":"FullBodyWorkout,CardioWorkout","currentDay":1},"log":[]}'),
 ('bucket_url','https://objectstorage.eu-marseille-1.oraclecloud.com/n/axrso0xdipxv/b/bucket/o/workout');
 
 CREATE TABLE workout_exercises (

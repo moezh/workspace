@@ -8,7 +8,7 @@ type Data = {
   };
   workoutData?: {
     level: string;
-    dayPerWeeks: number;
+    daysPerWeek: number;
     workTime: number;
     restTime: number;
     currentProgram?: {
@@ -38,7 +38,6 @@ type Data = {
       timer: number;
       exercises: number;
     }[];
-    bucket_url: string;
   };
 };
 

@@ -46,14 +46,17 @@ export default function Page(props: {
 }) {
   const { data, setData } = useUserContext();
 
-  const level = data.workoutData?.level || "beginner";
+  const level = data.workoutData?.level || props.config.default_level;
   const repeat = level === "advanced" ? 3 : level === "intermediate" ? 2 : 1;
 
   const workoutData = {
     level: level,
-    dayPerWeeks: data.workoutData?.dayPerWeeks || 5,
-    workTime: data.workoutData?.workTime || 30,
-    restTime: data.workoutData?.restTime || 10,
+    daysPerWeek:
+      data.workoutData?.daysPerWeek || Number(props.config.default_daysPerWeek),
+    workTime:
+      data.workoutData?.workTime || Number(props.config.default_work_time),
+    restTime:
+      data.workoutData?.restTime || Number(props.config.default_rest_time),
     currentProgram: data.workoutData?.currentProgram || undefined,
     currentWorkout: {
       id: props.data.id,
@@ -65,7 +68,6 @@ export default function Page(props: {
       ),
     },
     log: data.workoutData?.log || [],
-    bucket_url: props.config.bucket_url || "",
   };
 
   useEffect(() => {

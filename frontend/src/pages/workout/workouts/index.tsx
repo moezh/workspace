@@ -14,7 +14,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=600"
   );
-  const { id } = context.query;
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -61,11 +60,11 @@ export default function Page(props: {
         <p className="w-full pt-8">{props.config.workouts_summary}</p>
         <div className="flex flex-wrap flex-row items-start justify-start pt-6">
           {props.data.map((workout: Record<string, string>, index: number) => (
-            <div
+            <Link
               key={`${index}-${workout.id}`}
-              className="mb-4 pr-4 w-full h-[300px] md:w-1/2"
+              href={`/workouts/${workout.id}`}
             >
-              <Link href={`/workouts/${workout.id}`}>
+              <div className="mb-4 pr-4 h-[300px] w-full md:w-1/2">
                 <Image
                   src={`${props.config.bucket_url}${workout.id}.jpg`}
                   alt={workout.name}
@@ -82,14 +81,17 @@ export default function Page(props: {
                     <p className="uppercase font-serif">{workout.name}</p>
                   </div>
                 </div>
-                <div className="relative w-full -top-[380px] h-[300px] text-white p-4">
+
+                <div className="relative w-full -top-[380px] h-[80px] text-white p-4">
                   <div className="h-[80px] flex flex-col items-end justify-start">
-                    <div className="capitalize">{data.workoutData?.level}</div>
-                    <div className="font-light pt-1">Fitness Level</div>
+                    <p className="capitalize">
+                      {data.workoutData?.level || props.config.default_level}
+                    </p>
+                    <p className="font-light pt-1">Fitness Level</p>
                   </div>
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

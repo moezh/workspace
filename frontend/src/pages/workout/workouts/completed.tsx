@@ -26,7 +26,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export default function Page(props: { config: Record<string, string> }) {
   const { data, setData } = useUserContext();
-  if (!data.workoutData?.log) return null;
 
   return (
     <>
@@ -57,7 +56,7 @@ export default function Page(props: { config: Record<string, string> }) {
             <div className="relative w-full -top-[325px] h-[325px] bg-black bg-opacity-40 text-white dark:text-neutral-100 rounded-sm p-4">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-light pt-2">
-                  {new Date(Number(data.workoutData?.log[0].timestamp))
+                  {new Date(Number(data.workoutData?.log[0].timestamp || 0))
                     .toISOString()
                     .substring(0, 16)
                     .replace("T", " ")}
@@ -75,7 +74,7 @@ export default function Page(props: { config: Record<string, string> }) {
               <div className="w-full flex flex-row">
                 <div className="w-1/3 flex-col items-center justify-center">
                   <div className="capitalize font-serif">
-                    {new Date(data.workoutData?.log[0].timer * 1000)
+                    {new Date((data.workoutData?.log[0].timer || 0) * 1000)
                       .toISOString()
                       .substring(14, 19)}
                   </div>
@@ -97,7 +96,7 @@ export default function Page(props: { config: Record<string, string> }) {
                 </div>
                 <div className="w-1/3 flex-col items-center justify-center">
                   <div className="capitalize font-serif">
-                    {data.workoutData?.log[0].exercises}
+                    {data.workoutData?.log[0].exercises || 0}
                   </div>
                   <div className="font-light pb-1">Exercises</div>
                   <svg
@@ -117,7 +116,7 @@ export default function Page(props: { config: Record<string, string> }) {
                 </div>
                 <div className="w-1/3 flex-col items-center justify-center">
                   <div className="capitalize font-serif">
-                    {data.workoutData?.log[0].level}
+                    {data.workoutData?.log[0].level || "-"}
                   </div>
                   <div className="font-light pb-1">Level</div>
                   <svg

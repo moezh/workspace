@@ -118,14 +118,15 @@ export default function Page(props: { data: Record<string, string> }) {
       <Header />
       <div className="w-full pt-4 mx-auto">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/3">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-1/3">
+          <div className="flex-grow">
             <h1 className="text-xl uppercase font-serif text-center">
               Sign in
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <div className="w-[280px] mx-auto py-8">
           <div className="flex flex-col items-start justify-start">

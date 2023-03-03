@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import { useUserContext } from "../../context/UserContext";
 import { useEffect } from "react";
@@ -11,11 +11,7 @@ import Menu from "../../components/menu";
 import Link from "next/link";
 import Image from "next/image";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=600"
-  );
+export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -26,53 +22,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const configData = await config.json();
-  const program = await fetch(`http://backend:3001/api/workout/programs/`, {
-    headers: {
-      Authorization: `Bearer ${jwt.sign("admin", password)}`,
-      "Content-Type": "application/json",
-    },
-  });
-  const programData = await program.json();
-  if (programData.code === 404) return { notFound: true };
-  return { props: { config: configData, data: programData } };
+  return { props: { config: configData } };
 };
 
-export default function Page(props: {
-  config: Record<string, string>;
-  data: Record<string, string>[];
-}) {
+export default function Page(props: { config: Record<string, string> }) {
   const { data, setData } = useUserContext();
 
-  const workoutData = {
-    level: data.workoutData?.level || "beginner",
-    dayPerWeeks: data.workoutData?.dayPerWeeks || 5,
-    workTime: data.workoutData?.workTime || 30,
-    restTime: data.workoutData?.restTime || 10,
-    currentProgram: data.workoutData?.currentProgram || {
-      id: props.data[0].id,
-      goal: props.data[0].goal,
-      name: props.data[0].name,
-      description: props.data[0].description,
-      total_weeks: Number(props.data[0].total_weeks),
-      workouts:
-        props.data[0][`days_per_week_${data.workoutData?.dayPerWeeks || 5}`],
-      currentDay: data.workoutData?.currentProgram?.currentDay || 1,
-    },
-    currentWorkout: undefined,
-    log: data.workoutData?.log || [],
-    bucket_url: props.config.bucket_url || "",
-  };
+  const workoutData = data.workoutData || JSON.parse(props.config.default_data);
 
   useEffect(() => {
     setData({ ...data, workoutData: workoutData });
   }, []);
 
-  if (!data.workoutData?.currentProgram) return null;
-
   const sevenDaysAgo = (Date.now() - 1000 * 60 * 60 * 24 * 7).toString();
-  const last7DaysActivity = data.workoutData.log.filter(
-    (workout) => workout.timestamp > sevenDaysAgo
-  );
+  const last7DaysActivity =
+    data.workoutData?.log.filter(
+      (workout) => workout.timestamp > sevenDaysAgo
+    ) || [];
   const last7daysWorkouts = last7DaysActivity.length;
   const last7daysTimer = last7DaysActivity.reduce(
     (acc, current) => acc + current.timer,
@@ -118,7 +84,7 @@ export default function Page(props: {
             </div>
             <div className="w-1/2 lg:w-1/4 pb-4">
               <div className="uppercase">
-                {data.workoutData?.dayPerWeeks} days/week
+                {data.workoutData?.daysPerWeek} days/week
               </div>
               <div className="capitalize font-light pt-1">
                 Fitness frequency
@@ -154,10 +120,12 @@ export default function Page(props: {
               A personalized program based on your fitness profile.
             </div>
             <div className="mb-4 h-[300px] w-full pt-4 rounded-sm">
-              <Link href={`/programs/${data.workoutData?.currentProgram?.id}`}>
+              <Link href={"/programs/personalProgram"}>
                 <Image
                   src={`${props.config.bucket_url}${data.workoutData?.currentProgram?.id}.jpg`}
-                  alt={data.workoutData?.currentProgram?.name}
+                  alt={
+                    data.workoutData?.currentProgram?.name || "Current Program"
+                  }
                   width={400}
                   height={300}
                   className="rounded-sm h-[300px] w-full"
@@ -176,12 +144,15 @@ export default function Page(props: {
                     <div className="flex flex-row items-center justify-start pt-1">
                       <div className="font-light mr-2">
                         Progress:{" "}
-                        {Math.floor(
-                          ((data.workoutData?.currentProgram?.currentDay - 1) /
-                            (data.workoutData?.currentProgram?.total_weeks *
-                              data.workoutData?.dayPerWeeks)) *
-                            100
-                        )}
+                        {data.workoutData?.currentProgram
+                          ? Math.floor(
+                              ((data.workoutData?.currentProgram?.currentDay -
+                                1) /
+                                (data.workoutData?.currentProgram?.total_weeks *
+                                  data.workoutData?.daysPerWeek)) *
+                                100
+                            )
+                          : 0}
                         %
                       </div>
                     </div>
@@ -198,7 +169,7 @@ export default function Page(props: {
                       {data.workoutData?.currentProgram?.total_weeks}-Week
                     </div>
                     <div className="font-light pt-1">
-                      {data.workoutData?.dayPerWeeks} Days/Week
+                      {data.workoutData?.daysPerWeek} Days/Week
                     </div>
                   </div>
                   <div className="flex flex-col items-end justify-start text-white w-1/2">
