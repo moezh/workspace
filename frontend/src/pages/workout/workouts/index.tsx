@@ -59,7 +59,7 @@ export default function Page(props: {
             <Link
               key={`${index}-${workout.id}`}
               href={`/workouts/${workout.id}`}
-              className="mb-4 pr-4 h-[300px] w-full sm:w-1/2"
+              className="sm:pr-[20px] h-[320px] w-full sm:w-1/2"
             >
               <Image
                 src={`${props.config.bucket_url}${workout.id}.jpg`}

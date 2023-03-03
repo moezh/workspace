@@ -121,11 +121,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     level === "beginner"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   Beginner
                 </div>
@@ -137,11 +137,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
             >
               <button className="capitalize rounded-sm border border-black dark:border-white">
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     level === "intermediate"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   Intermediate
                 </div>
@@ -153,11 +153,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     level === "advanced"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   Advanced
                 </div>
@@ -172,11 +172,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     goal === "General Fitness"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   General Fitness
                 </div>
@@ -188,11 +188,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     goal === "Build Muscle"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   Build Muscle
                 </div>
@@ -204,11 +204,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                 className="capitalize rounded-sm border border-black dark:border-white"
               >
                 <div
-                  className={`capitalize font-light ${
+                  className={`capitalize font-light py-2 ${
                     goal === "Fat Loss"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } p-1`}
+                  }`}
                 >
                   Fat Loss
                 </div>
@@ -226,11 +226,11 @@ export default function Page(props: { data: Record<string, string>[] }) {
                   className="capitalize rounded-sm border border-black dark:border-white"
                 >
                   <div
-                    className={`capitalize font-light ${
+                    className={`capitalize font-light py-2 ${
                       daysPerWeek === val
                         ? "bg-black text-white dark:bg-white dark:text-black"
                         : ""
-                    } p-1`}
+                    }`}
                   >
                     {val}
                   </div>
