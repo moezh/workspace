@@ -4,6 +4,22 @@ import Footer from "../../../components/Footer";
 import GoBack from "../../../components/GoBack";
 
 export default function Page() {
+  /*const resetProgress = () => {
+    if (confirm("This will reset your progress for your personal program!")) {
+      if (data.workoutData?.currentProgram) {
+        setData({
+          ...data,
+          workoutData: {
+            ...data.workoutData,
+            currentProgram: {
+              ...data.workoutData.currentProgram,
+              currentDay: 1,
+            },
+          },
+        });
+      }
+    }
+  };*/
   return (
     <>
       <Head title="" description="" />

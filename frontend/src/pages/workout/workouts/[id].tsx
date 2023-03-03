@@ -46,8 +46,11 @@ export default function Page(props: {
 }) {
   const { data, setData } = useUserContext();
 
+  const level = data.workoutData?.level || "beginner";
+  const repeat = level === "advanced" ? 3 : level === "intermediate" ? 2 : 1;
+
   const workoutData = {
-    level: data.workoutData?.level || "beginner",
+    level: level,
     dayPerWeeks: data.workoutData?.dayPerWeeks || 5,
     workTime: data.workoutData?.workTime || 30,
     restTime: data.workoutData?.restTime || 10,
@@ -57,7 +60,9 @@ export default function Page(props: {
       type: props.data.type,
       name: props.data.name,
       description: props.data.description,
-      exercises: JSON.parse(props.data.exercises),
+      exercises: [].concat(
+        ...Array(repeat).fill(JSON.parse(props.data.exercises))
+      ),
     },
     log: data.workoutData?.log || [],
   };

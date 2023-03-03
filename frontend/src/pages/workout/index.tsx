@@ -62,23 +62,6 @@ export default function Page(props: {
     log: data.workoutData?.log || [],
   };
 
-  const resetProgress = () => {
-    if (confirm("This will reset your progress for your personal program!")) {
-      if (data.workoutData?.currentProgram) {
-        setData({
-          ...data,
-          workoutData: {
-            ...data.workoutData,
-            currentProgram: {
-              ...data.workoutData.currentProgram,
-              currentDay: 1,
-            },
-          },
-        });
-      }
-    }
-  };
-
   useEffect(() => {
     setData({ ...data, workoutData: workoutData });
   }, []);
@@ -114,21 +97,23 @@ export default function Page(props: {
           </div>
         </div>
         <div className="w-full flex flex-col items-start justify-start pt-8">
-          <div className="w-full flex flex-row flex-wrap items-start justify-start">
+          <div className="uppercase font-serif">Your fitness profile</div>
+          <div className="pt-1">
+            Every workout is adapted to your fitness profile.
+          </div>
+          <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4">
             <div className="w-1/2 lg:w-1/4 pb-4">
-              <div className="uppercase font-serif">
+              <div className="uppercase">
                 {data.workoutData?.currentProgram?.goal}
               </div>
               <div className="capitalize font-light pt-1">Fitness goal</div>
             </div>
             <div className="w-1/2 lg:w-1/4 pb-4">
-              <div className="uppercase font-serif">
-                {data.workoutData?.level}
-              </div>
+              <div className="uppercase">{data.workoutData?.level}</div>
               <div className="capitalize font-light pt-1">Fitness level</div>
             </div>
             <div className="w-1/2 lg:w-1/4 pb-4">
-              <div className="uppercase font-serif">
+              <div className="uppercase">
                 {data.workoutData?.dayPerWeeks} days/week
               </div>
               <div className="capitalize font-light pt-1">
@@ -159,7 +144,7 @@ export default function Page(props: {
           </div>
           <div className="w-full pt-8">
             <div className="uppercase font-serif">Your personal program</div>
-            <div className="font-light pt-1">
+            <div className="pt-1">
               A personalized program based on your fitness profile.
             </div>
             <div className="mb-4 pr-4 h-[300px] w-full pt-4 rounded-sm">
@@ -193,22 +178,6 @@ export default function Page(props: {
                         )}
                         %
                       </div>
-                      <button onClick={resetProgress}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                          />
-                        </svg>
-                      </button>
                     </div>
                   </div>
                   <div className="w-1/2 flex flex-col items-end justify-center pt-8">
@@ -219,7 +188,7 @@ export default function Page(props: {
                 </div>
                 <div className="relative w-full h-[80px] -top-[380px] flex flex-row items-start justify-start px-4">
                   <div className="flex flex-col items-start justify-start text-white w-1/2">
-                    <div className="font-light">
+                    <div className="capitalize">
                       {data.workoutData?.currentProgram?.total_weeks}-Week
                     </div>
                     <div className="font-light pt-1">
@@ -236,16 +205,16 @@ export default function Page(props: {
           </div>
           <div className="w-full pt-12">
             <div className="uppercase font-serif">Your fitness activity</div>
-            <div className="font-light pt-1">
-              A quick snapshot of your last 7 days.
-            </div>
+            <div className="pt-1">A quick snapshot of your last 7 days.</div>
             <div className="flex flex-row items-start justify-start pt-4">
               <div className="w-1/2 flex flex-col items-start justify-start">
-                <div>{last7daysWorkouts}</div>
+                <div className="uppercase">{last7daysWorkouts}</div>
                 <div className="font-light pt-1">Workouts</div>
               </div>
               <div className="w-1/2 flex flex-col items-start justify-start">
-                <div>{Math.floor(last7daysTimer / 60)}</div>
+                <div className="uppercase">
+                  {Math.floor(last7daysTimer / 60)}
+                </div>
                 <div className="font-light pt-1">Minutes</div>
               </div>
             </div>
