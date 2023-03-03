@@ -38,6 +38,7 @@ type Data = {
       timer: number;
       exercises: number;
     }[];
+    bucket_url: string;
   };
 };
 

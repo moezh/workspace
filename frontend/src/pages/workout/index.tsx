@@ -60,6 +60,7 @@ export default function Page(props: {
     },
     currentWorkout: undefined,
     log: data.workoutData?.log || [],
+    bucket_url: props.config.bucket_url || "",
   };
 
   useEffect(() => {
@@ -152,7 +153,7 @@ export default function Page(props: {
             <div className="w-full pt-1">
               A personalized program based on your fitness profile.
             </div>
-            <div className="mb-4 pr-4 h-[300px] w-full pt-4 rounded-sm">
+            <div className="mb-4 h-[300px] w-full pt-4 rounded-sm">
               <Link href={`/programs/${data.workoutData?.currentProgram?.id}`}>
                 <Image
                   src={`${props.config.bucket_url}${data.workoutData?.currentProgram?.id}.jpg`}

@@ -65,6 +65,7 @@ export default function Page(props: {
       ),
     },
     log: data.workoutData?.log || [],
+    bucket_url: props.config.bucket_url || "",
   };
 
   useEffect(() => {
@@ -91,25 +92,25 @@ export default function Page(props: {
           <div className="w-[60px]"></div>
         </div>
         <div className="flex flex-col items-start justify-start pt-8">
-          <div className="w-full h-[325px]">
+          <div className="w-full h-[350px]">
             <Image
               src={`${props.config.bucket_url}${props.data.id}.jpg`}
               alt={props.data.name}
               width={1000}
               height={750}
-              className="rounded-sm h-[325px] w-full"
+              className="rounded-sm h-[350px] w-full"
               style={{ objectFit: "cover", objectPosition: "50% 35%" }}
               quality={100}
               priority
             />
-            <div className="relative w-full -top-[325px] h-[325px] bg-black bg-opacity-30 text-white dark:text-neutral-100 rounded-sm p-4">
+            <div className="relative w-full -top-[350px] h-[350px] bg-black bg-opacity-30 text-white dark:text-neutral-100 rounded-sm p-4">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-light pt-2">{props.data.type}</p>
                 <p className="uppercase font-serif pt-1">{props.data.name}</p>
                 <p className="font-light pt-2">{props.data.description}</p>
               </div>
             </div>
-            <div className="relative w-full -top-[425px] h-[100px] text-white p-4">
+            <div className="relative w-full -top-[450px] h-[100px] text-white p-4">
               <div className="w-full flex flex-row">
                 <div className="w-1/3 flex flex-col items-start justify-center">
                   <p className="capitalize font-serif">
