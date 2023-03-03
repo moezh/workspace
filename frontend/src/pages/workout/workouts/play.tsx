@@ -279,8 +279,8 @@ export default function Page(props: { config: Record<string, string> }) {
             ></div>
           </div>
         </div>
-        <div className="w-full h-full flex flex-col items-center justify-center py-2">
-          <div className="w-full h-full max-h-[360px] flex flex-col items-center justify-center bg-white rounded-sm dark:opacity-95">
+        <div className="w-full h-full flex flex-col items-center justify-center my-2 bg-white dark:opacity-95">
+          <div className="w-full h-full max-h-[320px] flex flex-col items-center justify-center bg-white rounded-sm dark:opacity-95">
             <video
               ref={videoRef}
               autoPlay

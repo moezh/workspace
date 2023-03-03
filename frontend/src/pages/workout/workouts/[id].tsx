@@ -46,32 +46,30 @@ export default function Page(props: {
 }) {
   const { data, setData } = useUserContext();
 
-  const level = data.workoutData?.level || props.config.default_level;
-  const repeat = level === "advanced" ? 3 : level === "intermediate" ? 2 : 1;
-
-  const workoutData = {
-    level: level,
-    daysPerWeek:
-      data.workoutData?.daysPerWeek || Number(props.config.default_daysPerWeek),
-    workTime:
-      data.workoutData?.workTime || Number(props.config.default_work_time),
-    restTime:
-      data.workoutData?.restTime || Number(props.config.default_rest_time),
-    currentProgram: data.workoutData?.currentProgram || undefined,
-    currentWorkout: {
-      id: props.data.id,
-      type: props.data.type,
-      name: props.data.name,
-      description: props.data.description,
-      exercises: [].concat(
-        ...Array(repeat).fill(JSON.parse(props.data.exercises))
-      ),
-    },
-    log: data.workoutData?.log || [],
-  };
+  const exercisesArray = [].concat(
+    ...Array(
+      data.workoutData?.level === "advanced"
+        ? 3
+        : data.workoutData?.level === "intermediate"
+        ? 2
+        : 1
+    ).fill(JSON.parse(props.data.exercises))
+  );
 
   useEffect(() => {
-    setData({ ...data, workoutData: workoutData });
+    if (data.workoutData) {
+      const workoutData = {
+        ...data.workoutData,
+        currentWorkout: {
+          id: props.data.id,
+          type: props.data.type,
+          name: props.data.name,
+          description: props.data.description,
+          exercises: exercisesArray,
+        },
+      };
+      setData({ ...data, workoutData: workoutData });
+    }
   }, []);
 
   return (
@@ -112,30 +110,37 @@ export default function Page(props: {
                 <p className="font-light pt-2">{props.data.description}</p>
               </div>
             </div>
-            <div className="relative w-full -top-[450px] h-[100px] text-white p-4">
-              <div className="w-full flex flex-row">
-                <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">
-                    {workoutData.currentWorkout.exercises.length}
-                  </p>
-                  <p className="font-light">Exercises</p>
-                </div>
-                <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">
-                    {Math.floor(
-                      (workoutData.currentWorkout.exercises.length *
-                        (workoutData.workTime + workoutData.restTime)) /
-                        60
-                    )}
-                  </p>
-                  <p className="font-light">Minutes</p>
-                </div>
-                <div className="w-1/3 flex flex-col items-start justify-center">
-                  <p className="capitalize font-serif">{workoutData.level}</p>
-                  <p className="font-light">Level</p>
+            {data.workoutData ? (
+              <div className="relative w-full -top-[450px] h-[100px] text-white p-4">
+                <div className="w-full flex flex-row">
+                  <div className="w-1/3 flex flex-col items-start justify-center">
+                    <p className="capitalize font-serif">
+                      {data.workoutData?.currentWorkout?.exercises.length}
+                    </p>
+                    <p className="font-light">Exercises</p>
+                  </div>
+                  <div className="w-1/3 flex flex-col items-start justify-center">
+                    <p className="capitalize font-serif">
+                      {data.workoutData
+                        ? Math.floor(
+                            (props.data.exercises.length *
+                              (data.workoutData?.workTime +
+                                data.workoutData?.restTime)) /
+                              60
+                          )
+                        : null}
+                    </p>
+                    <p className="font-light">Minutes</p>
+                  </div>
+                  <div className="w-1/3 flex flex-col items-start justify-center">
+                    <p className="capitalize font-serif">
+                      {data.workoutData?.level}
+                    </p>
+                    <p className="font-light">Level</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
         <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
@@ -148,7 +153,7 @@ export default function Page(props: {
           </div>
         </div>
         <div className="pt-4">
-          {workoutData.currentWorkout.exercises.map(
+          {exercisesArray.map(
             (exercise: Record<string, string>, index: number) => (
               <div
                 key={index}
@@ -171,7 +176,11 @@ export default function Page(props: {
                   <Link href={`/exercises/${exercise.id}`}>
                     <p className="uppercase">{exercise.name}</p>
                   </Link>
-                  <p className="font-light">{workoutData.workTime} seconds</p>
+                  <p className="font-light">
+                    {data.workoutData
+                      ? `${data.workoutData?.workTime} seconds`
+                      : null}
+                  </p>
                 </div>
                 <div className="w-full max-w-[25px] ml-2 text-right">
                   <Link href={`/exercises/${exercise.id}`}>→</Link>

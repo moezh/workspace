@@ -130,7 +130,7 @@ export default function Page(props: {
                 </p>
                 <div className="flex flex-row items-center justify-start pt-1">
                   <div className="font-light mr-2">
-                    Progress:
+                    Progress:{" "}
                     {workoutData.currentProgram
                       ? Math.floor(
                           ((currentDay - 1) /
