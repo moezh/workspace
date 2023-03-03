@@ -156,13 +156,13 @@ export default function Page(props: { data: Record<string, string> }) {
           {props.data.projects_title}
         </p>
         <p className="pt-4">{props.data.projects_summary}</p>
-        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-6">
+        <div className="w-full flex flex-row flex-wrap items-start justify-center pt-8">
           {props.data.projects_featured
             .split(",")
             .map((project, index: number) => (
               <div
                 key={index}
-                className={`w-1/2 flex flex-col items-center justify-center pb-6 ${
+                className={`w-full sm:w-1/2 flex flex-col items-center justify-center pb-8 ${
                   index % 2 === 0 ? "pr-2" : "pl-2"
                 }`}
               >

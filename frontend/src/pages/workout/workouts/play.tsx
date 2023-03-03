@@ -221,7 +221,7 @@ export default function Page(props: { config: Record<string, string> }) {
         <div className="flex-shrink w-full">
           <div className="flex flex-row items-start justify-start">
             <button
-              className="w-1/4 flex flex-row items-center justify-start"
+              className="w-[60px] flex flex-row items-center justify-start"
               onClick={closeWorkout}
             >
               <svg
@@ -237,12 +237,12 @@ export default function Page(props: { config: Record<string, string> }) {
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
-            <div className="w-2/4 flex flex-row items-center justify-center">
+            <div className="flex flex-grow flex-row items-center justify-center">
               <h1 className="w-full text-xl uppercase font-serif text-center">
                 {data.workoutData.currentWorkout.name}
               </h1>
             </div>
-            <div className="w-1/4 flex flex-row items-center justify-end">
+            <div className="w-[60px] flex flex-row items-center justify-end">
               <DarkModeToggler />
             </div>
           </div>

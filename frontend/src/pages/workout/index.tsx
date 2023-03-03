@@ -87,18 +87,21 @@ export default function Page(props: {
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <Menu menu={JSON.parse(props.config.workout_menu)} url="/" />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               Dashboard
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <div className="w-full flex flex-col items-start justify-start pt-8">
-          <div className="uppercase font-serif">Your fitness profile</div>
-          <div className="pt-1">
+          <div className="w-full uppercase font-serif">
+            Your fitness profile
+          </div>
+          <div className="w-full pt-1">
             Every workout is adapted to your fitness profile.
           </div>
           <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4">
@@ -108,7 +111,7 @@ export default function Page(props: {
               </div>
               <div className="capitalize font-light pt-1">Fitness goal</div>
             </div>
-            <div className="w-1/2 lg:w-1/4 pb-4">
+            <div className="w-1/2 lg:w-1/4 pb-4 pl-1">
               <div className="uppercase">{data.workoutData?.level}</div>
               <div className="capitalize font-light pt-1">Fitness level</div>
             </div>
@@ -120,7 +123,7 @@ export default function Page(props: {
                 Fitness frequency
               </div>
             </div>
-            <div className="w-1/2 lg:w-1/4 pb-4 text-gray-500">
+            <div className="w-1/2 lg:w-1/4 pb-4 pl-1 text-gray-500">
               <Link href={`/fitnessProfile`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -143,8 +146,10 @@ export default function Page(props: {
             </div>
           </div>
           <div className="w-full pt-8">
-            <div className="uppercase font-serif">Your personal program</div>
-            <div className="pt-1">
+            <div className="w-full uppercase font-serif">
+              Your personal program
+            </div>
+            <div className="w-full pt-1">
               A personalized program based on your fitness profile.
             </div>
             <div className="mb-4 pr-4 h-[300px] w-full pt-4 rounded-sm">
@@ -181,7 +186,7 @@ export default function Page(props: {
                     </div>
                   </div>
                   <div className="w-1/2 flex flex-col items-end justify-center pt-8">
-                    <div className="flex flex-col items-center justify-center w-[125px] bg-black bg-opacity-50 text-white rounded-l-sm py-1 px-2">
+                    <div className="flex flex-col items-center justify-center w-[100px] bg-black bg-opacity-50 text-white rounded-l-sm py-1 px-2">
                       Day {data.workoutData?.currentProgram?.currentDay}
                     </div>
                   </div>
@@ -204,8 +209,12 @@ export default function Page(props: {
             </div>
           </div>
           <div className="w-full pt-12">
-            <div className="uppercase font-serif">Your fitness activity</div>
-            <div className="pt-1">A quick snapshot of your last 7 days.</div>
+            <div className="w-full uppercase font-serif">
+              Your fitness activity
+            </div>
+            <div className="w-full pt-1">
+              A quick snapshot of your last 7 days.
+            </div>
             <div className="flex flex-row items-start justify-start pt-4">
               <div className="w-1/2 flex flex-col items-start justify-start">
                 <div className="uppercase">{last7daysWorkouts}</div>

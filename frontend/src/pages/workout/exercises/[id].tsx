@@ -49,14 +49,15 @@ export default function Page(props: {
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.name}
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <div className="w-full flex flex-col items-center justify-start bg-white pt-6 my-2 rounded-sm dark:opacity-95">
           <video

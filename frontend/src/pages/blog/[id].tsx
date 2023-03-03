@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import GoBack from "../../components/GoBack";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -33,6 +34,17 @@ export default function Page(props: {
       <Head title={props.data.title} description={props.data.summary} />
       <Header />
       <div className="w-full pt-4">
+        <div className="flex flex-row items-start justify-start">
+          <div className="w-[60px]">
+            <GoBack />
+          </div>
+          <div className="flex-grow">
+            <h1 className="w-full text-xl uppercase font-serif text-center">
+              {props.data.title}
+            </h1>
+          </div>
+          <div className="w-[60px]"></div>
+        </div>
         <h1 className="text-xl uppercase font-serif text-center">
           {props.data.title}
         </h1>

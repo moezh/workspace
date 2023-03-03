@@ -45,14 +45,15 @@ export default function Page(props: {
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               Exercises
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <p className="w-full pt-8">{props.config.exercises_summary}</p>
         <div className="w-full flex flex-wrap flex-row items-start justify-start pt-8">

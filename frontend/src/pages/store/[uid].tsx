@@ -43,20 +43,21 @@ export default function Page(props: { data: Record<string, string> }) {
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.title}
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <p className="pt-2 w-full text-center">
           {props.data.product_category_name}
         </p>
-        <div className="flex flex-col items-center justify-start mt-6 mb-2">
-          <div className="flex flex-row flex-wrap items-center justify-center">
+        <div className="w-full flex flex-col items-center justify-start mt-6 mb-2">
+          <div className="w-full flex flex-row flex-wrap items-center justify-center">
             {imagesArray.map((e: string, index: number) => {
               return e === "" ? (
                 <></>
@@ -76,14 +77,14 @@ export default function Page(props: { data: Record<string, string> }) {
               );
             })}
           </div>
-          <div className="flex flex-col items-center justify-start pt-4">
+          <div className="w-full flex flex-col items-center justify-start pt-4">
             {props.data.brand === "" ? null : (
               <p className="w-full text-center">
                 <span className="capitalize pr-2">Brand:</span>
                 <span className="font-light">{props.data.brand}</span>
               </p>
             )}
-            <div className="flex flex-row items-start justify-start text-center pt-1">
+            <div className="w-full flex flex-row items-start justify-start text-center pt-1">
               {props.data.sale_price === "" ||
               props.data.sale_price === props.data.price ? (
                 <p className="w-full">
@@ -109,7 +110,7 @@ export default function Page(props: { data: Record<string, string> }) {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start pt-4">
+          <div className="w-full flex flex-col items-start justify-start pt-4">
             <p className="w-full pb-4">{props.data.description}</p>
             {props.data.availability === "" ? null : (
               <p className="w-full">

@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
+import { useUserContext } from "../../../context/UserContext";
 import Head from "../../../components/Head";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
@@ -39,23 +40,26 @@ export default function Page(props: {
   config: Record<string, string>;
   data: Record<string, string>[];
 }) {
+  const { data, setData } = useUserContext();
+
   return (
     <>
       <Head title="Workouts" description={props.config.workouts_summary} />
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               Workouts
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <p className="w-full pt-8">{props.config.workouts_summary}</p>
-        <div className="flex flex-wrap flex-row items-start justify-start pt-8">
+        <div className="flex flex-wrap flex-row items-start justify-start pt-6">
           {props.data.map((workout: Record<string, string>, index: number) => (
             <div
               key={`${index}-${workout.id}`}
@@ -76,6 +80,12 @@ export default function Page(props: {
                   <div className="flex flex-col items-start justify-start">
                     <p className="font-light">{workout.type}</p>
                     <p className="uppercase font-serif">{workout.name}</p>
+                  </div>
+                </div>
+                <div className="relative w-full -top-[380px] h-[300px] text-white p-4">
+                  <div className="h-[80px] flex flex-col items-end justify-start">
+                    <div className="capitalize">{data.workoutData?.level}</div>
+                    <div className="font-light pt-1">Fitness Level</div>
                   </div>
                 </div>
               </Link>

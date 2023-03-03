@@ -77,6 +77,7 @@ export default function Page(props: {
           level: level,
           dayPerWeeks: dayPerWeeks,
           currentProgram: {
+            ...data.workoutData.currentProgram,
             id: newProgram.id,
             goal: newProgram.goal,
             name: newProgram.name,
@@ -84,7 +85,6 @@ export default function Page(props: {
             total_weeks: Number(newProgram.total_weeks),
             workouts:
               newProgram[`days_per_week_${data.workoutData?.dayPerWeeks || 5}`],
-            currentDay: 1,
           },
         };
         setData({ ...data, workoutData: workoutData });
@@ -105,28 +105,27 @@ export default function Page(props: {
       <Header />
       <div className="w-full pt-4">
         <div className="flex flex-row items-start justify-start">
-          <div className="w-1/4">
+          <div className="w-[60px]">
             <GoBack />
           </div>
-          <div className="w-2/4">
+          <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
               Fitness profile
             </h1>
           </div>
+          <div className="w-[60px]"></div>
         </div>
         <div className="w-full flex flex-col items-start justify-start pt-8">
-          <div className="p">
+          <div className="w-full">
             Answer a few simple questions about your workout goal, intensity and
-            frequency preferences, and we'll create a fitness experience
-            tailored just for you. Editing your fitness profile will reset your
-            progress for your current personal program and generate a new one
-            based on the new data.
+            frequency preferences, and we'll create a personal program and
+            workouts tailored just for you.
           </div>
-          <div className="pt-4 font-serif">
+          <div className="w-full pt-6 font-serif">
             How would you describe your prior experience level with exercise?
           </div>
-          <div className="w-full flex flex-row items-center justify-center text-center pt-4 pb-1">
-            <div className="w-1/3 flex flex-col pb-4 pr-4">
+          <div className="w-full flex flex-row flex-wrap items-start justify-start text-center pt-4">
+            <div className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2">
               <button
                 onClick={() => changeLevel("beginner")}
                 className="capitalize rounded-sm border border-black dark:border-white"
@@ -136,7 +135,7 @@ export default function Page(props: {
                     level === "beginner"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   Beginner
                 </div>
@@ -144,7 +143,7 @@ export default function Page(props: {
             </div>
             <div
               onClick={() => changeLevel("intermediate")}
-              className="w-1/3 flex flex-col pb-4 pr-4"
+              className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2"
             >
               <button className="capitalize rounded-sm border border-black dark:border-white">
                 <div
@@ -152,13 +151,13 @@ export default function Page(props: {
                     level === "intermediate"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   Intermediate
                 </div>
               </button>
             </div>
-            <div className="w-1/3 flex flex-col pb-4 pr-4">
+            <div className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2">
               <button
                 onClick={() => changeLevel("advanced")}
                 className="capitalize rounded-sm border border-black dark:border-white"
@@ -168,16 +167,16 @@ export default function Page(props: {
                     level === "advanced"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   Advanced
                 </div>
               </button>
             </div>
           </div>
-          <div className="pt-4">What is your primary workout goal?</div>
-          <div className="w-full flex flex-row items-start justify-start pt-4 pb-1">
-            <div className="w-1/3 flex flex-col pb-4 pr-4">
+          <div className="w-full pt-4">What is your primary workout goal?</div>
+          <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4">
+            <div className="w-1/2 sm:w-1/3 flex flex-col pb-4 pr-2">
               <button
                 onClick={() => changeGoal("Fat Loss")}
                 className="capitalize rounded-sm border border-black dark:border-white"
@@ -187,13 +186,13 @@ export default function Page(props: {
                     goal === "Fat Loss"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   Fat Loss
                 </div>
               </button>
             </div>
-            <div className="w-1/3 flex flex-col pb-4 pr-4">
+            <div className="w-1/2 sm:w-1/3  flex flex-col pb-4 pr-2">
               <button
                 onClick={() => changeGoal("Build Muscle")}
                 className="capitalize rounded-sm border border-black dark:border-white"
@@ -203,13 +202,13 @@ export default function Page(props: {
                     goal === "Build Muscle"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   Build Muscle
                 </div>
               </button>
             </div>
-            <div className="w-1/3 flex flex-col pb-4 pr-4">
+            <div className="w-1/2 sm:w-1/3  flex flex-col pb-4 pr-2">
               <button
                 onClick={() => changeGoal("General Fitness")}
                 className="capitalize rounded-sm border border-black dark:border-white"
@@ -219,19 +218,19 @@ export default function Page(props: {
                     goal === "General Fitness"
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : ""
-                  } px-4 py-1`}
+                  } p-1`}
                 >
                   General Fitness
                 </div>
               </button>
             </div>
           </div>
-          <div className="pt-4">
+          <div className="w-full pt-4">
             How many days per week would you like to workout?
           </div>
-          <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4 pb-1">
+          <div className="w-full flex flex-row flex-wrap items-start justify-start pt-4">
             {[2, 3, 4, 5, 6, 7].map((val) => (
-              <div key={val} className="w-1/3 flex flex-col pb-4 pr-4">
+              <div key={val} className="w-1/3 flex flex-col pb-4 pr-2">
                 <button
                   onClick={() => changeDayPerWeeks(val)}
                   className="capitalize rounded-sm border border-black dark:border-white"
@@ -241,7 +240,7 @@ export default function Page(props: {
                       dayPerWeeks === val
                         ? "bg-black text-white dark:bg-white dark:text-black"
                         : ""
-                    } px-4 py-1`}
+                    } p-1`}
                   >
                     {val}
                   </div>
