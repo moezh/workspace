@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
@@ -8,12 +8,7 @@ import GoBack from "../../../components/GoBack";
 import Image from "next/image";
 import Link from "next/link";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=600"
-  );
-  const { id } = context.query;
+export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });

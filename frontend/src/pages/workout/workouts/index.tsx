@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import jwt from "jsonwebtoken";
 import { useUserContext } from "../../../context/UserContext";
@@ -9,11 +9,7 @@ import GoBack from "../../../components/GoBack";
 import Image from "next/image";
 import Link from "next/link";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=600"
-  );
+export const getStaticProps: GetStaticProps = async () => {
   const password = readFileSync("/run/secrets/backend-password", {
     encoding: "utf8",
   });
@@ -63,32 +59,31 @@ export default function Page(props: {
             <Link
               key={`${index}-${workout.id}`}
               href={`/workouts/${workout.id}`}
+              className="mb-4 pr-4 h-[300px] w-full sm:w-1/2"
             >
-              <div className="mb-4 pr-4 h-[300px] w-full md:w-1/2">
-                <Image
-                  src={`${props.config.bucket_url}${workout.id}.jpg`}
-                  alt={workout.name}
-                  width={400}
-                  height={300}
-                  className="rounded-sm h-[300px] w-full"
-                  style={{ objectFit: "cover", objectPosition: "50% 35%" }}
-                  quality={100}
-                  priority
-                />
-                <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-30 text-white rounded-sm p-4">
-                  <div className="flex flex-col items-start justify-start">
-                    <p className="font-light">{workout.type}</p>
-                    <p className="uppercase font-serif">{workout.name}</p>
-                  </div>
+              <Image
+                src={`${props.config.bucket_url}${workout.id}.jpg`}
+                alt={workout.name}
+                width={400}
+                height={300}
+                className="rounded-sm h-[300px] w-full"
+                style={{ objectFit: "cover", objectPosition: "50% 35%" }}
+                quality={100}
+                priority
+              />
+              <div className="relative w-full -top-[300px] h-[300px] bg-black bg-opacity-30 text-white rounded-sm p-4">
+                <div className="flex flex-col items-start justify-start">
+                  <p className="font-light">{workout.type}</p>
+                  <p className="uppercase font-serif">{workout.name}</p>
                 </div>
+              </div>
 
-                <div className="relative w-full -top-[380px] h-[80px] text-white p-4">
-                  <div className="h-[80px] flex flex-col items-end justify-start">
-                    <p className="capitalize">
-                      {data.workoutData?.level || props.config.default_level}
-                    </p>
-                    <p className="font-light pt-1">Fitness Level</p>
-                  </div>
+              <div className="relative w-full -top-[380px] h-[80px] text-white p-4">
+                <div className="h-[80px] flex flex-col items-end justify-start">
+                  <p className="capitalize">
+                    {data.workoutData?.level || props.config.default_level}
+                  </p>
+                  <p className="font-light pt-1">Fitness Level</p>
                 </div>
               </div>
             </Link>
