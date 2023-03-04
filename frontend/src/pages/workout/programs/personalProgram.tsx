@@ -59,42 +59,11 @@ export default function Page(props: {
     }
   };
 
-  const workoutData = {
-    level: data.workoutData?.level || props.config.default_level,
-    daysPerWeek:
-      data.workoutData?.daysPerWeek || Number(props.config.default_daysPerWeek),
-    workTime:
-      data.workoutData?.workTime || Number(props.config.default_work_time),
-    restTime:
-      data.workoutData?.restTime || Number(props.config.default_rest_time),
-    currentProgram: data.workoutData?.currentProgram || {
-      id: props.data[0].id,
-      goal: props.data[0].goal,
-      name: props.data[0].name,
-      description: props.data[0].description,
-      total_weeks: Number(props.data[0].total_weeks),
-      workouts:
-        props.data[0][
-          `days_per_week_${
-            data.workoutData?.daysPerWeek ||
-            Number(props.config.default_daysPerWeek)
-          }`
-        ],
-      currentDay: data.workoutData?.currentProgram?.currentDay || 1,
-    },
-    currentWorkout: undefined,
-    log: data.workoutData?.log || [],
-  };
-
-  useEffect(() => {
-    setData({ ...data, workoutData: workoutData });
-  }, []);
-
   return (
     <>
       <Head
-        title={`${workoutData.currentProgram.name} - Day ${currentDay}`}
-        description={workoutData.currentProgram?.description}
+        title={`${data.workoutData?.currentProgram?.name} - Day ${currentDay}`}
+        description={data.workoutData?.currentProgram?.description}
       />
       <Header />
       <div className="w-full pt-4">
@@ -104,7 +73,7 @@ export default function Page(props: {
           </div>
           <div className="flex-grow">
             <h1 className="w-full text-xl uppercase font-serif text-center">
-              {`${workoutData.currentProgram?.name}`}
+              {`${data.workoutData?.currentProgram?.name}`}
             </h1>
             <p className="w-full pt-1 text-center">Day {currentDay}</p>
           </div>
@@ -112,30 +81,38 @@ export default function Page(props: {
         </div>
         <div className="pt-8">
           <div className="h-[350px] w-full rounded-sm">
-            <Image
-              src={`${props.config.bucket_url}${workoutData.currentProgram?.id}.jpg`}
-              alt={workoutData.currentProgram?.name || "Personal program"}
-              width={400}
-              height={300}
-              className="rounded-sm h-[350px] w-full"
-              style={{ objectFit: "cover", objectPosition: "50% 35%" }}
-              quality={100}
-              priority
-            />
+            {data.workoutData?.currentProgram?.id ? (
+              <Image
+                src={`${props.config.bucket_url}${data.workoutData?.currentProgram?.id}.jpg`}
+                alt={
+                  data.workoutData?.currentProgram?.name || "Personal program"
+                }
+                width={400}
+                height={300}
+                className="rounded-sm h-[350px] w-full"
+                style={{ objectFit: "cover", objectPosition: "50% 35%" }}
+                quality={100}
+                priority
+              />
+            ) : (
+              <div className="h-[350px] w-full"></div>
+            )}
             <div className="relative flex flex-row items-start justify-start w-full -top-[350px] h-[350px] bg-black bg-opacity-30 text-white rounded-sm pl-4 pt-4">
               <div className="w-full flex flex-col items-start justify-start">
-                <p className="font-light">{workoutData.currentProgram?.goal}</p>
+                <p className="font-light">
+                  {data.workoutData?.currentProgram?.goal}
+                </p>
                 <p className="uppercase font-serif pt-1">
-                  {workoutData.currentProgram?.name}
+                  {data.workoutData?.currentProgram?.name}
                 </p>
                 <div className="flex flex-row items-center justify-start pt-1">
                   <div className="font-light mr-2">
                     Progress:{" "}
-                    {workoutData.currentProgram
+                    {data.workoutData?.currentProgram
                       ? Math.floor(
                           ((currentDay - 1) /
-                            (workoutData.currentProgram?.total_weeks *
-                              workoutData.daysPerWeek)) *
+                            (data.workoutData?.currentProgram?.total_weeks *
+                              data.workoutData?.daysPerWeek)) *
                             100
                         )
                       : 0}
@@ -159,7 +136,7 @@ export default function Page(props: {
                   </button>
                 </div>
                 <p className="font-light pt-2">
-                  {workoutData.currentProgram?.description}
+                  {data.workoutData?.currentProgram?.description}
                 </p>
               </div>
             </div>
@@ -173,14 +150,14 @@ export default function Page(props: {
             <div className="relative w-full h-[80px] -top-[510px] flex flex-row items-start justify-start px-4">
               <div className="flex flex-col items-start justify-start text-white w-1/2">
                 <div className="capitalize">
-                  {workoutData.currentProgram?.total_weeks}-Week
+                  {data.workoutData?.currentProgram?.total_weeks}-Week
                 </div>
                 <div className="font-light pt-1">
-                  {workoutData.daysPerWeek} Days/Week
+                  {data.workoutData?.daysPerWeek} Days/Week
                 </div>
               </div>
               <div className="flex flex-col items-end justify-start text-white w-1/2">
-                <div className="capitalize">{workoutData.level}</div>
+                <div className="capitalize">{data.workoutData?.level}</div>
                 <div className="font-light pt-1">Fitness Level</div>
               </div>
             </div>

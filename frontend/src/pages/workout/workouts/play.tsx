@@ -67,7 +67,7 @@ export default function Page(props: { config: Record<string, string> }) {
         startRestPeriod();
         const video = videoRef.current as HTMLVideoElement;
         video.load();
-        isPlaying ? video.play() : video.pause();
+        if (!isPlaying) video.pause();
         speechSynthesis.cancel();
       }
       if (index === data.workoutData.currentWorkout.exercises.length - 1) {

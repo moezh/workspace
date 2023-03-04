@@ -123,7 +123,7 @@ export default function Page(props: {
                     <p className="capitalize font-serif">
                       {data.workoutData
                         ? Math.floor(
-                            (props.data.exercises.length *
+                            (exercisesArray.length *
                               (data.workoutData?.workTime +
                                 data.workoutData?.restTime)) /
                               60
