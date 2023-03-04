@@ -12,7 +12,7 @@ VALUES
 ('github_url','https://github.com/moezh/workspace'),
 ('title','Personal Workspace'),
 ('profile_name','Moez Hachicha'),
-('profile_job_title','Contract Software Engineer'),
+('profile_job_title','Software Engineer'),
 ('profile_location','Remote, Worldwide'),
 ('profile_summary','Welcome to my personal workspace where I deploy and host my personal projects to experiment with and showcase my skills. As an experienced software engineer with expertise in both front-end and back-end technologies, as well as knowledge of DevOps practices, I specialize in delivering comprehensive end-to-end solutions that cover the entire development lifecycle. This workspace serves as a central hub where I bring my ideas and concepts to life, transforming my initial visions into fully functional and production-ready systems.'),
 ('contact_summary','I am available to communicate with you regarding any projects, ideas, or questions you may have. Please do not hesitate to contact me through email, message me on WhatsApp, connect with me on LinkedIn or schedule a Zoom meeting with me on Calendly, by clicking the buttons below:'),
