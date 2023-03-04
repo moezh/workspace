@@ -162,7 +162,7 @@ export default function Page(props: { config: Record<string, string> }) {
                       </div>
                     </div>
                   </div>
-                  <div className="w-1/2 flex flex-col items-end justify-center pt-8">
+                  <div className="w-1/2 flex flex-col items-end justify-center pt-4">
                     <div className="flex flex-col items-center justify-center w-[100px] bg-black bg-opacity-50 text-white rounded-l-sm py-1 px-2">
                       Day {data.workoutData?.currentProgram?.currentDay}
                     </div>

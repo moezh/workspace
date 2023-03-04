@@ -162,13 +162,15 @@ export default function Page(props: {
                   {workoutData.currentProgram?.description}
                 </p>
               </div>
-              <div className="w-[125px] flex flex-col items-end justify-center pt-8">
+            </div>
+            <div className="relative w-full h-[80px] -top-[700px] flex flex-row items-start justify-start">
+              <div className="w-full flex flex-col items-end justify-center pt-8">
                 <div className="flex flex-col items-center justify-center w-[100px] bg-black bg-opacity-50 text-white rounded-l-sm py-1 px-2">
                   Day {currentDay}
                 </div>
               </div>
             </div>
-            <div className="relative w-full h-[80px] -top-[430px] flex flex-row items-start justify-start px-4">
+            <div className="relative w-full h-[80px] -top-[510px] flex flex-row items-start justify-start px-4">
               <div className="flex flex-col items-start justify-start text-white w-1/2">
                 <div className="capitalize">
                   {workoutData.currentProgram?.total_weeks}-Week
@@ -190,6 +192,119 @@ export default function Page(props: {
                   Start Day {currentDay} →
                 </p>
               </Link>
+            </div>
+          </div>
+          <div className="pt-8">
+            <div className="font-serif uppercase">
+              {data.workoutData?.currentProgram?.total_weeks}-Week schedule
+            </div>
+            <div className="pt-1">
+              This {data.workoutData?.currentProgram?.name.toLowerCase()}{" "}
+              routine is a {data.workoutData?.currentProgram?.total_weeks}-week{" "}
+              {data.workoutData?.currentProgram?.goal.toLowerCase()} program
+              that involves working out {data.workoutData?.daysPerWeek} times a
+              week.
+            </div>
+            <div className="w-full flex flex-row flex-wrap items-start justify-start">
+              {[
+                ...Array(data.workoutData?.currentProgram?.total_weeks).keys(),
+              ].map((i) => (
+                <div key={`week-${i + 1}`} className="pr-4 pt-4 w-[80px]">
+                  {Math.floor(
+                    (currentDay - 1) / (data.workoutData?.daysPerWeek || 1)
+                  ) === i ? (
+                    <div className="">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-8 h-8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                      <div>{`week-${i + 1}`}</div>
+                    </div>
+                  ) : (
+                    <div className="text-gray-300 dark:text-gray-700">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1}
+                        stroke="currentColor"
+                        className="w-8 h-8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                      <div className="font-light">{`week-${i + 1}`}</div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="pt-8">
+            <div className="font-serif uppercase">
+              {data.workoutData?.daysPerWeek} Days per week
+            </div>
+            <div className="w-full flex flex-row flex-wrap items-start justify-start">
+              {[...Array(data.workoutData?.daysPerWeek).keys()].map((i) => (
+                <div key={`day-${i + 1}`} className="pr-4 pt-4 w-[80px]">
+                  {Math.floor(
+                    (currentDay - 1) % (data.workoutData?.daysPerWeek || 1)
+                  ) === i ? (
+                    <div className="">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-8 h-8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                      <div>{`Day-${i + 1}`}</div>
+                    </div>
+                  ) : (
+                    <div className="text-gray-300 dark:text-gray-700">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1}
+                        stroke="currentColor"
+                        className="w-8 h-8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                      <div className="font-light">{`Day-${i + 1}`}</div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="pt-4">
+              Try to spread out your workouts throughout the week and choose
+              anyday/time that suits you best.
             </div>
           </div>
         </div>
