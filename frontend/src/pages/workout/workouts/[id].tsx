@@ -9,6 +9,7 @@ import Footer from "../../../components/Footer";
 import GoBack from "../../../components/GoBack";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -45,6 +46,7 @@ export default function Page(props: {
   data: Record<string, string>;
 }) {
   const { data, setData } = useUserContext();
+  const router = useRouter();
 
   const exercisesArray = [].concat(
     ...Array(
@@ -66,6 +68,7 @@ export default function Page(props: {
           name: props.data.name,
           description: props.data.description,
           exercises: exercisesArray,
+          isLinkedToProgram: router.query.program ? true : false,
         },
       };
       setData({ ...data, workoutData: workoutData });
@@ -88,6 +91,11 @@ export default function Page(props: {
             <h1 className="w-full text-xl uppercase font-serif text-center">
               {props.data.name}
             </h1>
+            {data.workoutData?.currentWorkout?.isLinkedToProgram ? (
+              <p className="w-full text-center pt-1">
+                {`${data.workoutData?.currentProgram?.name} > Day ${data.workoutData?.currentProgram?.currentDay}`}
+              </p>
+            ) : null}
           </div>
           <div className="w-[60px]"></div>
         </div>

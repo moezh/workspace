@@ -94,15 +94,33 @@ export default function Page(props: { config: Record<string, string> }) {
     utterance.text = "Congratulations! Your workout is completed.";
     speechSynthesis.speak(utterance);
     setIsFinished(true);
-    if (data.workoutData?.currentWorkout) {
+    if (data.workoutData?.currentProgram && data.workoutData?.currentWorkout) {
       setData({
         ...data,
         workoutData: {
           ...data.workoutData,
+          currentProgram: {
+            ...data.workoutData.currentProgram,
+            currentDay:
+              data.workoutData?.currentProgram?.currentDay <
+              data.workoutData?.currentProgram?.total_weeks *
+                data.workoutData?.daysPerWeek
+                ? data.workoutData?.currentProgram?.currentDay + 1
+                : 1,
+          },
           currentWorkout: undefined,
           log: [
             {
               timestamp: Date.now().toString(),
+              programId: data.workoutData.currentWorkout.isLinkedToProgram
+                ? data.workoutData.currentProgram?.id
+                : undefined,
+              programName: data.workoutData.currentWorkout.isLinkedToProgram
+                ? data.workoutData.currentProgram?.name
+                : undefined,
+              programDay: data.workoutData.currentWorkout.isLinkedToProgram
+                ? data.workoutData.currentProgram?.currentDay
+                : undefined,
               workoutId: data.workoutData.currentWorkout.id,
               workoutName: data.workoutData.currentWorkout.name,
               timer: timer,
@@ -246,11 +264,13 @@ export default function Page(props: { config: Record<string, string> }) {
               <DarkModeToggler />
             </div>
           </div>
-          <div className="w-full flex flex-row items-center justify-center pt-1">
-            <div className="uppercase">
-              {data.workoutData.currentWorkout.exercises[index].name}
+          {data.workoutData?.currentWorkout?.isLinkedToProgram ? (
+            <div className="w-full flex flex-col items-center justify-center pt-1">
+              <p className="text-center">
+                {`${data.workoutData?.currentProgram?.name} > Day ${data.workoutData?.currentProgram?.currentDay}`}
+              </p>
             </div>
-          </div>
+          ) : null}
           <div className="w-full flex flex-row items-start justify-start pt-1">
             <div className="w-1/2 flex flex-col items-center justify-center">
               <div className="text-lg font-serif">
@@ -264,6 +284,11 @@ export default function Page(props: { config: Record<string, string> }) {
                 {new Date(timer * 1000).toISOString().substring(14, 19)}
               </div>
               <div className="font-light">Overall time</div>
+            </div>
+          </div>
+          <div className="w-full flex flex-row items-center justify-center pt-2">
+            <div className="uppercase">
+              {data.workoutData.currentWorkout.exercises[index].name}
             </div>
           </div>
           <div className="h-1 w-full rounded-full bg-gray-100  dark:bg-gray-800 mt-2">

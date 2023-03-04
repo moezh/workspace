@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import { readFileSync } from "fs";
 import { useUserContext } from "../../../context/UserContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import jwt from "jsonwebtoken";
 import Head from "../../../components/Head";
 import Header from "../../../components/Header";
@@ -164,7 +164,18 @@ export default function Page(props: {
           </div>
           <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-black z-10">
             <div className="w-full bg-black dark:bg-neutral-100 rounded-sm my-2">
-              <Link href={`#`}>
+              <Link
+                href={{
+                  pathname: `/workouts/${
+                    data.workoutData?.currentProgram?.workouts.split(",")[
+                      Math.floor(
+                        (currentDay - 1) % (data.workoutData?.daysPerWeek || 1)
+                      )
+                    ]
+                  }`,
+                  query: { program: "personal" },
+                }}
+              >
                 <p className="capitalize text-white dark:text-black px-8 py-2 text-center">
                   Start Day {currentDay} →
                 </p>

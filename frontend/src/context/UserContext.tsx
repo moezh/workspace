@@ -29,9 +29,13 @@ type Data = {
         id: string;
         name: string;
       }[];
+      isLinkedToProgram: boolean;
     };
     log: {
       timestamp: string;
+      programId?: string;
+      programName?: string;
+      programDay?: number;
       workoutId: string;
       workoutName: string;
       level: string;

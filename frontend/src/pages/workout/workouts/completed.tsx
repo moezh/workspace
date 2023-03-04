@@ -66,7 +66,10 @@ export default function Page(props: { config: Record<string, string> }) {
                 <p className="uppercase font-serif pt-1">
                   {data.workoutData?.log[0]?.workoutName}
                 </p>
-                <p className="font-light pt-2">
+                {data.workoutData?.log[0]?.programId ? (
+                  <p className="font-light pt-1">{`${data.workoutData?.log[0]?.programName} - Day ${data.workoutData?.log[0]?.programDay}`}</p>
+                ) : null}
+                <p className="font-light pt-4">
                   Congratulations! Your workout is completed.
                 </p>
                 <div className="w-full flex flex-col items-center justify-center pt-1"></div>
@@ -82,7 +85,7 @@ export default function Page(props: { config: Record<string, string> }) {
                           .substring(14, 19)
                       : null}
                   </div>
-                  <div className="font-light pb-1">Overall Time</div>
+                  <div className="font-light pb-1">Time</div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
