@@ -11,6 +11,7 @@
     "pg": "8.x",
     "cron": "2.x",
     "ssh2-sftp-client": "9.x",
+    "rss-parser": "3.x",
     "adm-zip": "0.x"
   },
   "devDependencies": {
