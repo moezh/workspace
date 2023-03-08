@@ -9,3 +9,5 @@ yarn.lock
 *.txt
 *.txt.zip
 *.log
+
+!robots.txt

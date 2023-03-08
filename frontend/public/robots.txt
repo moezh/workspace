@@ -1,0 +1,12 @@
+# Block
+User-agent: *
+Disallow: /login
+Disallow: /signup
+Disallow: /change-password
+Disallow: /reset-password
+Disallow: /user
+Disallow: /link/
+
+# Allow
+User-agent: *
+Allow: /
